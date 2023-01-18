@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 
-const ProfileThirdGrid = () => 
+export const ProfileThirdGrid = () => 
 {
     return (
         <div className='grid cs4:grid-cols-2 -translate-y-24 px-6 gap-4 mb-8'> 
@@ -48,5 +48,3 @@ const ProfileThirdGrid = () =>
 
     );
 }
- 
-export default ProfileThirdGrid;

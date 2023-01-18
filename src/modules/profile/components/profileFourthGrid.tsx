@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ProfileFourthGrid = () => {
+export const ProfileFourthGrid = () => {
     return (
             <div className='grid cs4:grid-cols-2 -translate-y-24 px-6 gap-4 mb-8'>
             <div className='bg-white shadow-xl w-full rounded-xl cs4:mb-0 mb-6'>
@@ -53,4 +53,3 @@ const ProfileFourthGrid = () => {
       );
 }
  
-export default ProfileFourthGrid;

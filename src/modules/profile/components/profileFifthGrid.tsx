@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ProfileFifthGrid = () => {
+export const ProfileFifthGrid = () => {
     return (
             <div className='grid cs4:grid-cols-2 -translate-y-24 px-6 gap-4'>
             <div className='bg-white shadow-xl w-full rounded-xl cs4:mb-0 mb-6'>
@@ -50,5 +50,3 @@ const ProfileFifthGrid = () => {
         </div>
     );
 }
- 
-export default ProfileFifthGrid;

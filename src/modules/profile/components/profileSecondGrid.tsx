@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ProfileSecondGrid = () => 
+export const ProfileSecondGrid = () => 
 {
     return (
         <div className='-translate-y-24 px-6 mb-8'>
@@ -148,4 +148,3 @@ const ProfileSecondGrid = () =>
     );
 }
  
-export default ProfileSecondGrid;
