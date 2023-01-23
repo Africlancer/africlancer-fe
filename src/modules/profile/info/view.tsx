@@ -1,4 +1,4 @@
-import { ApModal } from "@/src/components";
+import { ApModal } from "@/src/components/modal";
 import React, { useState } from "react";
 import { IProfile } from "../model";
 import { EditProfileInfo } from "./edit";
@@ -14,7 +14,7 @@ export const ProfileInfo: React.FC<IProps> = ({ profile }) => {
     <>
       <div className="col-span-2 p-5 bg-white shadow-xl w-full rounded-xl relative">
         <div className="flex w-full">
-          <div className="test-user-pic cs5:h-72 cs5:w-72 h-56 w-56 bg-center bg-cover rounded"></div>
+          <div className="test-user-pic cs5:h-80 cs5:w-80 h-56 w-56 bg-center bg-cover rounded"></div>
 
           <div className="ml-3 flex flex-col justify-between">
             <div>
@@ -56,6 +56,7 @@ export const ProfileInfo: React.FC<IProps> = ({ profile }) => {
             </div>
 
             <div className="cs5:text-base text-sm">
+              <p className="mb-2">My best skill, is typing, and am also into game development<br/>with unity for both PC and Mobile, and I also make designs.</p>
               <p className="mb-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -144,6 +145,7 @@ export const ProfileInfo: React.FC<IProps> = ({ profile }) => {
         onDismiss={() => {
           setModal({ open: false });
         }}
+        width={970}
       >
         <EditProfileInfo profile={profile} />
       </ApModal>
