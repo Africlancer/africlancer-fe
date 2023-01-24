@@ -10,7 +10,7 @@ export const CustomButton = ({size, children}) => {
         },
     }}
     >
-        <Button size={size} style={{backgroundColor: '#22c55e', color: 'white', display: 'flex', alignItems: 'center'}}>
+        <Button size={size} style={{border: 'none', backgroundColor: '#22c55e', color: 'white', display: 'flex', alignItems: 'center'}}>
             {children}
         </Button>
     </ConfigProvider>

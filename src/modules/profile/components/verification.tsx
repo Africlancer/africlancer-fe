@@ -2,7 +2,7 @@ import React from 'react'
 
 export const Verification = () => {
   return (
-    <div className='col-span-1 cs2:block hidden bg-white shadow-xl w-full rounded-xl'>
+    <div className='col-span-2 bg-white shadow-xl w-full rounded-xl'>
     <div className='border-b px-6 py-2 flex items-center'>
         <h1 className='font-bold text-xl mr-3'>Verfications</h1>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-gray-300">

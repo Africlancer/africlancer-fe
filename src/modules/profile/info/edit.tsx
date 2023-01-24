@@ -1,4 +1,4 @@
-import { picInputHandler } from '@/src/custom';
+import { clearPic, picInputHandler } from '@/src/custom';
 import { CloseOutlined, LoadingOutlined } from '@ant-design/icons';
 import React, { useRef, useState } from 'react'
 import { IProfile } from '../model'
@@ -14,8 +14,15 @@ export const EditProfileInfo: React.FC<IProps> = ({profile}) => {
 
   const fileInputHandler = () =>
   {
-    let file = picInputHandler(profilePic, 'profile-pic-button', 'profile-pic-loader', 'profile-pic-preview')
+    let file =  picInputHandler(
+      {inputRef: profilePic, inputButton: 'profile-pic-button', 
+      loader: 'profile-pic-loader', imgPreview: 'profile-pic-preview'})
     setProfilePicture(file)
+  }
+
+  const clearPicHandler = () =>
+  {
+    clearPic('profile-pic-button', 'profile-pic-preview')
   }
 
   return (
@@ -23,14 +30,14 @@ export const EditProfileInfo: React.FC<IProps> = ({profile}) => {
     <h1 className='font-bold text-xl'>Edit Profile Settings</h1>
     <p className='mb-3'>Enter new value and proceed</p>
       <div className="flex">
-      <button className='mr-5 h-80 w-80 flex justify-center items-center border-dashed border-2 border-gray-200'>
+      <button className='mr-5 h-80 w-96 flex justify-center items-center border-dashed border-2 border-gray-200'>
       <div className='loader hidden' id='profile-pic-loader'>
         <LoadingOutlined style={{fontSize: 50, color: '#22c55e'}} spin/>
       </div>
 
-      <div className='relative img-preview opacity-0 ease-out duration-500 w-full h-full bg-center bg-cover hidden' id='profile-pic-preview'>
+      <div className='relative img-preview opacity-0 ease-out duration-500 w-full h-full bg-center bg-contain hidden' id='profile-pic-preview'>
         <div className='bg-overlay ease-linear duration-300 opacity-0 hover:opacity-100 absolute top-0 right-0 left-0 bottom-0'>
-          <div className='absolute right-0 m-3'>
+          <div className='absolute right-0 m-3' onClick={clearPicHandler}>
             <CloseOutlined style={{fontSize: 20, color: '#22c55e'}}/>
           </div>
         </div>
@@ -49,11 +56,11 @@ export const EditProfileInfo: React.FC<IProps> = ({profile}) => {
           <div className='flex mb-3'>
             <div className='mr-3'>
               <p>Professional Headline</p>
-              <input type="text" className='w-72 border-2 h-8 mt-2' />
+              <input type="text" className='w-64 border-2 h-8 mt-2' />
             </div>
             <div>
               <p>Professional Headline</p>
-              <input type="text" className='w-72 border-2 h-8 mt-2' />
+              <input type="text" className='w-64 border-2 h-8 mt-2' />
             </div>
           </div>
 

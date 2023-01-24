@@ -1,28 +1,69 @@
 import React from 'react'
 
-export const picInputHandler = (inputRef, inputButton, loader, imgPreview) =>
+interface IPictureInput
 {
-  let input = inputRef.current
+  inputRef: React.MutableRefObject<HTMLInputElement>,
+  inputButton: string,
+  loader: string,
+  imgPreview: string
+}
+
+
+export const picInputHandler = (args: IPictureInput) =>
+{
+  let input = args.inputRef.current
   let file = input.files[0]
-  let iButton = document.getElementById(inputButton)
-  let iLoader = document.getElementById(loader)
-  let iPreview = document.getElementById(imgPreview)
+  let iButton = document.getElementById(args.inputButton)
+  let iLoader = document.getElementById(args.loader)
+  let iPreview = document.getElementById(args.imgPreview)
   let reader = new FileReader
 
-  iButton.classList.add('hidden')
-  iLoader.classList.remove('hidden')
-  setTimeout(() => {
-    reader.onload = (e) =>
+  if(file !== undefined)
+  {
+    if(file.type == 'image/jpeg' || file.type == 'image/png')
     {
-      iPreview.style.backgroundImage = `url(${e.target.result})`
+      if(file.size < 600000)
+      {
+        iButton.classList.add('hidden')
+        iLoader.classList.remove('hidden')
+        setTimeout(() => {
+          reader.onload = (e) =>
+          {
+            iPreview.style.backgroundImage = `url(${e.target.result})`
+          }
+          reader.readAsDataURL(file)
+          iLoader.classList.add('hidden')
+          iPreview.classList.remove('hidden')
+        }, 3000);
+        setTimeout(() => {
+          iPreview.classList.replace('opacity-0', 'opacity-1')
+        }, 4000);
+      
+        return file
+      }
+      else
+      {
+        console.log('ynah')
+      }
     }
-    reader.readAsDataURL(file)
-    iLoader.classList.add('hidden')
-    iPreview.classList.remove('hidden')
-  }, 3000);
-  setTimeout(() => {
-    iPreview.classList.replace('opacity-0', 'opacity-1')
-  }, 4000);
+    else
+    {
+      console.log('nah');
+    }
+  }
 
-  return file
+}
+
+export const clearPic = (inputButton: string, imgPreview: string) =>
+{
+  let iButton = document.getElementById(inputButton)
+  let iPreview = document.getElementById(imgPreview)
+
+  iPreview.classList.replace('opacity-1', 'opacity-0')
+  setTimeout(() => {
+    iPreview.classList.add('hidden')
+  }, 500);
+  setTimeout(() => {
+    iButton.classList.remove('hidden')
+  }, 1000);
 }

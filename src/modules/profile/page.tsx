@@ -1,4 +1,7 @@
+import { CustomButton } from "@/src/components/button";
+import { Footer } from "@/src/components/footer";
 import { Navbar, SubMenu } from "@/src/components/modal";
+
 import React from "react";
 import {
   Reviews, Portfolioitems, Education, Experience, Qualifications, Publications,
@@ -8,17 +11,19 @@ import { ProfileInfo } from "./info/view";
 
 export const ProfilePage = () => {
   return (
-    <div className="profile-page">
+    <div className="h-full relative">
+    <div className="profile-page relative">
       <Navbar/>
-      <div className="relative pt-16">
+      <div className="relative pt-16 pb-56">
       <SubMenu/>
         <BannerPhoto/> 
 
-        <div className="px-6 pb-8 absolute top-80 mt-20">
-          <button className="text-white p-2 rounded bg-green-500 mb-3">
+        <div className="-translate-y-44 mt-20 w-full">
+          <div className="px-6 pb-8">
+          <CustomButton size='large'>
             View Client Profile
-          </button>
-          <div className="gap-8 grid grid-cols-3">
+          </CustomButton>
+          <div className="cs:gap-8 cs:grid cs:grid-cols-3 w-full grid mt-4">
             <div className="col-span-2 grid gap-8">
               <ProfileInfo profile={null} />
               <Portfolioitems/>
@@ -37,8 +42,11 @@ export const ProfilePage = () => {
               <SimilarShowcases/>
             </div>
           </div>
+          </div>
         </div>
       </div>
+    </div>
+    <Footer/>
     </div>
   );
 };

@@ -1,3 +1,5 @@
+import { CustomButton } from '@/src/components/button';
+import { ArrowRightIcon } from '@/src/components/icons/customIcons';
 import Link from 'next/link';
 import React from 'react'
 
@@ -9,15 +11,14 @@ export const Certifications = () => {
                     <h1 className='font-bold text-xl mr-3'>Certifications</h1>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className='text-gray-300' viewBox="0 0 24 24">
                     <path d="M23.873 9.81c.087-.251.127-.509.127-.764 0-.77-.38-1.514-1.055-1.981-2.153-1.492-1.868-1.117-2.679-3.543-.34-1.013-1.319-1.697-2.424-1.697h-.007c-2.653.009-2.193.151-4.334-1.354-.446-.314-.974-.471-1.501-.471s-1.055.157-1.502.471c-2.156 1.515-1.686 1.362-4.334 1.353h-.007c-1.104 0-2.084.685-2.422 1.697-.812 2.432-.534 2.056-2.678 3.544-.677.469-1.057 1.212-1.057 1.983 0 .254.042.511.127.762.831 2.428.829 1.962 0 4.38-.085.251-.127.507-.127.762 0 .77.38 1.514 1.057 1.983 2.146 1.49 1.868 1.113 2.679 3.543.338 1.013 1.317 1.697 2.422 1.697h.007c2.653-.009 2.193-.152 4.334 1.353.446.314.974.472 1.501.472s1.055-.158 1.502-.471c2.141-1.504 1.679-1.362 4.334-1.353h.007c1.104 0 2.084-.685 2.424-1.697.811-2.427.525-2.052 2.679-3.543.674-.469 1.054-1.213 1.054-1.983 0-.254-.04-.512-.127-.763-.831-2.428-.827-1.963 0-4.38zm-13.373 6.94l-4.5-4.364 1.858-1.857 2.642 2.505 5.642-5.783 1.858 1.857-7.5 7.642z"/>
-                </svg>                 </div>
+                </svg>                 
+                </div>
 
-                <Link href='/my-portfolio'>
-                <button className='flex bg-green-500 p-2 rounded text-white justify-center'>
-                    <span className='mr-2'>Get Certified</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                        <path fill-rule="evenodd" d="M16.72 7.72a.75.75 0 011.06 0l3.75 3.75a.75.75 0 010 1.06l-3.75 3.75a.75.75 0 11-1.06-1.06l2.47-2.47H3a.75.75 0 010-1.5h16.19l-2.47-2.47a.75.75 0 010-1.06z" clip-rule="evenodd" />
-                    </svg>
-                </button>
+                <Link href='/get-certified'>
+                <CustomButton size='large'>
+                    Get Certified
+                    <ArrowRightIcon/>
+                </CustomButton>
                 </Link>
             </div>
 
