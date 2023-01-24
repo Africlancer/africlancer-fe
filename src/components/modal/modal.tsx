@@ -5,6 +5,7 @@ interface IPros {
   open: boolean;
   titile?: string;
   onDismiss?: () => void;
+  width?: string | number
   children: React.ReactNode;
 }
 
@@ -13,9 +14,10 @@ export const ApModal: React.FC<IPros> = ({
   titile,
   children,
   onDismiss,
+  width
 }) => {
   return (
-    <Modal open={open} title={titile} onCancel={onDismiss} footer={null}>
+    <Modal open={open} width={width} title={titile} onCancel={onDismiss} footer={null}>
       {children}
     </Modal>
   );

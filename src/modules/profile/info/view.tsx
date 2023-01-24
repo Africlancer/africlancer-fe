@@ -1,4 +1,6 @@
-import { ApModal } from "@/src/components";
+import { CustomOutlineButton } from "@/src/components/button";
+import { EditIcon } from "@/src/components/icons/customIcons";
+import { ApModal } from "@/src/components/modal";
 import React, { useState } from "react";
 import { IProfile } from "../model";
 import { EditProfileInfo } from "./edit";
@@ -14,23 +16,23 @@ export const ProfileInfo: React.FC<IProps> = ({ profile }) => {
     <>
       <div className="col-span-2 p-5 bg-white shadow-xl w-full rounded-xl relative">
         <div className="flex w-full">
-          <div className="test-user-pic cs5:h-72 cs5:w-72 h-56 w-56 bg-center bg-cover rounded"></div>
+          <div className="test-user-pic h-80 w-80 bg-center bg-cover rounded"></div>
 
           <div className="ml-3 flex flex-col justify-between">
             <div>
               <div className="flex items-end">
-                <h1 className="cs5:text-2xl text-lg">Paul A.</h1>
+                <h1 className="text-2xl">Paul A.</h1>
                 <div className="flex items-center">
-                  <p className="ml-2 cs5:text-lg text-sm text-gray-400">
+                  <p className="ml-2 text-lg text-gray-400">
                     paulandy32@gmail.com
                   </p>
                   <div className="bg-green-500 rounded-full h-2 w-2 ml-3"></div>
                 </div>
               </div>
-              <p className="cs5:text-base text-sm mt-1">
+              <p className="text-base mt-1">
                 Frontend And Backend Developer
               </p>
-              <div className="mt-3 cs5:text-base text-sm">
+              <div className="mt-3 text-base">
                 <div className="flex">
                   <p className="mr-4">
                     <span className="text-green-500 font-bold">N/A</span> Open
@@ -55,7 +57,8 @@ export const ProfileInfo: React.FC<IProps> = ({ profile }) => {
               </div>
             </div>
 
-            <div className="cs5:text-base text-sm">
+            <div className="text-base">
+              <p className="mb-2">My best skill, is typing, and am also into game development<br/>with unity for both PC and Mobile, and I also make designs.</p>
               <p className="mb-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -101,30 +104,22 @@ export const ProfileInfo: React.FC<IProps> = ({ profile }) => {
           </div>
         </div>
 
-        <div className="cs6:absolute cs6:p-5 bottom-0 top-0 right-0 flex gap-3 cs6:flex-col justify-between items-end cs6:mt-0 mt-3">
-          <button
-            onClick={() => setModal({ open: true })}
-            className="flex text-green-500 cs5:p-2 p-2 rounded border-green-500 border-2 cs6:mb-3"
-          >
-            <span className="mr-2 cs5:text-base text-sm">Edit Profile</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="cs5:w-6 cs5:h-6 w-5 h-5 inline-block"
-            >
-              <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
-              <path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
-            </svg>
-          </button>
-          <div className="text-right cs5:text-base text-sm">
+        <div className="absolute p-5 bottom-0 top-0 right-0 flex gap-3 flex-col justify-between items-end mt-0">
+          <div onClick={() => setModal({ open: true })}>
+          <CustomOutlineButton size='large'>
+            Edit Profile
+            <EditIcon/>
+          </CustomOutlineButton>
+          </div>
+          
+          <div className="text-right text-base">
             <p className="mb-1">Abuja, Nigeria</p>
             <p className="flex">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                className="cs5:w-6 cs5:h-6 w-5 h-5 text-green-500"
+                className="w-6 h-6 text-green-500"
               >
                 <path d="M10.464 8.746c.227-.18.497-.311.786-.394v2.795a2.252 2.252 0 01-.786-.393c-.394-.313-.546-.681-.546-1.004 0-.323.152-.691.546-1.004zM12.75 15.662v-2.824c.347.085.664.228.921.421.427.32.579.686.579.991 0 .305-.152.671-.579.991a2.534 2.534 0 01-.921.42z" />
                 <path
@@ -133,7 +128,7 @@ export const ProfileInfo: React.FC<IProps> = ({ profile }) => {
                   clip-rule="evenodd"
                 />
               </svg>
-              <span className="cs5:ml-2 ml-1">$70 USD / Hour</span>
+              <span className="ml-2">$70 USD / Hour</span>
             </p>
           </div>
         </div>
@@ -144,6 +139,7 @@ export const ProfileInfo: React.FC<IProps> = ({ profile }) => {
         onDismiss={() => {
           setModal({ open: false });
         }}
+        width={970}
       >
         <EditProfileInfo profile={profile} />
       </ApModal>

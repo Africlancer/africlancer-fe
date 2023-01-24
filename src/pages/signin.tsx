@@ -51,7 +51,7 @@ const Signin = () => {
               <input id="remember" className="mb-4" type={"checkbox"}></input>
 
               <label
-                for="remember"
+                htmlFor="remember"
                 className="text-gray-700 font-serif text-3x"
               >
                 <span className="ml-3">Remember Me</span>

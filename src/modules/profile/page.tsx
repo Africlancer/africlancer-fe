@@ -1,90 +1,52 @@
-import { Modal } from "antd";
-import React, { useState } from "react";
+import { CustomButton } from "@/src/components/button";
+import { Footer } from "@/src/components/footer";
+import { Navbar, SubMenu } from "@/src/components/modal";
+
+import React from "react";
 import {
-  ProfileFifthGrid,
-  ProfileFourthGrid,
-  ProfileSecondGrid,
-  ProfileThirdGrid,
-  Verification,
+  Reviews, Portfolioitems, Education, Experience, Qualifications, Publications,
+  Verification, BannerPhoto, Certifications, TopSkills, SimilarFreelancers, SimilarShowcases
 } from "./components";
 import { ProfileInfo } from "./info/view";
 
 export const ProfilePage = () => {
-  const [open, setOpen] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
-  const [modalText, setModalText] = useState("Content of the modal");
-
-  const showModal = () => {
-    setOpen(true);
-  };
-
-  const handleOk = () => {
-    setModalText("The modal will be closed after two seconds");
-    setConfirmLoading(true);
-    setTimeout(() => {
-      setOpen(false);
-      setConfirmLoading(false);
-    }, 2000);
-  };
-
-  const handleCancel = () => {
-    console.log("Clicked cancel button");
-    setOpen(false);
-  };
-
   return (
-    <div className="profile-page">
-      <div>
-        <div className="cover-bg w-full md:bg-center md:bg-cover bg-center bg-cover h-96">
-          <button
-            onClick={showModal}
-            className="bg-green-500 absolute right-5 top-5 p-2 rounded"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="text-white w-6 h-6"
-            >
-              <path d="M12 9a3.75 3.75 0 100 7.5A3.75 3.75 0 0012 9z" />
-              <path
-                fill-rule="evenodd"
-                d="M9.344 3.071a49.52 49.52 0 015.312 0c.967.052 1.83.585 2.332 1.39l.821 1.317c.24.383.645.643 1.11.71.386.054.77.113 1.152.177 1.432.239 2.429 1.493 2.429 2.909V18a3 3 0 01-3 3h-15a3 3 0 01-3-3V9.574c0-1.416.997-2.67 2.429-2.909.382-.064.766-.123 1.151-.178a1.56 1.56 0 001.11-.71l.822-1.315a2.942 2.942 0 012.332-1.39zM6.75 12.75a5.25 5.25 0 1110.5 0 5.25 5.25 0 01-10.5 0zm12-1.5a.75.75 0 100-1.5.75.75 0 000 1.5z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </button>
-        </div>
-        <div className="-translate-y-24 px-6 mb-8">
-          <button className="text-white p-2 rounded bg-green-500 mb-3">
+    <div className="h-full relative">
+    <div className="profile-page relative">
+      <Navbar/>
+      <div className="relative pt-16 pb-56">
+      <SubMenu/>
+        <BannerPhoto/> 
+
+        <div className="-translate-y-44 mt-20 w-full">
+          <div className="px-6 pb-8">
+          <CustomButton size='large'>
             View Client Profile
-          </button>
+          </CustomButton>
+          <div className="cs:gap-8 cs:grid cs:grid-cols-3 w-full grid mt-4">
+            <div className="col-span-2 grid gap-8">
+              <ProfileInfo profile={null} />
+              <Portfolioitems/>
+              <Reviews/>
+              <Experience/>
+              <Education/>
+              <Qualifications/>
+              <Publications/>
+            </div>
 
-          <div className="cs:gap-10 gap-3 grid cs2:grid-cols-3">
-            <ProfileInfo profile={null} />
-
-            <Verification />
+            <div className="flex flex-col gap-8">
+              <Verification />
+              <Certifications/>
+              <TopSkills/>
+              <SimilarFreelancers/>
+              <SimilarShowcases/>
+            </div>
+          </div>
           </div>
         </div>
-        <ProfileSecondGrid />
-        <ProfileThirdGrid />
-        <ProfileFourthGrid />
-        <ProfileFifthGrid />
-        <Modal
-          title="cover-pic-modal"
-          open={open}
-          onOk={handleOk}
-          confirmLoading={confirmLoading}
-          onCancel={handleCancel}
-          footer={[]}
-          bodyStyle={{
-            color: "green",
-          }}
-        >
-          <div></div>
-          <p>{modalText}</p>
-        </Modal>
       </div>
+    </div>
+    <Footer/>
     </div>
   );
 };
