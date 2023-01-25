@@ -20,7 +20,13 @@ module.exports = {
       colors: 
       {
         overlay: '#0000004d',
+        overlay2: '#00000080',
         footer: '#090a16'
+      },
+      fontSize:
+      {
+        cusf: ['2.70rem'],
+        cusf2: ['1.3rem']
       }
     },
   },

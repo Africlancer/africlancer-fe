@@ -1,15 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { HomePage } from '../modules/home/page'
 
 const Index = () => {
-  return (
-    <div className='text-red-300'>
-        
-        Index
-    
 
-    
-    </div>
-  )
+  return <HomePage/>
 }
 
 export default Index
