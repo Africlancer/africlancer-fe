@@ -1,16 +1,37 @@
+import { Form, Formik } from "formik";
 import React from "react";
 import { FaFacebookF } from "react-icons/fa";
 import { useAuthState } from "./context";
+import { IUser } from "./model";
+import * as Yup from "yup";
+import { ApTextInput } from "@/src/components";
+
+const FormikSchema = Yup.object().shape({
+  firstName: Yup.string().required("First name is required"),
+  lastName: Yup.string().required("First name is required"),
+  email: Yup.string()
+    .email("valid email is required")
+    .required("First name is required"),
+  username: Yup.string()
+    .min(6, "Username should be at list 6 char.")
+    .required("First name is required"),
+  password: Yup.string()
+    .min(6, "password should be as list 6 char.")
+    .required("password is required"),
+  confirmPassword: Yup.string().required("password is required"),
+});
 
 export const SignUpPage = () => {
   const { signUp } = useAuthState();
 
-  const handleSubmit = () => {
+  const handleSubmit = (values: IUser) => {
+
+    console.log(values);
     signUp({
-      firstName: "Sabi1",
-      lastName: "Ridwan1",
-      email: "sabi1@gmail.com",
-      username: "sabi1",
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email,
+      username: values.username,
       // password: "abc1231",
     });
   };
@@ -47,49 +68,61 @@ export const SignUpPage = () => {
             <div className=" border border-gray-00  w-full"></div>
           </div>
 
-          <div className="flex flex-col items-center w-full">
-            <div className=" bg-white w-full ">
-              <input
-                className=" border-gray-300 border text-black outline-none w-full text-sm m-2  px-10 py-3 flex items-center rounded mb-2"
-                type="email"
-                placeholder="Email"
-                name="email"
-                required
-              />
-            </div>
-            <div className=" bg-white w-full">
-              <input
-                className=" border-gray-300 border text-black outline-none text-sm m-2  w-full px-10 py-3 flex items-center rounded mb-3 "
-                type="password"
-                placeholder="Password"
-                name="password"
-                required
-              />
-            </div>
-          </div>
-          <div className="flex mb-5 items-center w-full">
-            <label className=" flex  text-xs w-full justify-between">
-              <input type="checkbox" name="agree" className="mr-1 " />I agree to
-              the Africlacer{" "}
-              <span className=" text-green-500 ">User agreement</span> and{" "}
-              <span className="text-green-500">privacy policy</span>
-            </label>
-          </div>
-          <button
-            onClick={handleSubmit}
-            type="submit"
-            className="text-white bg-green-500 w-full text-white-100 py-2
-                  rounded-lg  transition colors font-serif mb-6"
+          <Formik
+            initialValues={{
+              firstName: "",
+              lastName: "",
+              email: "",
+              username: "",
+              password: "",
+              confirmPassword: "",
+            }}
+            validationSchema={FormikSchema}
+            onSubmit={handleSubmit}
           >
-            Join Africlancer
-          </button>
-          <div className="border-gray-200 w-full border items-center"></div>
-          <div className="justify-center text-sm">
-            <p>
-              Already have an account{" "}
-              <span className="text-green-500">login</span>
-            </p>
-          </div>
+            <Form>
+              <div className="flex flex-col items-center w-full">
+                <ApTextInput placeholder="First Name" name="firstName" />
+                <ApTextInput placeholder="Last Name" name="lastName" />
+                <ApTextInput placeholder="Email" name="email" />
+                <ApTextInput placeholder="Username" name="username" />
+                <ApTextInput
+                  type="password"
+                  placeholder="*****"
+                  name="password"
+                />
+                <ApTextInput
+                  type="password"
+                  placeholder="*****"
+                  name="confirmPassword"
+                />
+              </div>
+              <div className="flex mb-5 items-center w-full">
+                <label className=" flex  text-xs w-full justify-between">
+                  <input type="checkbox" name="agree" className="mr-1 " />I
+                  agree to the Africlacer{" "}
+                  <span className=" text-green-500 ">User agreement</span> and{" "}
+                  <span className="text-green-500">privacy policy</span>
+                </label>
+              </div>
+
+              <button type="submit">Test</button>
+              <button
+                type="submit"
+                className="text-white bg-green-500 w-full text-white-100 py-2
+                  rounded-lg  transition colors font-serif mb-6"
+              >
+                Join Africlancer
+              </button>
+              <div className="border-gray-200 w-full border items-center"></div>
+              <div className="justify-center text-sm">
+                <p>
+                  Already have an account{" "}
+                  <span className="text-green-500">login</span>
+                </p>
+              </div>
+            </Form>
+          </Formik>
         </div>
       </main>
     </div>
