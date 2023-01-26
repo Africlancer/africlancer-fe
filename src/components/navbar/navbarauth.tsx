@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Layout, Button, Drawer, ConfigProvider, theme } from "antd";
-import {NavItems} from "./navitems";
+import {NavAuthItems} from "./navitems";
 import { MenuOutlined } from "@ant-design/icons";
 
 
-export const Navbar = () => {
+export const NavbarAuth = () => {
   const [visible, setVisible] = useState(false);
   const showDrawer = () => {
     setVisible(!visible);
@@ -17,21 +17,22 @@ export const Navbar = () => {
           theme={
             {
               token: {
-                colorPrimary: 'white',
-                fontFamily: ''
+                colorPrimary: 'none',
+                colorInfoHover: 'green',
+                fontFamily: '',
               }
             }
           }
         >
             <Layout>
-            <Layout.Header className="nav-header" style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: 'white', paddingLeft: 30, paddingRight: 10}}>
+            <Layout.Header className="nav-header" style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: 'white', padding: 30}}>
               <div className="logo flex items-center h-full">
               <h1 className='text-4xl font-bold'>Afric<span className='text-green-500'>lancer</span></h1>
               </div>
 
               <div className="navbar-menu h-full w-full">
                 <div className="leftMenu h-full flex justify-end w-full">
-                    <NavItems mode={"horizontal"}/>
+                    <NavAuthItems mode={"horizontal"}/>
                 </div>
                 <Button className="menuButton" type="text" onClick={showDrawer}>
                   <MenuOutlined />
@@ -46,7 +47,7 @@ export const Navbar = () => {
                   visible={visible}
                   style={{ zIndex: 99999 }}
                 >
-                  <NavItems mode={"inline"}/>
+                  <NavAuthItems mode={"inline"}/>
                 </Drawer>
               </div>
             </Layout.Header>

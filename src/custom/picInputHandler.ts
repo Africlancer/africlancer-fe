@@ -5,7 +5,8 @@ interface IPictureInput
   inputRef: React.MutableRefObject<HTMLInputElement>,
   inputButton: string,
   loader: string,
-  imgPreview: string
+  imgPreview: string,
+  inputForm: React.MutableRefObject<HTMLFormElement>
 }
 
 
@@ -43,18 +44,20 @@ export const picInputHandler = (args: IPictureInput) =>
       }
       else
       {
-        console.log('ynah')
+        args.inputForm.current.reset()
+        throw new Error('Maximum Image File Size is 600KB') 
       }
     }
     else
     {
-      console.log('nah');
+      args.inputForm.current.reset()
+      throw new Error('Please Select Image Files of JPG or PNG Only') 
     }
   }
 
 }
 
-export const clearPic = (inputButton: string, imgPreview: string) =>
+export const clearPic = (inputButton: string, imgPreview: string, inputForm: React.MutableRefObject<HTMLFormElement>) =>
 {
   let iButton = document.getElementById(inputButton)
   let iPreview = document.getElementById(imgPreview)
@@ -62,6 +65,7 @@ export const clearPic = (inputButton: string, imgPreview: string) =>
   iPreview.classList.replace('opacity-1', 'opacity-0')
   setTimeout(() => {
     iPreview.classList.add('hidden')
+    inputForm.current.reset()
   }, 500);
   setTimeout(() => {
     iButton.classList.remove('hidden')

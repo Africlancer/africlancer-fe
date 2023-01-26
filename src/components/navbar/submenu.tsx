@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import type { MenuProps } from 'antd';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
+import { ConfigProvider, MenuProps } from 'antd';
 import { Menu } from 'antd';
 
 const items: MenuProps['items'] = [
@@ -45,24 +45,35 @@ const items: MenuProps['items'] = [
       },
     ],
   },
-  {
-    label: (
-      <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-        My Rewards
-      </a>
-    ),
-    key: 'my-rewards',
-  },
 ];
 
-export const SubMenu = () => 
+export const SubMenu = ({items, currentPage}) => 
 {
-    const [current, setCurrent] = useState('improve-profile');
+    const [current, setCurrent] = useState(currentPage);
+    const [subMenuItems, setSubMenuItems] = useState<MenuProps['items']>()
+
+    useLayoutEffect(() => 
+    {
+      setSubMenuItems(items)
+    }, [])
 
     const onClick: MenuProps['onClick'] = (e) => {
         console.log('click ', e);
         setCurrent(e.key);
     };
 
-    return <Menu onClick={onClick} style={{paddingLeft: 10}} selectedKeys={[current]} mode="horizontal" items={items} />
+    return (
+      <ConfigProvider
+        theme={
+          {
+            token: {
+              colorPrimary: 'limegreen',
+              fontFamily: ''
+            }
+          }
+        }
+      >
+        <Menu onClick={onClick} style={{paddingLeft: 10}} selectedKeys={[current]} mode="horizontal" items={subMenuItems} />
+      </ConfigProvider>
+    )
 }

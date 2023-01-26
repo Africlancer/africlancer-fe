@@ -1,4 +1,4 @@
-import { Modal } from "antd";
+import { ConfigProvider, Modal } from "antd";
 import React from "react";
 
 interface IPros {
@@ -17,8 +17,18 @@ export const ApModal: React.FC<IPros> = ({
   width
 }) => {
   return (
-    <Modal open={open} width={width} title={titile} onCancel={onDismiss} footer={null}>
-      {children}
-    </Modal>
+    <ConfigProvider
+    theme={
+      {
+        token: {
+          fontFamily: ''
+        }
+      }
+    }
+    >
+      <Modal open={open} width={width} title={titile} onCancel={onDismiss} footer={null}>
+        {children}
+      </Modal>
+    </ConfigProvider>
   );
 };

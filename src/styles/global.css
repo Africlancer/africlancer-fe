@@ -11,6 +11,11 @@
 {
     background-image: url(../../public/test-user.png);
 }
+.home-test-bg
+{
+  background-image: url(../../public/test-home.jpg);
+  height: 83vh;
+}
 body
 {
   font-family: 'Red Hat Display';
@@ -18,7 +23,7 @@ body
 }
 .lofpd
 {
-  color: #090a16;
+  color: #ffffff00;
 } 
   .logo {
     float: left;
