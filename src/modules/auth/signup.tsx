@@ -21,9 +21,9 @@ export const SignUpPage = () => {
         <span>User Signup | Africlancer</span>
       </div>
       <main className=" flex-col items-center justify-center text-center ">
-        <div className="bg-white rounded shadow-sm px-14 py-36">
-          <div className="flex items-center justify-center mb-4">
-            <h1 className="font-serif text-4xl  flex items-center justify-center w-full text-black font-extrabold">
+        <div className="bg-white rounded shadow-sm px-14 py-36 mt-3">
+          <div className="flex items-center justify-center mb-4 font-red-hat">
+            <h1 className="text-5xl  flex items-center justify-center w-full text-black font-extrabold">
               Afric<span className=" text-green-500">lancer</span>
             </h1>
           </div>
