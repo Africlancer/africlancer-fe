@@ -17,7 +17,8 @@ const Dashboard = () => {
                         <br/>
                         </div>
                         <br />
-                        <div className='font-serif'>How to increase the number of our bids?? Any one guide me up would be very helpful</div>
+                        <div className='font-serif'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation 
+                        ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
                         </div>
                         <div>
                         <div className='bg-white shadow py-3 mb-5'>
@@ -31,8 +32,10 @@ const Dashboard = () => {
 
             </div>
           </div>
-          <div className="col-span-3 h-32 w-full bg-white shadow p-3 pt-32"/>
+          <div className="col-span-3 w-full bg-white shadow p-5">
+          <p className ='flex justify-between font-extrabold font-serif'>Balance <span>Add Funds</span></p>      
 
+          </div>
                         </div>
                         </div>
                         

@@ -1,4 +1,4 @@
-import { ApolloProvider } from "@apollo/client";
+import { ApolloProvider} from "@apollo/client";
 import { apolloClient } from "../ApolloClient";
 import { AuthContextProvider } from "../modules/auth/context";
 import { ProfileContextProvider } from "../modules/profile/context";
