@@ -9,7 +9,6 @@ interface IPictureInput
   inputForm: React.MutableRefObject<HTMLFormElement>
 }
 
-
 export const picInputHandler = (args: IPictureInput) =>
 {
   let input = args.inputRef.current

@@ -3,6 +3,59 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@layer base 
+{
+  :root 
+  {
+    --color-text-base: #121317;
+    --color-text-muted: #eeeaea;
+    --color-text-primary: #22c55e;
+    --color-text-default: #fafafa;
+
+    --color-bg-fill-nav: #fff;
+    --color-bg-fill-alt: #fff;
+    --color-bg-fill-base: #121317;
+    --color-bg-fill-muted: #eeeaea;
+    --color-bg-fill-primary: #22c55e;
+    --color-bg-fill-default: #fafafa;
+  }
+
+  .theme-dark
+  {
+    --color-text-base: #fffcfc;
+    --color-text-muted: #eeeaea;
+    --color-text-primary: #22c55e;
+    --color-text-default: #121317;
+
+    --color-bg-fill-nav: #121317;
+    --color-bg-fill-base: #fffcfc;
+    --color-bg-fill-muted: #eeeaea;
+    --color-bg-fill-primary: #22c55e;
+    --color-bg-fill-alt: #363636;
+    --color-bg-fill-default: #121317;
+  }
+}
+
+body
+{
+  font-family: 'Red Hat Display';
+}
+
+.lofpd
+{
+  color: #22c55e;
+} 
+
+
+
+
+
+
+
+
+
+
 .cover-bg
 {
     background-image: url(../assets/images/test-bg.jpg);
@@ -14,17 +67,10 @@
 .home-test-bg
 {
   background-image: url(../../public/test-home.jpg);
-  height: 83vh;
+  height: 85vh;
 }
-body
-{
-  font-family: 'Red Hat Display';
-    @apply bg-gray-100
-}
-.lofpd
-{
-  color: #ffffff00;
-} 
+
+
   .logo {
     float: left;
   }

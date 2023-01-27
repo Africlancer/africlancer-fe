@@ -1,10 +1,15 @@
-import { CustomButton } from '@/src/components/button'
+import { ApButton } from '@/src/components/button'
 import { ArrowRightIcon } from '@/src/components/icons/customIcons'
-import React from 'react'
+import { ApModal } from '@/src/components/modal';
+import React, { useState } from 'react'
+import { EditEducation } from './edit';
 
-export const Education = () =>
+export const Education = () => 
 {
-    return(
+    const [modal, setModal] = useState<{ open: boolean }>();
+
+    return (
+        <>
             <div className='bg-white col-span-2 shadow-xl w-full rounded-xl'>
             <div className='border-b px-6 py-2 flex justify-between'>
                 <div className='flex items-center'>
@@ -16,15 +21,28 @@ export const Education = () =>
                     </svg>
                 </div>
 
-                <CustomButton size='large'>
+                <ApButton
+                 onClick={() => setModal({ open: true })}
+                >
                     Add Education
                     <ArrowRightIcon/>
-                </CustomButton>
+                </ApButton>
             </div>
 
             <div className='flex items-center justify-center p-10 flex-col'>
                 <p className=''>No education information has been added.</p>
             </div>  
         </div>
-    )
+        <ApModal
+            open={modal?.open}
+            onDismiss={() => {
+            setModal({ open: false });
+            }}
+            width={970}
+        >
+            <EditEducation/>
+        </ApModal>
+        </>
+    );
 }
+ 

@@ -1,12 +1,17 @@
-import { CustomButton } from '@/src/components/button'
+import { ApButton } from '@/src/components/button'
 import { ArrowRightIcon } from '@/src/components/icons/customIcons'
-import React from 'react'
+import { ApModal } from '@/src/components/modal';
+import React, { useState } from 'react'
+import { EditPublication } from './edit';
 
-export const Publications = () =>
+export const Publication = () => 
 {
-    return(
-        <div className='bg-white shadow-xl w-full rounded-xl col-span-2'>
-        <div className='border-b px-6 py-2 flex justify-between'>
+    const [modal, setModal] = useState<{ open: boolean }>();
+
+    return (
+        <>
+            <div className='bg-white col-span-2 shadow-xl w-full rounded-xl'>
+            <div className='border-b px-6 py-2 flex justify-between'>
             <div className='flex items-center'>
                 <h1 className='font-bold text-xl mr-3'>Publications</h1>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-gray-300">
@@ -14,15 +19,28 @@ export const Publications = () =>
                 </svg>
             </div>
 
-            <CustomButton size='large'>
-                Add Publication
-                <ArrowRightIcon/>
-            </CustomButton>
-        </div>
+                <ApButton
+                 onClick={() => setModal({ open: true })}
+                >
+                    Add Publication
+                    <ArrowRightIcon/>
+                </ApButton>
+            </div>
 
-        <div className='flex items-center justify-center p-10 flex-col'>
-            <p className=''>No publications have been added.</p>
-        </div>  
-    </div>
-    )
+            <div className='flex items-center justify-center p-10 flex-col'>
+                <p className=''>No education information has been added.</p>
+            </div>  
+        </div>
+        <ApModal
+            open={modal?.open}
+            onDismiss={() => {
+            setModal({ open: false });
+            }}
+            width={970}
+        >
+            <EditPublication/>
+        </ApModal>
+        </>
+    );
 }
+ 

@@ -26,7 +26,7 @@ export const ApModal: React.FC<IPros> = ({
       }
     }
     >
-      <Modal open={open} width={width} title={titile} onCancel={onDismiss} footer={null}>
+      <Modal open={open} centered width={width} title={titile} onCancel={onDismiss} footer={null}>
         {children}
       </Modal>
     </ConfigProvider>

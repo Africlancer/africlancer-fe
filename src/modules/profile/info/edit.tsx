@@ -1,5 +1,6 @@
+import { ApTextInput } from '@/src/components';
 import { clearPic, picInputHandler } from '@/src/custom';
-import { CloseOutlined, LoadingOutlined } from '@ant-design/icons';
+import { CloseOutlined, LoadingOutlined, CloseCircleFilled  } from '@ant-design/icons';
 import { message } from 'antd';
 import React, { useRef, useState } from 'react'
 import { IProfile } from '../model'
@@ -11,6 +12,8 @@ interface IProps{
 export const EditProfileInfo: React.FC<IProps> = ({profile}) => {
 
   const profilePic = useRef<HTMLInputElement>()
+  const summary = useRef<HTMLTextAreaElement>()
+  const proHeadline = useRef<HTMLInputElement>()
   const profileInputForm = useRef<HTMLFormElement>()
   const [profilePicture, setProfilePicture] = useState(null)
   const [messageApi, contextHolder] = message.useMessage();
@@ -36,6 +39,23 @@ export const EditProfileInfo: React.FC<IProps> = ({profile}) => {
   const clearPicHandler = () =>
   {
     clearPic('profile-pic-button', 'profile-pic-preview', profileInputForm)
+  }
+
+  const uploadDetails = () =>
+  {
+    if(profilePicture !== null || summary.current.value !== '' || proHeadline.current.value !== '')
+    {
+      console.log(profilePicture, summary.current.value, proHeadline.current.value)
+    }
+    else
+    {
+      messageApi.open({
+        content: <p className='text-lg flex items-center px-3'>
+          <CloseCircleFilled  style={{color: 'red', fontSize: '20px'}}/>
+          <span className='ml-2'>Please Enter at Least One Field to Edit Details.</span>
+        </p>,
+      });
+    }
   }
 
   return (
@@ -72,18 +92,18 @@ export const EditProfileInfo: React.FC<IProps> = ({profile}) => {
         <div className='flex flex-col justify-between'>
           <div className='flex mb-3'>
             <div className='mr-3'>
-              <p>Professional Headline</p>
-              <input type="text" className='w-64 border-2 h-8 mt-2' />
+              <p className='mb-1'>Professional Headline</p>
+              <input type="text" ref={proHeadline} className='w-64 border rounded p-3 h-10' />
             </div>
             <div>
-              <p>Professional Headline</p>
-              <input type="text" className='w-64 border-2 h-8 mt-2' />
+              <p className='mb-1'>Hourly Rate - USD Per Hour</p>
+              <input type="text" className='w-64 border p-3 h-10' />
             </div>
           </div>
 
-          <div className='mt-2'>
+          <div className='mt-1'>
             <p className='mb-2'>Summary</p>
-            <textarea className='border-2 w-full h-52 resize-none'></textarea>
+            <textarea ref={summary} className='border w-full rounded p-3 h-52 resize-none'></textarea>
           </div>
         </div>
       </div>
@@ -91,7 +111,7 @@ export const EditProfileInfo: React.FC<IProps> = ({profile}) => {
       <div className='flex justify-between items-center mt-4'>
       <p className='text-green-500'>View More Settings</p>
       <div>
-      <button className="text-white px-5 py-2 rounded bg-green-500 mr-3">
+      <button onClick={uploadDetails} className="text-white px-5 py-2 rounded bg-green-500 mr-3">
         Upload Photo
       </button>
       <button className="text-green-500 px-4 py-2 rounded border-green-500 border-2">

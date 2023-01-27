@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 export const Footer = () => {
   return (
-    <footer className='absolute bottom-0 w-full pt-8 px-10 bg-footer text-white'>
+    <footer className='w-full pt-8 px-10 bg-footer text-white'>
         <div>
             <div className='flex items-center justify-between h-full'>
             <div className='flex items-center justify-between h-full'>
@@ -114,7 +114,7 @@ export const Footer = () => {
             </div>
             </div>
             
-            <div className='my-5'>
+            <div className='py-5'>
             <div className='w-full h-0.5 bg-gray-200 mb-3'></div>
             <p className='text-center'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae nostrum harum quo, numquam accusamus culpa quos aliquam laudantium cupiditate! Dolore.</p>
             </div>

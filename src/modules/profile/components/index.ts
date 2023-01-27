@@ -6,7 +6,4 @@ export * from './bannerPhoto'
 export * from './topSkills'
 export * from './portfolio'
 export * from './reviews'
-export * from './education'
-export * from './experience'
-export * from './publications'
-export * from './qualifications'
+

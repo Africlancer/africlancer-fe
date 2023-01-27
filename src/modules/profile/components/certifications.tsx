@@ -1,4 +1,4 @@
-import { CustomButton } from '@/src/components/button';
+import { ApButton } from '@/src/components/button';
 import { ArrowRightIcon } from '@/src/components/icons/customIcons';
 import Link from 'next/link';
 import React from 'react'
@@ -15,10 +15,10 @@ export const Certifications = () => {
                 </div>
 
                 <Link href='/get-certified'>
-                <CustomButton size='large'>
+                <ApButton >
                     Get Certified
                     <ArrowRightIcon/>
-                </CustomButton>
+                </ApButton>
                 </Link>
             </div>
 

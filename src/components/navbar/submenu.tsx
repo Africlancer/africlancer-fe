@@ -73,7 +73,7 @@ export const SubMenu = ({items, currentPage}) =>
           }
         }
       >
-        <Menu onClick={onClick} style={{paddingLeft: 10}} selectedKeys={[current]} mode="horizontal" items={subMenuItems} />
+        <Menu onClick={onClick} style={{background: '#fff', paddingLeft: 20, position: 'fixed', marginTop: 55, width: '100%', zIndex: 20}} selectedKeys={[current]} mode="horizontal" items={subMenuItems} />
       </ConfigProvider>
     )
 }

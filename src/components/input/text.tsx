@@ -38,7 +38,7 @@ export const ApTextInput: React.FC<IProps> = (props: IProps) => {
       )}
 
       <ErrorMessage
-        className="text-red-500 mb-5 text-xs text-left"
+        className="text-red-500 mb-5 text-cusf3 text-left"
         name={name}
         component="div"
       />
