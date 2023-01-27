@@ -36,21 +36,29 @@ module.exports = {
       textColor: 
       {
         skin: {
-           base: 'var(--color-text-base)',
-           muted: 'var(--color-text-muted)',
-           primary: 'var(--color-text-primary)',
-           default: 'var(--color-text-default)'
+           base: 'var(--color-base)',
+           alt: 'var(--color-alt)',
+           muted: 'var(--color-muted)',
+           accent: 'var(--color-accent)',
+           inverted: 'var(--color-inverted)',
+           input: 'var(--color-input)'
         }
       },
       backgroundColor: 
       {
         skin: {
-          base: 'var(--color-bg-fill-base)',
-          muted: 'var(--color-bg-fill-muted)',
-          primary: 'var(--color-bg-fill-primary)',
-          alt: 'var(--color-bg-fill-alt)',
-          default: 'var(--color-bg-fill-default)',
-          nav: 'var(--color-bg-fill-nav)'
+          base: 'var(--color-base)',
+          alt: 'var(--color-alt)',
+          muted: 'var(--color-muted)',
+          accent: 'var(--color-accent)',
+          inverted: 'var(--color-inverted)',
+          input: 'var(--color-input)',
+       }
+      },
+      borderColor:
+      {
+        skin: {
+          border: 'var(--color-border)'
         }
       }
     },

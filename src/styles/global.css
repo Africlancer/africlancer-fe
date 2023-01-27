@@ -8,11 +8,19 @@
 {
   :root 
   {
+    --color-inverted: #121317;
+    --color-muted: #eeeaea;
+    --color-accent: #22c55e;
+    --color-alt: #fafafa;
+    --color-base: #fff;
+    --color-input: #fff;
+    --color-border: #e5e7eb;
+
     --color-text-base: #121317;
     --color-text-muted: #eeeaea;
     --color-text-primary: #22c55e;
-    --color-text-default: #fafafa;
-
+    --color-text-#22c55e: #fafafa;
+    
     --color-bg-fill-nav: #fff;
     --color-bg-fill-alt: #fff;
     --color-bg-fill-base: #121317;
@@ -23,6 +31,14 @@
 
   .theme-dark
   {
+    --color-inverted: #fff;
+    --color-muted: #eeeaea;
+    --color-accent: #22c55e;
+    --color-alt: #121317;
+    --color-base: #363636;
+    --color-input: #272626;
+    --color-border: #6b7280;
+
     --color-text-base: #fffcfc;
     --color-text-muted: #eeeaea;
     --color-text-primary: #22c55e;
@@ -44,7 +60,7 @@ body
 
 .lofpd
 {
-  color: #22c55e;
+  color: #e5e7eb;
 } 
 
 

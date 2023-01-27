@@ -13,7 +13,7 @@ interface IProps {
 }
 
 const defaultClass =
-  "border-gray-300 border text-black outline-none w-full text-sm   px-5 py-3 flex items-center rounded mb-2";
+  "border-skin-border border text-black outline-none w-full text-sm bg-skin-input px-5 py-3 flex items-center rounded mb-2";
 
 export const ApTextInput: React.FC<IProps> = (props: IProps) => {
   const { name, type, label, className } = props;
