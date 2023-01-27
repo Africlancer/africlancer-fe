@@ -25,7 +25,7 @@ module.exports = {
       {
         overlay: '#0000004d',
         overlay2: '#00000080',
-        footer: '#090a16'
+        footer: '#202020'
       },
       fontSize:
       {

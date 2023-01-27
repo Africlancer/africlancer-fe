@@ -22,7 +22,7 @@ export const SigninPage = () => {
     };
 
   return (
-    <div className='absolute pt-8 pb-5 h-full w-full flex items-center justify-center bg-skin-alt'>
+    <div className='pt-8 pb-10 h-full w-full flex items-center justify-center bg-skin-alt'>
         <div className='bg-skin-base px-7 py-10 shadow-lg w-cusw' >
         <div className='mb-8'>
             <h1 className='text-4xl font-bold mb-1 text-skin-inverted'>Afric<span className='text-skin-accent'>lancer</span></h1>

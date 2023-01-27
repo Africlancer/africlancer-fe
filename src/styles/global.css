@@ -15,18 +15,6 @@
     --color-base: #fff;
     --color-input: #fff;
     --color-border: #e5e7eb;
-
-    --color-text-base: #121317;
-    --color-text-muted: #eeeaea;
-    --color-text-primary: #22c55e;
-    --color-text-#22c55e: #fafafa;
-    
-    --color-bg-fill-nav: #fff;
-    --color-bg-fill-alt: #fff;
-    --color-bg-fill-base: #121317;
-    --color-bg-fill-muted: #eeeaea;
-    --color-bg-fill-primary: #22c55e;
-    --color-bg-fill-default: #fafafa;
   }
 
   .theme-dark
@@ -35,21 +23,9 @@
     --color-muted: #eeeaea;
     --color-accent: #22c55e;
     --color-alt: #121317;
-    --color-base: #363636;
+    --color-base: #202020;
     --color-input: #272626;
     --color-border: #6b7280;
-
-    --color-text-base: #fffcfc;
-    --color-text-muted: #eeeaea;
-    --color-text-primary: #22c55e;
-    --color-text-default: #121317;
-
-    --color-bg-fill-nav: #121317;
-    --color-bg-fill-base: #fffcfc;
-    --color-bg-fill-muted: #eeeaea;
-    --color-bg-fill-primary: #22c55e;
-    --color-bg-fill-alt: #363636;
-    --color-bg-fill-default: #121317;
   }
 }
 
@@ -60,10 +36,53 @@ body
 
 .lofpd
 {
-  color: #e5e7eb;
+  color: #202020;
 } 
 
-
+.background-img img 
+{
+  transition: transform 0.7s, filter 0.7s ease-in-out;
+  transform-origin: center center;
+  filter: brightness(100%);
+  border-radius: 10px;
+  height: 100%;
+  width: 100%;
+}
+/* The Transformation */
+.background-img:hover .bag-overlay .overlay-content{
+  opacity: 1;
+}
+.background-img:hover img {
+  filter: brightness(50%);
+  transform: scale(1.3);
+  border-radius: 10px;
+}
+.background-img
+{
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    height: 230px;
+    width: 300px;
+}
+.bag-overlay
+{
+    border-radius: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.bag-overlay .overlay-content
+{
+  opacity: 0;
+  transition: 1.7s all ease;
+}
 
 
 

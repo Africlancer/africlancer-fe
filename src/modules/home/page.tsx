@@ -4,6 +4,7 @@ import { Header, SecondSection, ThirdSection } from './components';
 import { Footer } from '@/src/components/footer';
 import type { MenuProps } from 'antd';
 import Image from 'next/image';
+import { ProjectsPreview } from './components/projectspreview';
 
 export const HomePage = () => {
     const items: MenuProps['items'] = [
@@ -47,15 +48,18 @@ export const HomePage = () => {
       }
 
   return (
-    <div className='page theme-dark'>
-      <div className='bg-skin-default relative'>
+    <div className=''>
+      <div className='bg-skin-alt relative'>
         <NavbarAuth/>
         <SubMenu items={items} currentPage='home'/>
         <div className="relative pt-24">
             <Header/>
             {/* <button type='button' onClick={theme}>theme</button> */}
+          <div className='flex flex-col gap-10'>
             <SecondSection/>
             <ThirdSection/>
+            <ProjectsPreview/>
+          </div>
           <Footer/>
         </div>
       </div>

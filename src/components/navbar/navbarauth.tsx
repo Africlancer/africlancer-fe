@@ -14,9 +14,9 @@ export const NavbarAuth = () => {
 
   return (
     <header>
-    <nav className="flex flex-wrap items-center justify-between w-full shadow py-2 z-50 md:py-0 px-10 text-lg text-skin-base bg-skin-nav fixed">
+    <nav className="flex flex-wrap items-center justify-between w-full shadow py-2 z-50 md:py-0 px-10 text-lg text-skin-inverted bg-skin-base fixed">
       <div>
-        <h1 className='text-4xl text-skin-base font-bold'>Afric<span className='text-skin-primary'>lancer</span></h1>
+        <h1 className='text-4xl text-skin-inverted font-bold'>Afric<span className='text-skin-accent'>lancer</span></h1>
        </div>
         <svg
            xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +37,7 @@ export const NavbarAuth = () => {
       <div className="hidden w-full md:flex md:items-center md:w-auto" id="menu">
          <ul className="pt-4 md:flex md:justify-between md:pt-0">
            <li>
-             <Link className="md:p-4 py-2 block" href='/signin'>Sign In</Link>
+             <Link className="md:p-4 py-2 block" href='/auth/signin'>Sign In</Link>
            </li>
            <li>
              <Link className="md:p-4 py-2 block" href="/signup">Sign Up</Link>
@@ -48,7 +48,7 @@ export const NavbarAuth = () => {
                 
                 <ApButton
                   onClick={() => {}}
-                  className='text-base'
+                  className='py-2 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2'
                 >
                   Post a Project
                 </ApButton>
