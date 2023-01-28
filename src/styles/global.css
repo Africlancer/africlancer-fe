@@ -105,94 +105,164 @@ body
   height: 85vh;
 }
 
-
-  .logo {
-    float: left;
+  * {
+    box-sizing: border-box;
   }
   
-  .logo a {
-    display: inline-block;
-    font-size: 20px;
-    text-transform: capitalize;
+  .fab-wrapper {
+    position: fixed;
+    bottom: 3rem;
+    right: 3rem;
   }
-  
-  .navbar-menu {
-    width: calc(100% - 200px);
-    float: left;
-  }
-  .navbar-menu .ant-layout-header {
-    padding: 0 20px;
-  }
-  
-  .navbar-menu .ant-menu-horizontal {
-    border-bottom: 0;
-  }
-  
-  .navbar-menu .ant-menu-item {
-    padding-bottom: 0px;
-  }
-  
-  .navbar-menu .leftMenu {
-    float: left;
-  }
-  
-  .navbar-menu .rightMenu {
-    float: right;
-  }
-  
-  .menuButton {
-    float: right;
-    height: 32px;
-    padding: 6px;
-    margin-top: 14px;
+  .fab-checkbox {
     display: none;
-    background: none;
-    margin-right: 10px;
+  }
+  .fab {
+    position: absolute;
+    bottom: -1rem;
+    right: -1rem;
+    width: 4rem;
+    height: 4rem;
+    background: #22c55e;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0px 0px 10px #22c55e;
+    transition: all 0.3s ease;
+    z-index: 1;
+    border-bottom-right-radius: 6px;
+    border: 1px solid #22c55e;
   }
   
-  .ant-drawer-body {
-    padding: 0;
-  }
-  
-  .ant-drawer-body .ant-menu-horizontal > .ant-menu-item,
-  .ant-drawer-body .ant-menu-horizontal > .ant-menu-submenu {
-    display: inline-block;
+  .fab:before {
+    content: "";
+    position: absolute;
     width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  .fab-checkbox:checked ~ .fab:before {
+    width: 90%;
+    height: 90%;
+    left: 5%;
+    top: 5%;
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  .fab:hover {
+    background: #22c55e;
+    box-shadow: 0px 0px 20px #22c55e;
   }
   
-  .ant-drawer-body .ant-menu-horizontal {
-    border-bottom: none;
+  .fab-dots {
+    position: absolute;
+    height: 8px;
+    width: 8px;
+    background-color: white;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateX(0%) translateY(-50%) rotate(0deg);
+    opacity: 1;
+    animation: blink 3s ease infinite;
+    transition: all 0.3s ease;
   }
   
-  .ant-drawer-body .ant-menu-horizontal > .ant-menu-item:hover {
-    border-bottom-color: transparent;
+  .fab-dots-1 {
+    left: 15px;
+    animation-delay: 0s;
+  }
+  .fab-dots-2 {
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    animation-delay: 0.4s;
+  }
+  .fab-dots-3 {
+    right: 15px;
+    animation-delay: 0.8s;
   }
   
-  .username {
-    display: none;
-    margin-left: 8px;
+  .fab-checkbox:checked ~ .fab .fab-dots {
+    height: 6px;
   }
   
-  @media (max-width: 767px) {
-    .menuButton {
-      display: block;
-      margin-right: 10px;
-    }
+  .fab .fab-dots-2 {
+    transform: translateX(-50%) translateY(-50%) rotate(0deg);
+  }
   
-    .leftMenu,
-    .rightMenu {
-      display: none;
-    }
+  .fab-checkbox:checked ~ .fab .fab-dots-1 {
+    width: 32px;
+    border-radius: 10px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%) rotate(45deg);
+  }
+  .fab-checkbox:checked ~ .fab .fab-dots-3 {
+    width: 32px;
+    border-radius: 10px;
+    right: 50%;
+    transform: translateX(50%) translateY(-50%) rotate(-45deg);
+  }
   
-    .logo a {
-      margin-left: -10px;
-    }
-  
-    .ant-drawer-title > .brand-font {
-      margin-bottom: 0;
-    }
-  
-    .username {
-      display: inline-block;
+  @keyframes blink {
+    50% {
+      opacity: 0.25;
     }
   }
+  
+  .fab-checkbox:checked ~ .fab .fab-dots {
+    animation: none;
+  }
+  
+  .fab-wheel {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 10rem;
+    height: 10rem;
+    transition: all 0.3s ease;
+    transform-origin: bottom right;
+    transform: scale(0);
+  }
+  
+  .fab-checkbox:checked ~ .fab-wheel {
+    transform: scale(1);
+  }
+  .fab-action {
+    position: absolute;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0.1rem 0.5rem #22c55e;
+    transition: all 0.5s ease;
+    opacity: 0;
+  }
+  
+  .fab-checkbox:checked ~ .fab-wheel .fab-action {
+    opacity: 1;
+  }
+  
+  .fab-action:hover {
+    background-color: #22c55e;
+  }
+
+  .fab-wheel .fab-action-1 {
+    right: -1rem;
+    top: 0;
+  }
+  
+  .fab-wheel .fab-action-2 {
+    right: 3.4rem;
+    top: 0.5rem;
+  }
+  .fab-wheel .fab-action-3 {
+    left: 0.5rem;
+    bottom: 3.4rem;
+  }
+  .fab-wheel .fab-action-4 {
+    left: 0;
+    bottom: -1rem;
+  }
+  
