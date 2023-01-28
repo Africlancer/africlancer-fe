@@ -9,7 +9,7 @@
   :root 
   {
     --color-inverted: #121317;
-    --color-muted: #eeeaea;
+    --color-muted: #e5e7eb;
     --color-accent: #22c55e;
     --color-alt: #fafafa;
     --color-base: #fff;
@@ -20,7 +20,7 @@
   .theme-dark
   {
     --color-inverted: #fff;
-    --color-muted: #eeeaea;
+    --color-muted: #6b7280;
     --color-accent: #22c55e;
     --color-alt: #121317;
     --color-base: #202020;

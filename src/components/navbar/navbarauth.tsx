@@ -4,6 +4,7 @@ import {NavAuthItems} from "./navitems";
 import { MenuOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { ApButton } from "../button";
+import { ArrowRightIcon } from "../icons/customIcons";
 
 
 export const NavbarAuth = () => {
@@ -14,7 +15,7 @@ export const NavbarAuth = () => {
 
   return (
     <header>
-    <nav className="flex flex-wrap items-center justify-between w-full shadow py-2 z-50 md:py-0 px-10 text-lg text-skin-inverted bg-skin-base fixed">
+    <nav className="flex flex-wrap items-center justify-between w-full shadow-lg py-2 z-50 md:py-0 px-10 text-lg text-skin-inverted bg-skin-alt fixed">
       <div>
         <h1 className='text-4xl text-skin-inverted font-bold'>Afric<span className='text-skin-accent'>lancer</span></h1>
        </div>
@@ -44,13 +45,14 @@ export const NavbarAuth = () => {
            </li>
            <li>
             <div className="ml-5 flex items-center justify-center text-base h-full">
-                <div className="border-l-2 border-gray-200 h-10 w-2 mr-5"></div>
+                <div className="border-l border-skin-border h-10 w-2 mr-5"></div>
                 
                 <ApButton
                   onClick={() => {}}
                   className='py-2 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2'
                 >
                   Post a Project
+                  <ArrowRightIcon/>
                 </ApButton>
               </div>
            </li>

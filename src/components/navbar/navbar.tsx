@@ -4,6 +4,7 @@ import {NavItems} from "./navitems";
 import { MenuOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { ApButton } from "../button";
+import { ArrowRightIcon } from "../icons/customIcons";
 
 export const Navbar = () => {
   const [visible, setVisible] = useState(false);
@@ -14,9 +15,9 @@ export const Navbar = () => {
 
   return (
       <header>
-          <nav className="flex flex-wrap items-center justify-between w-full shadow py-2 z-50 md:py-0 px-10 text-lg text-skin-base bg-skin-nav fixed">
+          <nav className="flex flex-wrap items-center justify-between w-full shadow-lg py-2 z-50 md:py-0 px-10 text-lg text-skin-inverted bg-skin-alt fixed">
           <div>
-            <h1 className='text-4xl text-skin-base font-bold'>Afric<span className='text-skin-primary'>lancer</span></h1>
+          <h1 className='text-4xl text-skin-inverted font-bold'>Afric<span className='text-skin-accent'>lancer</span></h1>
           </div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +50,7 @@ export const Navbar = () => {
               </li>
               
               <li className="flex items-center">
-                <div className="border-l-2 border-gray-200 h-10 w-2 ml-5 mr-3"></div>
+              <div className="border-l border-skin-border h-10 w-2 mx-5"></div>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6 block">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
                 </svg>
@@ -66,9 +67,10 @@ export const Navbar = () => {
                     
                     <ApButton
                       onClick={() => {}}
-                      className='text-base'
-                    >
+                      className='py-2 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2'
+                      >
                       Post a Project
+                      <ArrowRightIcon/>
                     </ApButton>
                   </div>
               </li>

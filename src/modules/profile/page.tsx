@@ -35,7 +35,7 @@ export const ProfilePage = () => {
   ];
 
   return (
-    <div className="h-full relative">
+    <div className="h-full relative bg-skin-alt">
     <div className="profile-page relative">
       <Navbar/>
       <SubMenu items={items} currentPage='improve-profile'/>
@@ -44,11 +44,13 @@ export const ProfilePage = () => {
         <BannerPhoto/> 
         <div className="-translate-y-44 mt-20 w-full">
           <div className="px-6 pb-8">
-          <ApButton 
+          <ApButton
             onClick={() => {}}
+            className='py-2 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2'
           >
             View Client Profile
           </ApButton>
+
           <div className="cs:gap-8 cs:grid cs:grid-cols-3 w-full grid mt-4">
             <div className="col-span-2 grid gap-8">
               <ProfileInfo profile={null} />

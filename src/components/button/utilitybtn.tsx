@@ -31,7 +31,7 @@ export const ApUtilityBtn = () => {
   }
 
   return (
-    <div className="fab-wrapper">
+    <div className="fab-wrapper z-50">
     <input id="fabCheckbox" type="checkbox" className="fab-checkbox" />
     <label className="fab" htmlFor="fabCheckbox">
         <span className="fab-dots fab-dots-1"></span>

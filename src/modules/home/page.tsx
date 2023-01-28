@@ -13,7 +13,7 @@ export const HomePage = () => {
           key: 'home',
         },
         {
-          label: 'Find Jobs',
+          label: ( <p className='text-skin-inverted'>Find Jobs</p> ),
           key: 'find-jobs',
         },
         {
