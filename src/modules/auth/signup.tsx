@@ -1,130 +1,104 @@
-import { Form, Formik } from "formik";
-import React from "react";
-import { FaFacebookF } from "react-icons/fa";
-import { useAuthState } from "./context";
-import { IUser } from "./model";
+import { ApTextInput } from '@/src/components'
+import { ApButton } from '@/src/components/button'
+import { ArrowRightSvg } from '@/src/custom';
+import { Form, Formik } from 'formik'
+import Link from 'next/link';
+import React from 'react'
 import * as Yup from "yup";
-import { ApTextInput } from "@/src/components";
 
 const FormikSchema = Yup.object().shape({
-  firstName: Yup.string().required("First name is required"),
-  lastName: Yup.string().required("First name is required"),
-  email: Yup.string()
-    .email("valid email is required")
-    .required("First name is required"),
-  username: Yup.string()
-    .min(6, "Username should be at list 6 char.")
-    .required("First name is required"),
-  password: Yup.string()
-    .min(6, "password should be as list 6 char.")
-    .required("password is required"),
-  confirmPassword: Yup.string().required("password is required"),
+    email: Yup.string()
+        .email("Enter a Valid Email Address")
+        .required("Email is Required"),
+    password: Yup.string()
+        .min(6, "Password Should be at Least 6 Characters.")
+        .required("Password is Required."),
 });
 
 export const SignUpPage = () => {
-  const { signUp } = useAuthState();
+    const handleSubmit = () => 
+    {
+       
+    };
 
-  const handleSubmit = (values: IUser) => {
-
-    console.log(values);
-    signUp({
-      firstName: values.firstName,
-      lastName: values.lastName,
-      email: values.email,
-      username: values.username,
-      // password: "abc1231",
-    });
-  };
-
-  return (
-    <div className="flex flex-col items-center justify-center py-2 bg-gray-100 min-h-screen">
-      <div>
-        <span>User Signup | Africlancer</span>
-      </div>
-      <main className=" flex-col items-center justify-center text-center ">
-        <div className="bg-white rounded shadow-sm px-14 py-36 mt-3">
-          <div className="flex items-center justify-center mb-4 font-red-hat">
-            <h1 className="text-5xl  flex items-center justify-center w-full text-black font-extrabold">
-              Afric<span className=" text-green-500">lancer</span>
-            </h1>
-          </div>
-          <div className="flex items-center justify-center mb-4">
-            <h3 className="font-roboto text-xl  flex items-center justify-center w-full text-black font-medium">
-              Sign Up
-            </h3>
-          </div>
-          <div className=" flex-row inline-block mb-4 text-white bg-blue-600 w-full rounded-lg font-roboto text-xl justify-items-center px-10 py-3 mr-1">
-            <button type="submit">
-              <a href="#" className="flex items-center">
-                <FaFacebookF className=" text-xl border-2  rounded-full p-0 mx-1" />
-                Continue with Facebook
-              </a>
-            </button>
-          </div>
-
-          <div className="flex justify-between mb-3 items-center">
-            <div className=" border border-gray-300 w-full"></div>
-            <p className=" text-sm">OR</p>
-            <div className=" border border-gray-00  w-full"></div>
-          </div>
-
-          <Formik
+    return (
+        <div className='pt-8 pb-10 h-full w-full flex items-center justify-center bg-skin-alt'>
+            <div className='bg-skin-base px-7 py-10 shadow-lg w-cusw2'>
+            <div className='mb-8'>
+                <h1 className='text-4xl font-bold mb-1 text-skin-inverted'>Afric<span className='text-skin-accent'>lancer</span></h1>
+                <div className='flex justify-between pb-3 items-center border-b border-skin-border'>
+                    <p className='text-lg text-skin-inverted'>Create New Account</p>
+                    <Link href='' className='text-skin-accent'>Already Have An Account</Link>
+                </div>
+            </div>
+    
+            <Formik
             initialValues={{
-              firstName: "",
-              lastName: "",
-              email: "",
-              username: "",
-              password: "",
-              confirmPassword: "",
+                email: "",
+                password: "",
             }}
             validationSchema={FormikSchema}
             onSubmit={handleSubmit}
-          >
-            <Form>
-              <div className="flex flex-col items-center w-full">
-                <ApTextInput placeholder="First Name" name="firstName" />
-                <ApTextInput placeholder="Last Name" name="lastName" />
-                <ApTextInput placeholder="Email" name="email" />
-                <ApTextInput placeholder="Username" name="username" />
-                <ApTextInput
-                  type="password"
-                  placeholder="*****"
-                  name="password"
-                />
-                <ApTextInput
-                  type="password"
-                  placeholder="*****"
-                  name="confirmPassword"
-                />
-              </div>
-              <div className="flex mb-5 items-center w-full">
-                <label className=" flex  text-xs w-full justify-between">
-                  <input type="checkbox" name="agree" className="mr-1 " />I
-                  agree to the Africlacer{" "}
-                  <span className=" text-green-500 ">User agreement</span> and{" "}
-                  <span className="text-green-500">privacy policy</span>
-                </label>
-              </div>
-
-              <button type="submit">Test</button>
-              <button
-                type="submit"
-                className="text-white bg-green-500 w-full text-white-100 py-2
-                  rounded-lg  transition colors font-serif mb-6"
-              >
-                Join Africlancer
-              </button>
-              <div className="border-gray-200 w-full border items-center"></div>
-              <div className="justify-center text-sm">
-                <p>
-                  Already have an account{" "}
-                  <span className="text-green-500">login</span>
-                </p>
-              </div>
-            </Form>
-          </Formik>
-        </div>
-      </main>
-    </div>
-  );
+            >
+                <Form className='flex flex-col gap-3'>
+                <div className='grid grid-cols-2 gap-5'>
+                    <ApTextInput placeholder="First Name" name="firstName" />
+                    <ApTextInput placeholder="Last Name" name="lastName" />
+                </div>
+                    <ApTextInput placeholder="Email" name="email" />
+                    <ApTextInput placeholder="Username" name="username" />
+                    <ApTextInput
+                        type="password"
+                        placeholder="Password"
+                        name="password"
+                    />
+                    <ApTextInput
+                    type="password"
+                    placeholder="Confirm Password"
+                    name="confirmPassword"
+                    />
+                    
+                    <div className='flex w-full justify-between text-skin-inverted'>
+                        <div className='flex gap-2'>
+                            <input type="checkbox"/>
+                            <p>I Agree to the Africlancer <span className='text-skin-accent'>User Agreement</span> and <span className='text-skin-accent'>Privacy Policy</span></p>
+                        </div>
+                    </div>
+    
+                    <div className='my-3 flex flex-col gap-3'>
+                    <ApButton 
+                        onClick={() => {}}
+                        className='py-3 flex bg-skin-accent text-white rounded items-center w-full justify-center gap-2'
+                        type='submit'
+                    >
+                        Create New Account
+                        <ArrowRightSvg/>
+                    </ApButton>
+    
+                    <ApButton 
+                        onClick={() => {}}
+                        className='py-3 flex bg-blue-600 text-white rounded items-center w-full justify-center gap-2'
+                        type='submit'
+                    >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className='text-white'>
+                                <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3 8h-1.35c-.538 0-.65.221-.65.778v1.222h2l-.209 2h-1.791v7h-3v-7h-2v-2h2v-2.308c0-1.769.931-2.692 3.029-2.692h1.971v3z"/>
+                            </svg>
+                        Continue With Facebook
+                    </ApButton>
+    
+                    <ApButton 
+                        onClick={() => {}}
+                        className='py-3 bg-white flex border rounded items-center w-full justify-center gap-2'
+                        type='submit'
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="20" height="20"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/></svg>
+                        Continue With Google
+                    </ApButton>
+                    </div>
+    
+                </Form>
+            </Formik>
+          </div>
+            </div>
+      )
 };

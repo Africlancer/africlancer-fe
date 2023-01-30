@@ -24,7 +24,7 @@ export const Qualifications = () =>
                     onClick={() => setModal({ open: true })}
                     className='py-2 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2'
                 >
-                    Add Publication
+                    Add Qualification
                     <ArrowRightIcon/>
                 </ApButton>
             </div>

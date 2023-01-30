@@ -3,8 +3,9 @@ import { ApButton } from '@/src/components/button'
 import { ArrowRightSvg } from '@/src/custom';
 import { Form, Formik } from 'formik'
 import Link from 'next/link';
-import React from 'react'
+import React, { useRef } from 'react'
 import * as Yup from "yup";
+import { EyeInvisibleFilled, EyeFilled } from '@ant-design/icons'
 
 const FormikSchema = Yup.object().shape({
     email: Yup.string()
@@ -16,6 +17,7 @@ const FormikSchema = Yup.object().shape({
 });
 
 export const SigninPage = () => {
+
     const handleSubmit = () => 
     {
        
@@ -88,3 +90,34 @@ export const SigninPage = () => {
         </div>
   )
 }
+
+
+{/*
+    const showPasswordBtn = useRef<HTMLElement>()
+    const hidePasswordBtn = useRef<HTMLElement>()
+    const passwordRef = useRef<HTMLInputElement>()
+
+    const togglePassword = () =>
+    {
+        if(passwordRef.current.type === 'password')
+        {
+            passwordRef.type = 'text'
+            hidePasswordBtn.current.classList.add('hidden')
+            showPasswordBtn.current.classList.remove('hidden')
+        }
+        else
+        {
+            passwordRef.current.type = 'password'
+            showPasswordBtn.current.classList.add('hidden')
+            hidePasswordBtn.current.classList.remove('hidden')
+        }
+    } <EyeInvisibleFilled ref={hidePasswordBtn} className='text-skin-muted text-xl mt-0.5'/>
+<EyeFilled ref={showPasswordBtn} className='text-skin-muted text-xl mt-0.5 hidden'/>                     
+                <div className="relative w-full">
+                <div className="absolute pt-1 right-0 flex items-center px-2">
+                    <EyeInvisibleFilled className='text-skin-muted text-xl mt-0.5'/>
+                    <EyeFilled className='text-skin-muted text-xl mt-0.5 hidden'/>                    
+                </div>
+                    <ApTextInput type="password" placeholder="Password" name="password"/>
+                </div>
+*/}

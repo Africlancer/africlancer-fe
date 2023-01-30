@@ -1,7 +1,7 @@
 import { ApButton } from "@/src/components/button";
 import { Footer } from "@/src/components/footer";
 import { Navbar, SubMenu } from "@/src/components/modal";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Reviews, Portfolioitems,  
   Verification, BannerPhoto, Certifications, TopSkills, SimilarFreelancers, SimilarShowcases
@@ -33,6 +33,8 @@ export const ProfilePage = () => {
       key: 'my-rewards',
     }
   ];
+  
+
 
   return (
     <div className="h-full relative bg-skin-alt">

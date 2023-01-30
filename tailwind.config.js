@@ -19,7 +19,8 @@ module.exports = {
       },
       width:
       {
-        cusw: '30rem'
+        cusw: '30rem',
+        cusw2: '40rem'
       },
       colors: 
       {
