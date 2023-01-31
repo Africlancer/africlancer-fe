@@ -1,24 +1,55 @@
 import { ApTextInput } from '@/src/components'
 import { ApButton } from '@/src/components/button'
 import { ArrowRightSvg } from '@/src/custom';
+import { useMutation } from '@apollo/client';
 import { Form, Formik } from 'formik'
 import Link from 'next/link';
-import React from 'react'
+import React, { useRef } from 'react'
 import * as Yup from "yup";
+import { useAuthState } from './context';
+import { CREATE_USER } from './gql/query';
+import { IUser } from './model';
+import { LoadingOutlined } from '@ant-design/icons'
 
 const FormikSchema = Yup.object().shape({
+    firstName: Yup.string().required("First name is required"),
+    lastName: Yup.string().required("First name is required"),
     email: Yup.string()
-        .email("Enter a Valid Email Address")
-        .required("Email is Required"),
+      .email("valid email is required")
+      .required("First name is required"),
+    username: Yup.string()
+      .min(6, "Username should be at list 6 char.")
+      .required("First name is required"),
     password: Yup.string()
-        .min(6, "Password Should be at Least 6 Characters.")
-        .required("Password is Required."),
-});
+      .min(6, "password should be as list 6 char.")
+      .required("password is required"),
+    confirmPassword: Yup.string().required("password is required"),
+  });
 
 export const SignUpPage = () => {
-    const handleSubmit = () => 
-    {
-       
+    const proceedRef = useRef<HTMLDivElement>()
+    const loadingIconRef = useRef<HTMLDivElement>()
+    const [createUser, {data, loading, error}] = useMutation(CREATE_USER)
+
+    const handleSubmit = ({ firstName, lastName, email, username, password, confirmPassword }) => 
+    {   
+       const submitBtn = document.querySelector('.submitBtn')
+       submitBtn.setAttribute("disabled", "true")
+       submitBtn.classList.add('cursor-not-allowed')
+       proceedRef.current.classList.add('hidden')
+       loadingIconRef.current.classList.remove('hidden')
+
+        createUser({ variables: {
+            user: { firstName, lastName, email, username, password }   
+        }})
+        .then(() => {
+
+        })
+        .catch((err) =>
+        {
+            console.log(err);
+        })
+        //console.log(data, loading, error)
     };
 
     return (
@@ -32,10 +63,14 @@ export const SignUpPage = () => {
                 </div>
             </div>
     
-            <Formik
+            <Formik 
             initialValues={{
+                firstName: "",
+                lastName: "",
                 email: "",
+                username: "",
                 password: "",
+                confirmPassword: "",
             }}
             validationSchema={FormikSchema}
             onSubmit={handleSubmit}
@@ -68,11 +103,17 @@ export const SignUpPage = () => {
                     <div className='my-3 flex flex-col gap-3'>
                     <ApButton 
                         onClick={() => {}}
-                        className='py-3 flex bg-skin-accent text-white rounded items-center w-full justify-center gap-2'
+                        className='submitBtn py-3 bg-skin-accent text-white rounded w-full '
                         type='submit'
                     >
-                        Create New Account
-                        <ArrowRightSvg/>
+                        <div ref={proceedRef} className='flex justify-center gap-2 items-center '>
+                            Create New Account
+                            <ArrowRightSvg/>
+                        </div>
+
+                        <div className='hidden' ref={loadingIconRef}>
+                            <LoadingOutlined  style={{fontSize: 25, color: '#fff'}} spin/>
+                        </div>
                     </ApButton>
     
                     <ApButton 

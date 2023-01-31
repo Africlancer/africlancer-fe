@@ -73,7 +73,7 @@ export const SubMenu = ({items, currentPage}) =>
           }
         }
       >
-        <Menu className='bg-skin-base text-skin-inverted shadow-xl' onClick={onClick} style={{ paddingLeft: 20, position: 'fixed', marginTop: 55, width: '100%', zIndex: 20}} selectedKeys={[current]} mode="horizontal" items={subMenuItems} />
+        <Menu className='bg-skin-base text-skin-inverted shadow' onClick={onClick} style={{ paddingLeft: 20, position: 'fixed', marginTop: 55, width: '100%', zIndex: 20}} selectedKeys={[current]} mode="horizontal" items={subMenuItems} />
       </ConfigProvider>
     )
 }

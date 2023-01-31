@@ -15,7 +15,7 @@ export const Navbar = () => {
 
   return (
       <header>
-          <nav className="flex flex-wrap items-center justify-between w-full shadow-lg py-2 z-50 md:py-0 px-10 text-lg text-skin-inverted bg-skin-alt fixed">
+          <nav className="flex flex-wrap items-center justify-between w-full  py-2 z-50 md:py-0 px-10 text-lg text-skin-inverted bg-skin-alt fixed">
           <div>
           <h1 className='text-4xl text-skin-inverted font-bold'>Afric<span className='text-skin-accent'>lancer</span></h1>
           </div>

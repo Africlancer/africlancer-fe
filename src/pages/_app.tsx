@@ -8,18 +8,18 @@ import "../styles/global.css";
 
 const MyApp = ({ Component, pageProps }: any) => {
 
-  useLayoutEffect(() => 
-  {
-    const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
-    if (darkThemeMq.matches) 
-    {
-      document.querySelector('.page').classList.add('theme-dark')
-    } 
-    else 
-    {
-      document.querySelector('.page').classList.remove('theme-dark')
-    }
-  }, [])
+  // useLayoutEffect(() => 
+  // {
+  //   const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
+  //   if (darkThemeMq.matches) 
+  //   {
+  //     document.querySelector('.page').classList.add('theme-dark')
+  //   } 
+  //   else 
+  //   {
+  //     document.querySelector('.page').classList.remove('theme-dark')
+  //   }
+  // }, [])
 
   return (
     <ApolloProvider client={apolloClient}>

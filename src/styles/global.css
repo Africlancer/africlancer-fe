@@ -29,9 +29,23 @@
   }
 }
 
+
 body
 {
   font-family: 'Red Hat Display';
+  min-height: 100vh;
+}
+#__next
+{
+  height: 100%;
+}
+.page
+{
+  height: 100%;
+}
+.sigin-bg, .page-bg-overlay
+{
+  min-height: 100vh;
 }
 
 .lofpd

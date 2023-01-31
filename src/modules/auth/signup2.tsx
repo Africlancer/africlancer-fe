@@ -25,15 +25,14 @@ export const SignUpPage = () => {
   const { signUp } = useAuthState();
 
   const handleSubmit = (values: IUser) => {
-
     console.log(values);
-    signUp({
-      firstName: values.firstName,
-      lastName: values.lastName,
-      email: values.email,
-      username: values.username,
-      // password: "abc1231",
-    });
+    // signUp({
+    //   firstName: values.firstName,
+    //   lastName: values.lastName,
+    //   email: values.email,
+    //   username: values.username,
+    //   // password: "abc1231",
+    // });
   };
 
   return (
@@ -78,7 +77,7 @@ export const SignUpPage = () => {
               confirmPassword: "",
             }}
             validationSchema={FormikSchema}
-            onSubmit={handleSubmit}
+            onSubmit={(values) => handleSubmit(values)}
           >
             <Form>
               <div className="flex flex-col items-center w-full">

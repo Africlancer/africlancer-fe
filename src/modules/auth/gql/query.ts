@@ -2,14 +2,9 @@ import { IUser } from "../model";
 import { useMutation, gql } from "@apollo/client";
 
 const CREATE_USER = gql`
-  mutation createUser($user: CreateUserInput!) {
-    createUser(user: $user) {
-      _id
-      firstName
-      lastName
-      otherName
-      email
-      username
+      mutation UserSignUp($user: UserSignUp!) {
+        userSignUp(user: $user) {
+        username
     }
   }
 `;
@@ -26,3 +21,5 @@ export const useCreateUser = (callback: (rs: any) => void) => {
     },
   });
 };
+
+export { CREATE_USER }
