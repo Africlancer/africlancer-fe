@@ -3,9 +3,22 @@ import { ArrowRightIcon } from '@/src/components/icons/customIcons'
 import { ApModal } from '@/src/components/modal';
 import React, { useState } from 'react'
 import { EditPublication } from './edit';
+import  { MoreOutlined } from '@ant-design/icons'
+import { Dropdown, MenuProps } from 'antd';
 
 export const Publication = () => 
 {
+    const items: MenuProps['items'] = [
+        {
+            key: '1',
+            label: 'Edit',
+        },
+        {
+            key: '2',
+            label: 'Delete',
+        },
+    ];
+
     const [modal, setModal] = useState<{ open: boolean }>();
 
     return (
@@ -28,9 +41,19 @@ export const Publication = () =>
                 </ApButton>
             </div>
 
-            <div className='flex items-center justify-center p-10 flex-col'>
-                <p className='text-skin-inverted'>No education information has been added.</p>
-            </div>  
+            <div className='px-5 py-5'>
+                {/* <p className='text-skin-inverted'>No qualification has been added.</p> */}
+                <div className='flex justify-between items-start'>
+                    <div>
+                        <h1 className='font-bold mb-2'>My Publication Title - Publication Title</h1>
+                        <p className='font-bold mb-5'>Name of Publisher - Publisher</p>
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime non mollitia deserunt quam omnis ratione adipisci. Quis sint nulla a perferendis voluptatum quam quasi numquam, tenetur alias sapiente laudantium officia velit recusandae cum consequatur commodi accusantium ex necessitatibus possimus voluptate natus! Perspiciatis, rerum. Iure aperiam vitae illo nobis dolorem! Nemo?</p>
+                    </div>
+                    <Dropdown trigger={["click"]} menu={{ items }} placement="bottom" arrow={{ pointAtCenter: true }}>
+                        <MoreOutlined className='text-2xl'/>
+                    </Dropdown>
+                </div>
+            </div> 
         </div>
         <ApModal
             open={modal?.open}

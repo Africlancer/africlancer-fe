@@ -3,9 +3,22 @@ import { ArrowRightIcon } from '@/src/components/icons/customIcons'
 import { ApModal } from '@/src/components/modal';
 import React, { useState } from 'react'
 import { EditEducation } from './edit';
+import  { MoreOutlined } from '@ant-design/icons'
+import { Dropdown, MenuProps } from 'antd';
 
 export const Education = () => 
 {
+    const items: MenuProps['items'] = [
+        {
+            key: '1',
+            label: 'Edit',
+        },
+        {
+            key: '2',
+            label: 'Delete',
+        },
+    ];
+
     const [modal, setModal] = useState<{ open: boolean }>();
 
     return (
@@ -30,9 +43,19 @@ export const Education = () =>
                 </ApButton>
             </div>
 
-            <div className='flex items-center justify-center p-10 flex-col'>
-                <p className='text-skin-inverted'>No education information has been added.</p>
-            </div>  
+            <div className='px-5 py-5'>
+                {/* <p className='text-skin-inverted'>No education information has been added.</p> */}
+                <div className='flex justify-between items-start'>
+                    <div>
+                        <h1 className='font-bold mb-2'>England - Country</h1>
+                        <p className='font-bold'>Newcastle College - University/College</p>
+                        <p className=''>2007 - 2012(5 years)</p>
+                    </div>
+                    <Dropdown trigger={["click"]} menu={{ items }} placement="bottom" arrow={{ pointAtCenter: true }}>
+                        <MoreOutlined className='text-2xl'/>
+                    </Dropdown>
+                </div>
+            </div> 
         </div>
         <ApModal
             open={modal?.open}

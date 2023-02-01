@@ -23,11 +23,6 @@ export const ApTextInput: React.FC<IProps> = (props: IProps) => {
 
   return (
     <div className="w-full">
-      <ErrorMessage
-        className="text-red-500 text-cusf3 text-left mt-3"
-        name={name}
-        component="div"
-      />
       {label && <label>{label}</label>}
       {type == "textarea" ? (
         <textarea
@@ -42,6 +37,11 @@ export const ApTextInput: React.FC<IProps> = (props: IProps) => {
           className={`${defaultClass} ${className}`}
         />
       )}
+      <ErrorMessage
+        className="text-red-500 text-cusf3 text-left mt-3"
+        name={name}
+        component="div"
+      />
     </div>
   );
 };

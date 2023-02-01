@@ -27,7 +27,7 @@ const MyApp = ({ Component, pageProps }: any) => {
         <ProfileContextProvider>
           <div className="page">
           <Component {...pageProps} />
-          <ApUtilityBtn/>
+          {/* <ApUtilityBtn/> */}
           </div>
         </ProfileContextProvider>
       </AuthContextProvider>

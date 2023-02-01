@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Layout, Button, Drawer, ConfigProvider, theme } from "antd";
+import { Layout, Button, Drawer, ConfigProvider, theme, MenuProps, Dropdown } from "antd";
 import {NavItems} from "./navitems";
 import { MenuOutlined } from "@ant-design/icons";
 import Link from "next/link";
@@ -7,15 +7,58 @@ import { ApButton } from "../button";
 import { ArrowRightIcon } from "../icons/customIcons";
 
 export const Navbar = () => {
-  const [visible, setVisible] = useState(false);
-  const showDrawer = () => {
-    setVisible(!visible);
-  };
-
+  const items: MenuProps['items'] = [
+    {
+      key: '1',
+      label: 'Account',
+      children: [
+        {
+          label: (
+            <Link href='/account/profile'>View Profile</Link>
+          ),
+          key: '1'
+        },
+        {
+          label: (
+            <Link href=''>Membership</Link>
+          ),
+          key: '2'
+        },
+        {
+          label: (
+            <Link href=''>Account Analytics</Link>
+          ),
+          key: '3'
+        },
+        {
+          label: (
+            <Link href=''>Bid Insights</Link>
+          ),
+          key: '4'
+        },
+        {
+          label: (
+            <Link href='/account/settings'>Settings</Link>
+          ),
+          key: '5'
+        }
+      ]
+    },
+    {
+      key: '2',
+      label: 'Finances',
+      children: [
+        {
+          label: 'ddd',
+          key: 2
+        }
+      ]
+    },
+  ];
 
   return (
       <header>
-          <nav className="flex flex-wrap items-center justify-between w-full  py-2 z-50 md:py-0 px-10 text-lg text-skin-inverted bg-skin-alt fixed">
+          <nav className="flex flex-wrap items-center justify-between w-full  py-2 z-50 md:py-0 px-10 text-lg text-skin-inverted bg-skin-nav fixed">
           <div>
           <h1 className='text-4xl text-skin-inverted font-bold'>Afric<span className='text-skin-accent'>lancer</span></h1>
           </div>
@@ -77,8 +120,10 @@ export const Navbar = () => {
 
               <li className="flex items-center ml-5">
               <div className="flex items-center text-lg">
-              <p className="font-bold text-lg">Paul.A</p>
-                  <div className="test-user-pic h-10 w-10 bg-center bg-cover rounded ml-5"></div>
+                  <p className="font-bold text-lg">Paul.A</p>
+                  <Dropdown trigger={["click", "hover"]} menu={{ items }} placement="bottomLeft" arrow>
+                    <div className="cursor-pointer test-user-pic h-10 w-10 bg-center bg-cover rounded ml-5"></div>
+                  </Dropdown>
               </div>    
               </li>
 

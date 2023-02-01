@@ -15,6 +15,8 @@
     --color-base: #fff;
     --color-input: #fff;
     --color-border: #e5e7eb;
+    --color-nav: #fff;
+    --color-submenu: #22c55e;
   }
 
   .theme-dark
@@ -22,6 +24,8 @@
     --color-inverted: #fff;
     --color-muted: #6b7280;
     --color-accent: #22c55e;
+    --color-nav: #121317;
+    --color-submenu: #202020;
     --color-alt: #121317;
     --color-base: #202020;
     --color-input: #272626;
@@ -133,10 +137,10 @@ body
   }
   .fab {
     position: absolute;
-    bottom: -1rem;
+    bottom: -2rem;
     right: -1rem;
-    width: 4rem;
-    height: 4rem;
+    width: 3.5rem;
+    height: 3.5rem;
     background: #22c55e;
     border-radius: 50%;
     background: #22c55e;

@@ -9,6 +9,14 @@ const CREATE_USER = gql`
   }
 `;
 
+const USER_SIGNIN = gql`
+      mutation UserSignIn($user: UserSignIn!){
+        userSignIn(user: $user){
+            access_token
+        }
+      }
+`
+
 export const useCreateUser = (callback: (rs: any) => void) => {
   return useMutation(CREATE_USER, {
     onCompleted: (rs) => {
@@ -22,4 +30,4 @@ export const useCreateUser = (callback: (rs: any) => void) => {
   });
 };
 
-export { CREATE_USER }
+export { CREATE_USER, USER_SIGNIN }

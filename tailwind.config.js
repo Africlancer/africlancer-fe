@@ -19,8 +19,9 @@ module.exports = {
       },
       width:
       {
-        cusw: '30rem',
-        cusw2: '40rem'
+        cusw: '35rem',
+        cusw2: '40rem',
+        cusw3: '50rem'
       },
       colors: 
       {
@@ -54,6 +55,8 @@ module.exports = {
           accent: 'var(--color-accent)',
           inverted: 'var(--color-inverted)',
           input: 'var(--color-input)',
+          nav: 'var(--color-nav)',
+          submenu: 'var(--color-submenu)'
        }
       },
       borderColor:
