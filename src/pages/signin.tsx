@@ -9,7 +9,7 @@ const Signin = () => {
         <div className="Flex flex-col items-center justify-center-py-2 bg-gray-100 min"></div>
         <div className="bg-white w-96 p-6 rounded shadow-sm">
           <div className="flex items-center justify-center mb-4">
-            <h1 className="text-black font-extrabold fonts-serif text-4xl font-serif">
+            <h1 className="text-black font-extrabold fonts-red-hat text-4xl font-serif">
               Afric<span className="text-green-500 ">lancer</span>
             </h1>
           </div>
