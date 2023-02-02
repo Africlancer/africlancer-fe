@@ -1,3 +1,5 @@
-export interface IProfile{
-    
+export interface IProfile
+{
+    bannerphoto,
+    profilephoto
 }

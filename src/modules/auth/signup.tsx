@@ -1,130 +1,180 @@
-import { Form, Formik } from "formik";
-import React from "react";
-import { FaFacebookF } from "react-icons/fa";
-import { useAuthState } from "./context";
-import { IUser } from "./model";
+import { ApTextInput } from '@/src/components'
+import { ApButton } from '@/src/components/button'
+import { ArrowRightSvg } from '@/src/custom';
+import { useMutation } from '@apollo/client';
+import { Form, Formik } from 'formik'
+import Link from 'next/link';
+import React, { useLayoutEffect, useState } from 'react'
 import * as Yup from "yup";
-import { ApTextInput } from "@/src/components";
+import { CREATE_USER } from './gql/query';
+import { LoadingOutlined, DoubleRightOutlined, CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons'
+import { bgImages } from './model';
+import { notification } from 'antd';
+import { useRouter } from 'next/router';
 
 const FormikSchema = Yup.object().shape({
-  firstName: Yup.string().required("First name is required"),
-  lastName: Yup.string().required("First name is required"),
-  email: Yup.string()
-    .email("valid email is required")
-    .required("First name is required"),
-  username: Yup.string()
-    .min(6, "Username should be at list 6 char.")
-    .required("First name is required"),
-  password: Yup.string()
-    .min(6, "password should be as list 6 char.")
-    .required("password is required"),
-  confirmPassword: Yup.string().required("password is required"),
-});
+    firstName: Yup.string().required("First name is required"),
+    lastName: Yup.string().required("First name is required"),
+    email: Yup.string()
+      .email("valid email is required")
+      .required("First name is required"),
+    username: Yup.string()
+      .min(6, "Username should be at list 6 char.")
+      .required("First name is required"),
+    password: Yup.string()
+      .min(6, "password should be as list 6 char.")
+      .required("password is required"),
+    confirmPassword: Yup.string().required("password is required"),
+  });
 
 export const SignUpPage = () => {
-  const { signUp } = useAuthState();
+    const [api, contextHolder] = notification.useNotification();
+    const router = useRouter()
+    const [createUser, {}] = useMutation(CREATE_USER)
+    const [loading, setLoading] = useState(false)
+    const [bgImg, setBgImg] = useState<string>()
 
-  const handleSubmit = (values: IUser) => {
+    useLayoutEffect(() => 
+    {
+        let index = Math.floor(Math.random() * bgImages.length)
+        let item = bgImages[index]
+        setBgImg(item)
+    },[])
 
-    console.log(values);
-    signUp({
-      firstName: values.firstName,
-      lastName: values.lastName,
-      email: values.email,
-      username: values.username,
-      // password: "abc1231",
-    });
-  };
+    const handleSubmit = ({ firstName, lastName, email, username, password, confirmPassword }) => 
+    {   
+        setLoading(true)
+        createUser({ variables: {
+            user: { firstName, lastName, email, username, password }   
+        }})
+        .then((value) => {
+            api.info({
+                icon: (<CheckCircleFilled className='text-green-500' />),
+                message: `Account Created`,
+                description:(<div className='flex gap-3'>
+                    <p>Redirecting to Sign in Page, Sign In to Proceed.</p>
+                </div>),
+                placement: 'topLeft',
+            });
+            setTimeout(() => {
+                router.push('/signin')
+            }, 2000)
+        })
+        .catch((err) =>
+        {
+            setLoading(false)
+            api.info({
+                icon: (<CloseCircleFilled className='text-red-500' />),
+                message: `Error`,
+                description:(<div className='flex gap-3'>
+                    <p>{err.message}, Please Change Username or Email</p>
+                </div>),
+                placement: 'topLeft',
+            });
+        })
+    };
 
-  return (
-    <div className="flex flex-col items-center justify-center py-2 bg-gray-100 min-h-screen">
-      <div>
-        <span>User Signup | Africlancer</span>
-      </div>
-      <main className=" flex-col items-center justify-center text-center ">
-        <div className="bg-white rounded shadow-sm px-14 py-36 mt-3">
-          <div className="flex items-center justify-center mb-4 font-red-hat">
-            <h1 className="text-5xl  flex items-center justify-center w-full text-black font-extrabold">
-              Afric<span className=" text-green-500">lancer</span>
-            </h1>
-          </div>
-          <div className="flex items-center justify-center mb-4">
-            <h3 className="font-roboto text-xl  flex items-center justify-center w-full text-black font-medium">
-              Sign Up
-            </h3>
-          </div>
-          <div className=" flex-row inline-block mb-4 text-white bg-blue-600 w-full rounded-lg font-roboto text-xl justify-items-center px-10 py-3 mr-1">
-            <button type="submit">
-              <a href="#" className="flex items-center">
-                <FaFacebookF className=" text-xl border-2  rounded-full p-0 mx-1" />
-                Continue with Facebook
-              </a>
-            </button>
-          </div>
+    return (
+        <>
+        {contextHolder}
+        <div className='overflow-auto w-full bg-center bg-cover bg-scroll sigin-bg' style={{backgroundImage: `url(${bgImg})`}}>
+        <div className='page-bg-overlay py-10 flex justify-between w-full bg-center bg-cover text-skin-inverted bg-overlay2'>
+            <div className='flex flex-col justify-center p-10'>
+                <h1 className='text-7xl font-bold mb-2 text-skin-base'>Afric<span className='text-skin-accent'>lancer</span></h1>
+                <div className='flex gap-2 text-xl'>
+                    <p className='text-skin-base'>Already Have an Account ?</p>
+                    <Link href='' className='text-skin-accent flex items-center gap-1'>Sign In<DoubleRightOutlined className='text-base'/></Link>
+                </div>
+                <div className='flex mt-2 items-center gap-2'>
+                    <p className='text-skin-base text-xl'>Continue With - </p>
+                    <div className='bg-white rounded-full p-1.5'>
+                        <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="25" height="25"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/></svg>
+                    </div>
+                    <div className='bg-white rounded-full p-1.5 ml-1'>
+                        <svg xmlns="http://www.w3.org/2000/svg"  fill='blue' width="24" height="22" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>                    
+                    </div>
+                </div>
+            </div>
 
-          <div className="flex justify-between mb-3 items-center">
-            <div className=" border border-gray-300 w-full"></div>
-            <p className=" text-sm">OR</p>
-            <div className=" border border-gray-00  w-full"></div>
-          </div>
+            <div className='flex justify-center items-center px-10'>
+                <div className='bg-skin-base px-7 py-10 rounded-lg shadow-lg w-cusw2'>
+                <div className=''>
+                    <div className='pb-3 border-b border-skin-border'>
+                        <h1 className='text-4xl font-bold mb-1 text-skin-inverted'>SIGN UP</h1>
+                        <p className='text-lg'>Create a New Account</p>
+                    </div>
+                </div>
 
-          <Formik
+                <Formik 
             initialValues={{
-              firstName: "",
-              lastName: "",
-              email: "",
-              username: "",
-              password: "",
-              confirmPassword: "",
+                firstName: "",
+                lastName: "",
+                email: "",
+                username: "",
+                password: "",
+                confirmPassword: "",
             }}
             validationSchema={FormikSchema}
             onSubmit={handleSubmit}
-          >
-            <Form>
-              <div className="flex flex-col items-center w-full">
-                <ApTextInput placeholder="First Name" name="firstName" />
-                <ApTextInput placeholder="Last Name" name="lastName" />
-                <ApTextInput placeholder="Email" name="email" />
-                <ApTextInput placeholder="Username" name="username" />
-                <ApTextInput
-                  type="password"
-                  placeholder="*****"
-                  name="password"
-                />
-                <ApTextInput
-                  type="password"
-                  placeholder="*****"
-                  name="confirmPassword"
-                />
-              </div>
-              <div className="flex mb-5 items-center w-full">
-                <label className=" flex  text-xs w-full justify-between">
-                  <input type="checkbox" name="agree" className="mr-1 " />I
-                  agree to the Africlacer{" "}
-                  <span className=" text-green-500 ">User agreement</span> and{" "}
-                  <span className="text-green-500">privacy policy</span>
-                </label>
-              </div>
+            >
+                <Form className='flex flex-col gap-3 mt-5'>
+                <div className='grid grid-cols-2 gap-5'>
+                    <ApTextInput placeholder="First Name" name="firstName" />
+                    <ApTextInput placeholder="Last Name" name="lastName" />
+                </div>
+                <div className='grid grid-cols-2 gap-5'>
+                    <ApTextInput placeholder="Email" name="email" />
+                    <ApTextInput placeholder="Username" name="username" />
+                </div>
+                    <ApTextInput
+                        type="password"
+                        placeholder="Password"
+                        name="password"
+                    />
+                    <ApTextInput
+                    type="password"
+                    placeholder="Confirm Password"
+                    name="confirmPassword"
+                    />
+                    
+                    <div className='flex w-full justify-between text-skin-inverted'>
+                        <div className='flex gap-2'>
+                            <input type="checkbox"/>
+                            <p>I Agree to the Africlancer <span className='text-skin-accent'>User Agreement</span> and <span className='text-skin-accent'>Privacy Policy</span></p>
+                        </div>
+                    </div>
+    
+                    <div className='my-3 flex flex-col gap-3'>
+                    {
+                        loading ? 
+                        <ApButton 
+                            onClick={() => {}}
+                            disabled
+                            className='cursor-not-allowed submitBtn py-3 bg-skin-accent text-white rounded w-full '
+                            type='submit'
+                        >
+                                <LoadingOutlined  style={{fontSize: 25, color: '#fff'}} spin/>
+                        </ApButton>
 
-              <button type="submit">Test</button>
-              <button
-                type="submit"
-                className="text-white bg-green-500 w-full text-white-100 py-2
-                  rounded-lg  transition colors font-serif mb-6"
-              >
-                Join Africlancer
-              </button>
-              <div className="border-gray-200 w-full border items-center"></div>
-              <div className="justify-center text-sm">
-                <p>
-                  Already have an account{" "}
-                  <span className="text-green-500">login</span>
-                </p>
-              </div>
-            </Form>
-          </Formik>
+                        : 
+                        <ApButton 
+                            onClick={() => {}}
+                            className='flex justify-center gap-2 items-center submitBtn py-3 bg-skin-accent text-white rounded w-full '
+                            type='submit'
+                        >
+                                Create New Account
+                                <ArrowRightSvg/>
+                        </ApButton>
+                    }
+                    </div>
+    
+                </Form>
+            </Formik>
+
+                </div>
+            </div>
         </div>
-      </main>
     </div>
-  );
+    </>
+    )
 };

@@ -1,2 +1,2 @@
-export * from './picInputHandler'
+export * from '../modules/profile/functions'
 export * from './customSvg'

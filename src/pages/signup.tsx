@@ -1,9 +1,10 @@
-import React from "react";
+import { SignUpPage } from '@/src/modules/auth/signup'
+import React from 'react'
 
-import { SignUpPage } from "../modules/auth/signup";
+const SignUp = () => {
+  return (
+    <SignUpPage/>
+  )
+}
 
-const signup = () => {
-  return <SignUpPage />;
-};
-
-export default signup;
+export default SignUp

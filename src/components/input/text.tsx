@@ -7,16 +7,17 @@ interface IProps {
   name: string;
   className?: string;
   placeholder?: string;
+  ref?: any;
   props?: {
     [x: string]: any;
   };
 }
 
 const defaultClass =
-  "border-gray-300 border text-black outline-none w-full text-sm   px-5 py-3 flex items-center rounded mb-2";
+  "border-skin-border border text-black outline-none w-full text-sm bg-skin-input px-5 py-3 flex items-center rounded mb-2";
 
 export const ApTextInput: React.FC<IProps> = (props: IProps) => {
-  const { name, type, label, className } = props;
+  const { name, type, label, className, ref } = props;
 
   const [field] = useField(name);
 
@@ -36,9 +37,8 @@ export const ApTextInput: React.FC<IProps> = (props: IProps) => {
           className={`${defaultClass} ${className}`}
         />
       )}
-
       <ErrorMessage
-        className="text-red-500 mb-5 text-xs text-left"
+        className="text-red-500 text-cusf3 text-left mt-3"
         name={name}
         component="div"
       />

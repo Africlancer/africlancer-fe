@@ -15,6 +15,7 @@ export const BannerPhotoView = () =>
         <CameraIcon style={{color: 'white', fontSize: '25px'}}/>
       </button>
 
+      
       <ApModal
         open={modal?.open}
         onDismiss={() => setModal({
