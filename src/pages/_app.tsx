@@ -5,6 +5,7 @@ import { ApUtilityBtn } from "../components/button/utilitybtn";
 import { AuthContextProvider } from "../modules/auth/context";
 import { ProfileContextProvider } from "../modules/profile/context";
 import "../styles/global.css";
+import { SessionProvider } from "next-auth/react"
 
 const MyApp = ({ Component, pageProps }: any) => {
 
@@ -22,16 +23,18 @@ const MyApp = ({ Component, pageProps }: any) => {
   // }, [])
 
   return (
-    <ApolloProvider client={apolloClient}>
-      <AuthContextProvider>
-        <ProfileContextProvider>
-          <div className="page">
-          <Component {...pageProps} />
-          {/* <ApUtilityBtn/> */}
-          </div>
-        </ProfileContextProvider>
-      </AuthContextProvider>
-    </ApolloProvider>
+    <SessionProvider session={pageProps.session}>
+          <ApolloProvider client={apolloClient}>
+          <AuthContextProvider>
+            <ProfileContextProvider>
+              <div className="page">
+              <Component {...pageProps} />
+              {/* <ApUtilityBtn/> */}
+              </div>
+            </ProfileContextProvider>
+          </AuthContextProvider>
+        </ApolloProvider>
+    </SessionProvider>
   );
 };
 

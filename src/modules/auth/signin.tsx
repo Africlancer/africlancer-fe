@@ -11,6 +11,7 @@ import { useMutation } from '@apollo/client';
 import { USER_SIGNIN } from './gql/query';
 import { notification } from 'antd';
 import { useRouter } from 'next/router';
+import { signIn } from "next-auth/react"
 
 const FormikSchema = Yup.object().shape({
     username: Yup.string()
@@ -35,7 +36,7 @@ export const SigninPage = () => {
         setBgImg(item)
     },[])
 
-    const handleSubmit = ({username, password}) => 
+    const handleSubmit = async({username, password}) => 
     {
         setLoading(true)
         userSignIn({ variables : {

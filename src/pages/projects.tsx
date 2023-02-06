@@ -1,7 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ProjectPage } from '../modules/project/page'
+import { useSession } from "next-auth/react"
+import Router from 'next/router'
 
 const Project = () => {
+
+        // const {status, data} = useSession()
+        // useEffect(() => {
+        //         if(status === "unauthenticated")
+        //         Router.replace("/signin")
+        // }, [status])
+        
   return (
         <div className="pt-10 h-full px-10">
             <div className='grid grid-cols-3 gap-5'>

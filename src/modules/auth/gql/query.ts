@@ -28,6 +28,6 @@ export const useCreateUser = (callback: (rs: any) => void) => {
       console.log(error);
     },
   });
-};
+}
 
 export { CREATE_USER, USER_SIGNIN }
