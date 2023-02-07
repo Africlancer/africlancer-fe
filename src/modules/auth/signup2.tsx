@@ -26,13 +26,13 @@ export const SignUpPage = () => {
 
   const handleSubmit = (values: IUser) => {
     console.log(values);
-    // signUp({
-    //   firstName: values.firstName,
-    //   lastName: values.lastName,
-    //   email: values.email,
-    //   username: values.username,
-    //   // password: "abc1231",
-    // });
+    signUp({
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email,
+      username: values.username,
+      password: "abc1231",
+    });
   };
 
   return (

@@ -8,10 +8,12 @@ import * as Yup from "yup";
 import { LoadingOutlined, CheckCircleFilled, CloseCircleFilled, EyeInvisibleFilled, EyeFilled, DoubleRightOutlined } from '@ant-design/icons'
 import { bgImages } from './model';
 import { useMutation } from '@apollo/client';
-import { USER_SIGNIN } from './gql/query';
+import { useCreateUser, USER_SIGNIN } from './gql/query';
 import { notification } from 'antd';
 import { useRouter } from 'next/router';
 import { signIn } from "next-auth/react"
+import { useAuthState } from "./context";
+import { IUser } from "./model";
 
 const FormikSchema = Yup.object().shape({
     username: Yup.string()
@@ -36,39 +38,51 @@ export const SigninPage = () => {
         setBgImg(item)
     },[])
 
-    const handleSubmit = async({username, password}) => 
-    {
-        setLoading(true)
-        userSignIn({ variables : {
-            user: { username, password }
-        }})
-        .then((value) => 
-        {
-            api.info({
-                icon: (<CheckCircleFilled className='text-green-500' />),
-                message: `Signed In Successfully`,
-                description:(<div className='flex gap-3'>
-                    <p>Redirecting to Your Dashboard.</p>
-                </div>),
-                placement: 'topLeft',
-            });
-            // setTimeout(() => {
-            //     router.push('/signin')
-            // }, 2000)
-        })
-        .catch((err) => 
-        {
-            setLoading(false)
-            api.info({
-                icon: (<CloseCircleFilled className='text-red-500' />),
-                message: `Error`,
-                description:(<div className='flex gap-3'>
-                    <p>{err.message}</p>
-                </div>),
-                placement: 'topLeft',
-            });
-        })
+    const { signIn } = useAuthState();
+    const handleSubmit = (values) => {
+      signIn({
+        username: values.username,
+        password: values.password,
+      });
     };
+
+    
+    // const handleSubmit = async({username, password}) => 
+    // {
+    //     //setLoading(true)
+    //     const res = useCreateUser(() => {})
+    //     console.log(res)
+        
+    //     // userSignIn({ variables : {
+    //     //     user: { username, password }
+    //     // }})
+    //     // .then((value) => 
+    //     // {
+    //     //     api.info({
+    //     //         icon: (<CheckCircleFilled className='text-green-500' />),
+    //     //         message: `Signed In Successfully`,
+    //     //         description:(<div className='flex gap-3'>
+    //     //             <p>Redirecting to Your Dashboard.</p>
+    //     //         </div>),
+    //     //         placement: 'topLeft',
+    //     //     });
+    //     //     // setTimeout(() => {
+    //     //     //     router.push('/signin')
+    //     //     // }, 2000)
+    //     // })
+    //     // .catch((err) => 
+    //     // {
+    //     //     setLoading(false)
+    //     //     api.info({
+    //     //         icon: (<CloseCircleFilled className='text-red-500' />),
+    //     //         message: `Error`,
+    //     //         description:(<div className='flex gap-3'>
+    //     //             <p>{err.message}</p>
+    //     //         </div>),
+    //     //         placement: 'topLeft',
+    //     //     });
+    //     // })
+    // };
 
   return (
     <>

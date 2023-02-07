@@ -30,4 +30,17 @@ export const useCreateUser = (callback: (rs: any) => void) => {
   });
 }
 
+export const useSignInUser = (callback: (rs: any) => void) => {
+  return useMutation(USER_SIGNIN, {
+    onCompleted: (rs) => {
+      if (rs?.userSignIn) {
+        callback(rs?.userSignIn);
+      }
+    },
+    onError: (error: any) => {
+      console.log(error);
+    },
+  });
+}
+
 export { CREATE_USER, USER_SIGNIN }

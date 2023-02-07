@@ -11,6 +11,8 @@ import { LoadingOutlined, DoubleRightOutlined, CheckCircleFilled, CloseCircleFil
 import { bgImages } from './model';
 import { notification } from 'antd';
 import { useRouter } from 'next/router';
+import { useAuthState } from "./context";
+import { IUser } from "./model";
 
 const FormikSchema = Yup.object().shape({
     firstName: Yup.string().required("First name is required"),
@@ -31,7 +33,7 @@ export const SignUpPage = () => {
     const [api, contextHolder] = notification.useNotification();
     const router = useRouter()
     const [createUser, {}] = useMutation(CREATE_USER)
-    const [loading, setLoading] = useState(false)
+    //const [loading, setLoading] = useState(false)
     const [bgImg, setBgImg] = useState<string>()
 
     useLayoutEffect(() => 
@@ -41,38 +43,53 @@ export const SignUpPage = () => {
         setBgImg(item)
     },[])
 
-    const handleSubmit = ({ firstName, lastName, email, username, password, confirmPassword }) => 
-    {   
-        setLoading(true)
-        createUser({ variables: {
-            user: { firstName, lastName, email, username, password }   
-        }})
-        .then((value) => {
-            api.info({
-                icon: (<CheckCircleFilled className='text-green-500' />),
-                message: `Account Created`,
-                description:(<div className='flex gap-3'>
-                    <p>Redirecting to Sign in Page, Sign In to Proceed.</p>
-                </div>),
-                placement: 'topLeft',
-            });
-            setTimeout(() => {
-                router.push('/signin')
-            }, 2000)
-        })
-        .catch((err) =>
-        {
-            setLoading(false)
-            api.info({
-                icon: (<CloseCircleFilled className='text-red-500' />),
-                message: `Error`,
-                description:(<div className='flex gap-3'>
-                    <p>{err.message}, Please Change Username or Email</p>
-                </div>),
-                placement: 'topLeft',
-            });
-        })
+    const { signUp, loading } = useAuthState();
+
+    const handleSubmit = (values: IUser) => {
+      console.log(loading);
+      signUp({
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        username: values.username,
+        password: "abc1231",
+      }).then((val) => {
+        console.log(val);
+      })
     };
+
+    // const handleSubmit = ({ firstName, lastName, email, username, password, confirmPassword }) => 
+    // {   
+    //     setLoading(true)
+    //     createUser({ variables: {
+    //         user: { firstName, lastName, email, username, password }   
+    //     }})
+    //     .then((value) => {
+    //         api.info({
+    //             icon: (<CheckCircleFilled className='text-green-500' />),
+    //             message: `Account Created`,
+    //             description:(<div className='flex gap-3'>
+    //                 <p>Redirecting to Sign in Page, Sign In to Proceed.</p>
+    //             </div>),
+    //             placement: 'topLeft',
+    //         });
+    //         setTimeout(() => {
+    //             router.push('/signin')
+    //         }, 2000)
+    //     })
+    //     .catch((err) =>
+    //     {
+    //         setLoading(false)
+    //         api.info({
+    //             icon: (<CloseCircleFilled className='text-red-500' />),
+    //             message: `Error`,
+    //             description:(<div className='flex gap-3'>
+    //                 <p>{err.message}, Please Change Username or Email</p>
+    //             </div>),
+    //             placement: 'topLeft',
+    //         });
+    //     })
+    // };
 
     return (
         <>

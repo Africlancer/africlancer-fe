@@ -1,10 +1,11 @@
 import React from "react";
-import { useCreateUser } from "./gql/query";
+import { useCreateUser, useSignInUser } from "./gql/query";
 import { IUser } from "./model";
 
 interface IState {
   loading: boolean;
   signUp: (user: IUser) => Promise<void>;
+  signIn: (user) => Promise<void>
 }
 
 const AuthContext = React.createContext<IState>({
@@ -12,25 +13,27 @@ const AuthContext = React.createContext<IState>({
   signUp(user) {
     return null;
   },
+  signIn(user) {
+    return null
+  }
 });
 
 const useAuthState = () => {
   const context = React.useContext(AuthContext);
-
   if (context === undefined) throw new Error("contenxt doest not exist");
-
   return context;
 };
 
 interface IProps {
   children: React.ReactNode;
 }
+
 const AuthContextProvider: React.FC<IProps> = ({ children }) => {
   const createUserQery = useCreateUser((rs) => {});
+  const createSigninQuery = useSignInUser((rs) => {})
 
   const signUp = async (user: IUser): Promise<void> => {
     console.log(user);
-
     await createUserQery[0]({ variables: { user } }).then((rs) => {
       if (rs.data?.createUser) {
         console.log("User created..");
@@ -38,9 +41,18 @@ const AuthContextProvider: React.FC<IProps> = ({ children }) => {
     });
   };
 
+  const signIn = async (user): Promise<void> => {
+    console.log(user);
+    await createSigninQuery[0]({ variables: { user } }).then((rs) => {
+      if (rs.data?.userSignIn) {
+        console.log("User Signed In..");
+      }
+    });
+  };
+
   return (
     <AuthContext.Provider
-      value={{ loading: createUserQery[1].loading, signUp }}
+      value={{ loading: createUserQery[1].loading, signUp, signIn }}
     >
       {children}
     </AuthContext.Provider>
