@@ -52,7 +52,7 @@ export const SignUpPage = () => {
         lastName: values.lastName,
         email: values.email,
         username: values.username,
-        password: "abc1231",
+        password: values.password,
       }).then((val) => {
         console.log(val);
       })
@@ -90,7 +90,7 @@ export const SignUpPage = () => {
     //         });
     //     })
     // };
-
+    
     return (
         <>
         {contextHolder}

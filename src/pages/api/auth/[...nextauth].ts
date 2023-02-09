@@ -14,7 +14,8 @@ const authOptions: NextAuthOptions = {
                 const {username, password} = credentials as {
                     username: string
                     password: string
-                }                
+                }
+
                 // Login logic
                 if(username !== 'kloop' || password !== '123456')
                 {
@@ -29,6 +30,5 @@ const authOptions: NextAuthOptions = {
         signIn: '/signin'
     }
 }
-
 
 export default NextAuth(authOptions)
