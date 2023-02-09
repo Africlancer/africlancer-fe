@@ -5,7 +5,7 @@ import { IUser } from "./model";
 interface IState {
   loading: boolean;
   signUp: (user: IUser) => Promise<void>;
-  signIn: (user) => Promise<void>
+  signIn: (user) => Promise<any>
 }
 
 const AuthContext = React.createContext<IState>({
@@ -41,14 +41,18 @@ const AuthContextProvider: React.FC<IProps> = ({ children }) => {
     });
   };
 
-  const signIn = async (user): Promise<void> => {
-    console.log(user);
-    await createSigninQuery[0]({ variables: { user } }).then((rs) => {
-      if (rs.data?.userSignIn) {
-        console.log("User Signed In..");
+  const signIn = async (user): Promise<any> => {
+    return await createSigninQuery[0]({ variables: { user } }).then((rs) => {
+      if (rs.data?.userSignIn) 
+      {
+        return { user: "User Signed In.."}
       }
-    });
-  };
+      else 
+      {
+        return { error: rs?.errors }
+      }
+    })
+  }
 
   return (
     <AuthContext.Provider

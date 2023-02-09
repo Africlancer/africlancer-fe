@@ -38,7 +38,7 @@ export const useSignInUser = (callback: (rs: any) => void) => {
       }
     },
     onError: (error: any) => {
-      console.log(error);
+      return error
     },
   });
 }

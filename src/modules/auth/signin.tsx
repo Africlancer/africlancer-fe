@@ -39,11 +39,53 @@ export const SigninPage = () => {
     },[])
 
     const { signIn } = useAuthState();
-    const handleSubmit = (values) => {
-      signIn({
+    const handleSubmit = async (values) => {
+       setLoading(true)
+      const res = await signIn({
         username: values.username,
         password: values.password,
-      });
+      })
+      if(res.user)
+      {
+        api.info({
+            icon: (<CheckCircleFilled className='text-green-500' />),
+            message: `Signed In Successfully`,
+            description:(<div className='flex gap-3'>
+                <p>Redirecting to Your Dashboard.</p>
+            </div>),
+            placement: 'topLeft',
+        });
+        setTimeout(() => {
+            router.push('/')
+        }, 2000)
+      }
+      else
+      {
+        if(res.error.message === "Invalid Username Or Password")
+        {
+            setLoading(false)
+            api.info({
+                icon: (<CloseCircleFilled className='text-red-500' />),
+                message: `Error`,
+                description:(<div className='flex gap-3'>
+                    <p>{res.error.message}</p>
+                </div>),
+                placement: 'topLeft',
+            });       
+        }
+        else
+        {
+            setLoading(false)
+            api.info({
+                icon: (<CloseCircleFilled className='text-red-500' />),
+                message: `Error`,
+                description:(<div className='flex gap-3'>
+                    <p>{res.error.message}</p>
+                </div>),
+                placement: 'topLeft',
+            }); 
+        }
+      }
     };
 
     

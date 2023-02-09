@@ -12,6 +12,7 @@ import  { MenuProps } from 'antd';
 import { Education } from "./education/view";
 import { Publication } from "./publication/view";
 import { Qualifications } from "./qualification/view";
+import { Skills } from "./skills/view";
 
 
 export const ProfilePage = () => {
@@ -34,6 +35,8 @@ export const ProfilePage = () => {
     }
   ];
   
+  const [profile, setProfile] = useState({})
+  const [user, setUser] = useState({})
 
 
   return (
@@ -61,13 +64,13 @@ export const ProfilePage = () => {
               <Experience/>
               <Education/>
               <Qualifications/>
-              <Publication/>
+              <Publication publications={null} profileID={null}/>
             </div>
 
             <div className="flex flex-col gap-8">
               <Verification />
               <Certifications/>
-              <TopSkills/>
+              <Skills/>
               <SimilarFreelancers/>
               <SimilarShowcases/>
             </div>

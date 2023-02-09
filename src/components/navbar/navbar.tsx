@@ -5,6 +5,7 @@ import { MenuOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { ApButton } from "../button";
 import { ArrowRightIcon } from "../icons/customIcons";
+import Image from "next/image";
 
 export const Navbar = () => {
   const items: MenuProps['items'] = [
@@ -60,7 +61,7 @@ export const Navbar = () => {
       <header>
           <nav className="flex flex-wrap items-center justify-between w-full  py-2 z-50 md:py-0 px-10 text-lg text-skin-inverted bg-skin-nav fixed">
           <div>
-          <h1 className='text-4xl text-skin-inverted font-bold'>Afric<span className='text-skin-accent'>lancer</span></h1>
+            <Image alt="logo" src='/africlancer.png' width={140} height={30} />
           </div>
             <svg
               xmlns="http://www.w3.org/2000/svg"

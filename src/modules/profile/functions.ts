@@ -55,7 +55,6 @@ export const picInputHandler = (args: IPictureInput) =>
   }
 
 }
-
 export const clearPic = (inputButton: string, imgPreview: string, inputForm: React.MutableRefObject<HTMLFormElement>) =>
 {
   let iButton = document.getElementById(inputButton)

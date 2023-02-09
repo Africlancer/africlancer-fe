@@ -6,7 +6,7 @@ import { EditQualifications } from './edit';
 import  { MoreOutlined } from '@ant-design/icons'
 import { Dropdown, MenuProps } from 'antd';
 
-export const Qualifications = () => 
+export const Qualifications = ({qualifications, profileID}) => 
 {
     const items: MenuProps['items'] = [
         {
@@ -43,8 +43,9 @@ export const Qualifications = () =>
             </div>
 
             <div className='px-5 py-5'>
-                {/* <p className='text-skin-inverted'>No qualification has been added.</p> */}
-                <div className='flex justify-between items-start'>
+                {
+                    qualifications ? 
+                    <div className='flex justify-between items-start'>
                     <div>
                         <h1 className='font-bold mb-2'>Name of Certificate - Professional Certificate or Award</h1>
                         <p className='font-bold'>Name of Conferring Organization - Conferring Organization</p>
@@ -54,7 +55,9 @@ export const Qualifications = () =>
                     <Dropdown trigger={["click"]} menu={{ items }} placement="bottom" arrow={{ pointAtCenter: true }}>
                         <MoreOutlined className='text-2xl'/>
                     </Dropdown>
-                </div>
+                    </div>
+                    : <p className='text-skin-inverted'>No qualification has been added.</p>
+                }
             </div> 
         </div>
         <ApModal
@@ -64,7 +67,7 @@ export const Qualifications = () =>
             }}
             width={970}
         >
-            <EditQualifications/>
+            <EditQualifications setModal={setModal}/>
         </ApModal>
         </>
     );

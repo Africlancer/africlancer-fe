@@ -4,6 +4,7 @@ import { ApModal } from "@/src/components/modal";
 import React, { useState } from "react";
 import { IProfile } from "../model";
 import { EditProfileInfo } from "./edit";
+import { Divider, Form, Radio, Skeleton, Space, Switch } from 'antd';
 
 interface IProps {
   profile: IProfile;
@@ -16,9 +17,15 @@ export const ProfileInfo: React.FC<IProps> = ({ profile }) => {
     <>
       <div className="col-span-2 p-5 bg-skin-base shadow-xl w-full rounded-xl relative">
         <div className="flex w-full">
-          <div className="test-user-pic h-80 w-80 bg-center bg-cover rounded"></div>
+          {
+            profile?.avatar ?
+            <div className="test-user-pic h-80 w-80 bg-center bg-cover rounded"></div>
+            :  <Skeleton.Image style={{ height: '320px', width: '320px' }} active />
+          }
 
-          <div className="ml-3 flex flex-col justify-between">
+          {
+            profile?.professionalHeadline ?
+            <div className="ml-3 flex flex-col justify-between">
             <div>
               <div className="flex items-end">
                 <h1 className="text-2xl text-skin-inverted font-bold">Paul A.</h1>
@@ -29,6 +36,7 @@ export const ProfileInfo: React.FC<IProps> = ({ profile }) => {
                   <div className="bg-green-500 rounded-full h-2 w-2 ml-3"></div>
                 </div>
               </div>
+              
               <p className="text-base mt-1 text-skin-inverted">
                 Frontend And Backend Developer
               </p>
@@ -101,38 +109,44 @@ export const ProfileInfo: React.FC<IProps> = ({ profile }) => {
                 0 Recommendations
               </p>
             </div>
-          </div>
+            </div>
+            : <div className="mt-1 ml-5 w-full"><Skeleton active paragraph={{ rows: 9 }} /></div>
+          }
         </div>
 
-        <div className="absolute p-5 bottom-0 top-0 right-0 flex gap-3 flex-col justify-between items-end mt-0">
-          <ApButton
-            onClick={() => setModal({ open: true })}
-            className='py-2 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2'
-          >
-            Edit Profile
-            <EditIcon/>
-          </ApButton>
-          
-          <div className="text-right text-base">
-            <p className="mb-1 text-skin-inverted">Abuja, Nigeria</p>
-            <p className="flex">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="w-6 h-6 text-green-500"
+          {
+            profile?.hourlyRate ?
+            <div className="absolute p-5 bottom-0 top-0 right-0 flex gap-3 flex-col justify-between items-end mt-0">
+              <ApButton
+                onClick={() => setModal({ open: true })}
+                className='py-2 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2'
               >
-                <path d="M10.464 8.746c.227-.18.497-.311.786-.394v2.795a2.252 2.252 0 01-.786-.393c-.394-.313-.546-.681-.546-1.004 0-.323.152-.691.546-1.004zM12.75 15.662v-2.824c.347.085.664.228.921.421.427.32.579.686.579.991 0 .305-.152.671-.579.991a2.534 2.534 0 01-.921.42z" />
-                <path
-                  fill-rule="evenodd"
-                  d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v.816a3.836 3.836 0 00-1.72.756c-.712.566-1.112 1.35-1.112 2.178 0 .829.4 1.612 1.113 2.178.502.4 1.102.647 1.719.756v2.978a2.536 2.536 0 01-.921-.421l-.879-.66a.75.75 0 00-.9 1.2l.879.66c.533.4 1.169.645 1.821.75V18a.75.75 0 001.5 0v-.81a4.124 4.124 0 001.821-.749c.745-.559 1.179-1.344 1.179-2.191 0-.847-.434-1.632-1.179-2.191a4.122 4.122 0 00-1.821-.75V8.354c.29.082.559.213.786.393l.415.33a.75.75 0 00.933-1.175l-.415-.33a3.836 3.836 0 00-1.719-.755V6z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-              <span className="ml-2 text-skin-inverted">$70 USD / Hour</span>
-            </p>
-          </div>
-        </div>
+                Edit Profile
+                <EditIcon/>
+              </ApButton>
+              
+                  <div className="text-right text-base">
+                  <p className="mb-1 text-skin-inverted">Abuja, Nigeria</p>
+                  <p className="flex">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="w-6 h-6 text-green-500"
+                    >
+                      <path d="M10.464 8.746c.227-.18.497-.311.786-.394v2.795a2.252 2.252 0 01-.786-.393c-.394-.313-.546-.681-.546-1.004 0-.323.152-.691.546-1.004zM12.75 15.662v-2.824c.347.085.664.228.921.421.427.32.579.686.579.991 0 .305-.152.671-.579.991a2.534 2.534 0 01-.921.42z" />
+                      <path
+                        fill-rule="evenodd"
+                        d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v.816a3.836 3.836 0 00-1.72.756c-.712.566-1.112 1.35-1.112 2.178 0 .829.4 1.612 1.113 2.178.502.4 1.102.647 1.719.756v2.978a2.536 2.536 0 01-.921-.421l-.879-.66a.75.75 0 00-.9 1.2l.879.66c.533.4 1.169.645 1.821.75V18a.75.75 0 001.5 0v-.81a4.124 4.124 0 001.821-.749c.745-.559 1.179-1.344 1.179-2.191 0-.847-.434-1.632-1.179-2.191a4.122 4.122 0 00-1.821-.75V8.354c.29.082.559.213.786.393l.415.33a.75.75 0 00.933-1.175l-.415-.33a3.836 3.836 0 00-1.719-.755V6z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <span className="ml-2 text-skin-inverted">$70 USD / Hour</span>
+                  </p>
+                  </div>
+            </div>
+            : <></>
+        }
       </div>
 
       <ApModal

@@ -6,7 +6,7 @@ import { EditPublication } from './edit';
 import  { MoreOutlined } from '@ant-design/icons'
 import { Dropdown, MenuProps } from 'antd';
 
-export const Publication = () => 
+export const Publication = ({publications, profileID}) => 
 {
     const items: MenuProps['items'] = [
         {
@@ -42,17 +42,20 @@ export const Publication = () =>
             </div>
 
             <div className='px-5 py-5'>
-                {/* <p className='text-skin-inverted'>No qualification has been added.</p> */}
-                <div className='flex justify-between items-start'>
-                    <div>
-                        <h1 className='font-bold mb-2'>My Publication Title - Publication Title</h1>
-                        <p className='font-bold mb-5'>Name of Publisher - Publisher</p>
-                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime non mollitia deserunt quam omnis ratione adipisci. Quis sint nulla a perferendis voluptatum quam quasi numquam, tenetur alias sapiente laudantium officia velit recusandae cum consequatur commodi accusantium ex necessitatibus possimus voluptate natus! Perspiciatis, rerum. Iure aperiam vitae illo nobis dolorem! Nemo?</p>
+                {
+                    publications ? 
+                    <div className='flex justify-between items-start'>
+                        <div>
+                            <h1 className='font-bold mb-2'>My Publication Title - Publication Title</h1>
+                            <p className='font-bold mb-5'>Name of Publisher - Publisher</p>
+                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime non mollitia deserunt quam omnis ratione adipisci. Quis sint nulla a perferendis voluptatum quam quasi numquam, tenetur alias sapiente laudantium officia velit recusandae cum consequatur commodi accusantium ex necessitatibus possimus voluptate natus! Perspiciatis, rerum. Iure aperiam vitae illo nobis dolorem! Nemo?</p>
+                        </div>
+                        <Dropdown trigger={["click"]} menu={{ items }} placement="bottom" arrow={{ pointAtCenter: true }}>
+                            <MoreOutlined className='text-2xl'/>
+                        </Dropdown>
                     </div>
-                    <Dropdown trigger={["click"]} menu={{ items }} placement="bottom" arrow={{ pointAtCenter: true }}>
-                        <MoreOutlined className='text-2xl'/>
-                    </Dropdown>
-                </div>
+                    : <p className='text-skin-inverted'>No publication has been added.</p>
+                }
             </div> 
         </div>
         <ApModal
@@ -62,7 +65,7 @@ export const Publication = () =>
             }}
             width={970}
         >
-            <EditPublication/>
+            <EditPublication setModal={setModal}/>
         </ApModal>
         </>
     );
