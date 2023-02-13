@@ -1,5 +1,5 @@
 import React from 'react'
-import { CameraIcon, GlobeIcon } from '../icons/customIcons'
+import { CameraIcon, GlobeIcon } from '../icons'
 import { QuestionCircleFilled, FacebookFilled, TwitterOutlined, InstagramFilled, YoutubeFilled } from '@ant-design/icons';
 import Image from 'next/image';
 

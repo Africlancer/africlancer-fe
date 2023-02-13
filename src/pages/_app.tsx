@@ -1,7 +1,7 @@
 import { ApolloProvider} from "@apollo/client";
 import { useLayoutEffect, useState } from "react";
 import { apolloClient } from "../ApolloClient";
-import { ApUtilityBtn } from "../components/button/utilitybtn";
+import { ApUtilityBtn } from "../components/utilitybtn";
 import { AuthContextProvider } from "../modules/auth/context";
 import { ProfileContextProvider } from "../modules/profile/context";
 import "../styles/global.css";

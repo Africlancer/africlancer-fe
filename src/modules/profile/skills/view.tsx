@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { EditSkills } from './edit';
 import  { MoreOutlined } from '@ant-design/icons'
 import { Dropdown, MenuProps } from 'antd';
-import { EditIcon } from '@/src/components/icons/customIcons';
+import { EditIcon } from '@/src/components/icons';
 
 
 export const Skills = () => 

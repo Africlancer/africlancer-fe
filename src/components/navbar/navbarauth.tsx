@@ -4,7 +4,7 @@ import {NavAuthItems} from "./navitems";
 import { MenuOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { ApButton } from "../button";
-import { ArrowRightIcon } from "../icons/customIcons";
+import { ArrowRightIcon } from "../icons";
 
 
 export const NavbarAuth = () => {

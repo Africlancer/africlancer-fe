@@ -38,7 +38,7 @@ export const SigninPage = () => {
 
   //   const { signIn } = useAuthState();
   const handleSubmit = async (values) => {
-    setLoading(true);
+    //setLoading(true);
 
     const rs: any = await signIn("credentials", {
       username: values.username,
@@ -49,9 +49,11 @@ export const SigninPage = () => {
     if (rs.error) {
       errorMsg("Error", rs.error);
       setLoading(false);
+      console.log(rs)
       return;
     }
 
+    console.log(rs)
     successMsg(`Signed In Successfully`, `Redirecting to Your Dashboard.`);
     // setTimeout(() => {
     //   router.push("/");

@@ -1,4 +1,4 @@
-import { CameraIcon } from '@/src/components/icons/customIcons';
+import { CameraIcon } from '@/src/components/icons';
 import { ApModal } from '@/src/components/modal';
 import React, { useState} from 'react'
 import { EditBannerPhoto } from './edit';

@@ -1,5 +1,5 @@
 import { ApButton } from '@/src/components/button'
-import { ArrowRightIcon } from '@/src/components/icons/customIcons'
+import { ArrowRightIcon } from '@/src/components/icons'
 import Link from 'next/link'
 import React from 'react'
 

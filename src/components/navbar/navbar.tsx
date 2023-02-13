@@ -4,7 +4,7 @@ import {NavItems} from "./navitems";
 import { MenuOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { ApButton } from "../button";
-import { ArrowRightIcon } from "../icons/customIcons";
+import { ArrowRightIcon } from "../icons";
 import Image from "next/image";
 
 export const Navbar = () => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { DollarCircleFilled, QuestionCircleFilled } from '@ant-design/icons'
-import { GlobeFolderIcon } from '@/src/components/icons/customIcons'
+import { GlobeFolderIcon } from '@/src/components/icons'
 
 export const SecondSection = () => {
   return (

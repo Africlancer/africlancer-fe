@@ -1,41 +1,38 @@
 import { ApButton } from '@/src/components/button'
 import { useMutation } from '@apollo/client'
 import React, { useState } from 'react'
-import { ADD_PUBLICATION } from '../gql/query'
+import { ADD_PUBLICATION } from '../../gql/query'
 import { PlusOutlined, CloseOutlined, CloseCircleFilled } from '@ant-design/icons'
-import { notification } from 'antd';
+import useApNotification from "@/src/hooks/notification";
 
-export const EditPublication = ({setModal}) => {
+interface Iprops
+{
+  profileId: string,
+  setModal: any
+}
 
+export const EditPublication:React.FC<Iprops> = ({ profileId, setModal}) => {
+
+  const { notificationContext, successMsg, errorMsg } = useApNotification();
   const [addPublication] = useMutation(ADD_PUBLICATION)
   const [publication, setPublication] = useState({title: null, publisher: null, summary: null})
-  const [api, contextHolder] = notification.useNotification();
 
   const addPublicationHandler = () =>
   {
     if(publication.publisher !== null && publication.title !== null && publication.summary !== null)
     {
       addPublication({ variables : {
-        publication: { title: publication.title, publisher: publication.publisher, summary: publication.summary }
+        publication: { title: publication.title, publisher: publication.publisher, summary: publication.summary, profileId }
       }})
+      .then((val) => { if(val) { successMsg(`Success`, `Publication has been added.`) }} )
+      .catch((err) => { if(err) { errorMsg("Error", err.message), console.log(err.message) }})
     }
-    else
-    {
-        api.info({
-          icon: (<CloseCircleFilled className='text-red-500' />),
-          message: `Error`,
-          description:(<div className='flex gap-3'>
-              <p>Please fill all fields before proceeding.</p>
-          </div>),
-          placement: 'topLeft',
-          duration: 2
-      }); 
-    }
+    else { errorMsg("Error", "Please fill all fields before proceeding.") }
   }
 
   return (
       <>
-        {contextHolder}
+        {notificationContext}
         <div>
         <h1 className='font-bold text-xl'>Add Publication</h1>
         <p className='mb-3'>Fill To Add New Publication</p>

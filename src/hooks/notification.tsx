@@ -1,14 +1,14 @@
-import { CheckCircleFilled } from "@ant-design/icons";
+import { CheckCircleFilled, CloseCircleFilled } from "@ant-design/icons";
 import { notification } from "antd";
 
 export default function useApNotification() {
   const [api, contextHolder] = notification.useNotification();
   const show = (title: string, message: string, isError?: boolean) => {
+
     api.info({
       icon: (
-        <CheckCircleFilled
-          className={isError ? "text-red-500" : "text-green-500"}
-        />
+        isError ? <CloseCircleFilled className="text-red-500"/>
+        : <CheckCircleFilled className="text-green-500"/>
       ),
       message: title,
       description: (

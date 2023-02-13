@@ -1,5 +1,5 @@
 import { ApButton } from '@/src/components/button'
-import { ArrowRightIcon } from '@/src/components/icons/customIcons'
+import { ArrowRightIcon } from '@/src/components/icons'
 import { ApModal } from '@/src/components/modal';
 import React, { useState } from 'react'
 import { EditEducation } from './edit';

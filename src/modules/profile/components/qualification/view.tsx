@@ -1,12 +1,27 @@
 import { ApButton } from '@/src/components/button'
-import { ArrowRightIcon } from '@/src/components/icons/customIcons'
+import { ArrowRightIcon } from '@/src/components/icons'
 import { ApModal } from '@/src/components/modal';
 import React, { useState } from 'react'
 import { EditQualifications } from './edit';
 import  { MoreOutlined } from '@ant-design/icons'
 import { Dropdown, MenuProps } from 'antd';
+import { QualificationView } from './components';
 
-export const Qualifications = ({qualifications, profileID}) => 
+
+type qualification = {
+    certificate: string,
+    conferringOrganization: string,
+    startYear: string,
+    summary: string
+}
+
+interface Iprops
+{
+    qualifications: qualification[],
+    profileID: string
+}
+
+export const Qualifications: React.FC<Iprops> = ({qualifications, profileID}) => 
 {
     const items: MenuProps['items'] = [
         {
@@ -35,27 +50,18 @@ export const Qualifications = ({qualifications, profileID}) =>
 
                 <ApButton
                     onClick={() => setModal({ open: true })}
-                    className='py-2 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2'
                 >
                     Add Qualification
                     <ArrowRightIcon/>
                 </ApButton>
             </div>
 
-            <div className='px-5 py-5'>
+            <div className='px-5 py-5 flex flex-col gap-5'>
                 {
-                    qualifications ? 
-                    <div className='flex justify-between items-start'>
-                    <div>
-                        <h1 className='font-bold mb-2'>Name of Certificate - Professional Certificate or Award</h1>
-                        <p className='font-bold'>Name of Conferring Organization - Conferring Organization</p>
-                        <p className='mb-3'>Awarded on Feb 2017</p>
-                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime non mollitia deserunt quam omnis ratione adipisci. Quis sint nulla a perferendis voluptatum quam quasi numquam, tenetur alias sapiente laudantium officia velit recusandae cum consequatur commodi accusantium ex necessitatibus possimus voluptate natus! Perspiciatis, rerum. Iure aperiam vitae illo nobis dolorem! Nemo?</p>
-                    </div>
-                    <Dropdown trigger={["click"]} menu={{ items }} placement="bottom" arrow={{ pointAtCenter: true }}>
-                        <MoreOutlined className='text-2xl'/>
-                    </Dropdown>
-                    </div>
+                    qualifications ?
+                    qualifications.map(qualification => (
+                        <QualificationView startYear={ qualification.startYear } certificate={ qualification.startYear } conferringOrganization={ qualification.conferringOrganization } profileId={ profileID } summary={ qualification.summary }/>
+                    )) 
                     : <p className='text-skin-inverted'>No qualification has been added.</p>
                 }
             </div> 
@@ -67,7 +73,7 @@ export const Qualifications = ({qualifications, profileID}) =>
             }}
             width={970}
         >
-            <EditQualifications setModal={setModal}/>
+            <EditQualifications profileId={ profileID } setModal={setModal}/>
         </ApModal>
         </>
     );

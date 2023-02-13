@@ -1,5 +1,5 @@
 import { ApButton, CustomOutlineButton } from '@/src/components/button';
-import { EditIcon } from '@/src/components/icons/customIcons';
+import { EditIcon } from '@/src/components/icons';
 import React from 'react'
 
 export const TopSkills = () => 

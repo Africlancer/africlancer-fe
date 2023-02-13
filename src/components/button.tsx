@@ -10,9 +10,17 @@ interface Iprops
   type? : "button" | "submit" | "reset"
 }
 
+const defaultClassName = "py-2 px-3 flex bg-skin-accent text-white rounded items-center justify-center gap-2"
+
 export const ApButton: React.FC<Iprops> = ({className, children, onClick, type, disabled}) => {
+
   return (
-      <button type={type} disabled={disabled} className={className} onClick={onClick}>
+      <button 
+        type={type} 
+        disabled={disabled} 
+        className={className ? className : defaultClassName} 
+        onClick={onClick}
+      >
           {children}
       </button>
   )

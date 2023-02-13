@@ -1,7 +1,7 @@
 import { ApTextInput } from '@/src/components';
 import { ApButton } from '@/src/components/button';
 import { Footer } from '@/src/components/footer';
-import { ArrowRightIcon } from '@/src/components/icons/customIcons';
+import { ArrowRightIcon } from '@/src/components/icons';
 import { Navbar, SubMenu } from '@/src/components/navbar'
 import { MenuProps } from 'antd';
 import React from 'react'

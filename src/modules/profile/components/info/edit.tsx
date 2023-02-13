@@ -1,9 +1,11 @@
-import { ApTextInput } from '@/src/components';
+import { useMutation } from '@apollo/client'
 import { clearPic, picInputHandler } from '@/src/custom';
+import useApImageDataURI from '@/src/hooks/imageDataURI';
 import { CloseOutlined, LoadingOutlined, CloseCircleFilled  } from '@ant-design/icons';
-import { message } from 'antd';
 import React, { useRef, useState } from 'react'
-import { IProfile } from '../model'
+import { IProfile } from '../../model'
+import useApNotification from "@/src/hooks/notification";
+import { UPDATE_PROFILE } from '../../gql/query';
 
 interface IProps{
   profile: IProfile;
@@ -12,28 +14,41 @@ interface IProps{
 export const EditProfileInfo: React.FC<IProps> = ({profile}) => {
 
   const profilePic = useRef<HTMLInputElement>()
-  const summary = useRef<HTMLTextAreaElement>()
-  const proHeadline = useRef<HTMLInputElement>()
   const profileInputForm = useRef<HTMLFormElement>()
-  const [profilePicture, setProfilePicture] = useState(null)
-  const [messageApi, contextHolder] = message.useMessage();
+  const [avatar, setAvatar] = useState(null)
+  const [professionalHeadline, setProfessionalHeadline]  = useState(null)
+  const [hourlyRate, setHourlyRate] = useState(null)
+  const [summary, setSummary] = useState(null)
+  const { notificationContext, successMsg, errorMsg } = useApNotification();
+  const [updateProfile] = useMutation(UPDATE_PROFILE)
 
-  const fileInputHandler = () =>
+  const fileInputHandler = async () =>
   {
-    try 
+    const result = await useApImageDataURI(profilePic.current.files[0], 600000);
+    if(result?.data)
     {
-        let file =  picInputHandler(
-        {inputRef: profilePic, inputButton: 'profile-pic-button', 
-        loader: 'profile-pic-loader', imgPreview: 'profile-pic-preview', inputForm: profileInputForm})
-        setProfilePicture(file)
-    } 
-    catch (error) 
-    {
-      messageApi.open({
-        type: 'error',
-        content: error.message,
-      });
+      setAvatar({ avatar: result?.data})
     }
+    else
+    {
+      errorMsg("Error", result?.error)
+      profileInputForm.current.reset()
+    }
+    
+    // try 
+    // {
+    //     let file =  picInputHandler(
+    //     {inputRef: profilePic, inputButton: 'profile-pic-button', 
+    //     loader: 'profile-pic-loader', imgPreview: 'profile-pic-preview', inputForm: profileInputForm})
+    //     setProfilePicture(file)
+    // } 
+    // catch (error) 
+    // {
+    //   messageApi.open({
+    //     type: 'error',
+    //     content: error.message,
+    //   });
+    // }
   }
 
   const clearPicHandler = () =>
@@ -43,24 +58,22 @@ export const EditProfileInfo: React.FC<IProps> = ({profile}) => {
 
   const uploadDetails = () =>
   {
-    if(profilePicture !== null || summary.current.value !== '' || proHeadline.current.value !== '')
-    {
-      console.log(profilePicture, summary.current.value, proHeadline.current.value)
-    }
-    else
-    {
-      messageApi.open({
-        content: <p className='text-lg flex items-center px-3'>
-          <CloseCircleFilled  style={{color: 'red', fontSize: '20px'}}/>
-          <span className='ml-2'>Please Enter at Least One Field to Edit Details.</span>
-        </p>,
-      });
-    }
+    const fields = [ avatar, professionalHeadline, hourlyRate, summary ]
+    const filterFields = fields.filter(field => field !== null)
+    let variables
+    filterFields.forEach(item => {
+      variables = { ...variables, ...item }
+    })
+    updateProfile({ variables : {
+      profile: variables
+    }})
+    .then((val) => console.log(val))
+    .catch((err) => console.log(err))
   }
 
   return (
     <>
-    {contextHolder}
+    {notificationContext}
     <div>
     <h1 className='font-bold text-xl'>Edit Profile Settings</h1>
     <p className='mb-3'>Enter new value and proceed</p>
@@ -93,17 +106,17 @@ export const EditProfileInfo: React.FC<IProps> = ({profile}) => {
           <div className='flex mb-3'>
             <div className='mr-3'>
               <p className='mb-1'>Professional Headline</p>
-              <input type="text" ref={proHeadline} className='w-64 border rounded p-3 h-10' />
+              <input type="text" onChange={(e) => setProfessionalHeadline({professionalHeadline: e.target.value})}  className='w-64 border rounded p-3 h-10' />
             </div>
             <div>
               <p className='mb-1'>Hourly Rate - USD Per Hour</p>
-              <input type="text" className='w-64 border p-3 h-10' />
+              <input type="number" onChange={(e) => setHourlyRate({hourlyRate: e.target.value})} className='w-64 border p-3 h-10' />
             </div>
           </div>
 
           <div className='mt-1'>
             <p className='mb-2'>Summary</p>
-            <textarea ref={summary} className='border w-full rounded p-3 h-52 resize-none'></textarea>
+            <textarea onChange={(e) => setSummary({summary: e.target.value})} className='border w-full rounded p-3 h-52 resize-none'></textarea>
           </div>
         </div>
       </div>

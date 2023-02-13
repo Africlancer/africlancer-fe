@@ -13,59 +13,59 @@ const authOptions: NextAuthOptions = {
     maxAge: parseInt(process.env.TOKEN_MAX_AGE as string),
   },
   callbacks: {
-    async jwt(params: any) {
-      console.log(params, "JWT");
-      const { token, user, account } = params;
-      if (account?.accessToken) {
-        token.accessToken = account.accessToken;
-      }
-      if (user?.roles) {
-        token.roles = user.roles.toString();
-      }
-      return token;
+    async jwt({ token, user, account }) {
+      console.log("JWT : " , token, user, account)
+      return token
     },
-    async session(params: any) {
-      console.log(params, "session");
-      const { session, token } = params;
-      return session;
+    async session({ session, token }) {
+      console.log("SESSION : ", session, token)
+      return session
     },
     async signIn(params) {
-      console.log(params, "signIn");
-      return true;
+        console.log("SIGNIN : ", params)
+        return true
     },
   },
   providers: [
     CredentialsProvider({
       type: "credentials",
       credentials: {
-        username: { label: "Email", type: "text", placeholder: "Email" },
-        password: { label: "Password", type: "password" },
+        // username: { label: "Email", type: "text", placeholder: "Email" },
+        // password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
         const { username, password } = credentials as {
           username: string;
           password: string;
         };
+          
         // Login logic
-        const rs = await fetch(`${process.env.BASE_API}/auth/signin`, {
+        const result = await fetch(`${process.env.BASE_API}/auth/signin`, {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
           method: "POST",
           body: JSON.stringify({ username, password }),
-        }).then((rs) => rs.json());
+        })
+        const user = await result.json()
+        
+        if (result.ok && user) {
+          return user
+        }
+        throw new Error(user.message);
 
-        if (rs.statusCode === 200)
-          // return Promise.resolve({
-          //   id: "123",
-          //   name: "sabi",
-          //   email: "abc@gmail.com",
-          //   image: "image.png",
-          // });
-        return { ...rs, token: rs?.access_token, user: rs.details };
-
-        throw new Error(rs.message);
+        // if (rs.statusCode === 200)
+        //  {
+        //   console.log(rs)
+        //   // return { ...rs, token: rs?.access_token, user: rs.details };
+        //  } // return Promise.resolve({
+        //   //   id: "123",
+        //   //   name: "sabi",
+        //   //   email: "abc@gmail.com",
+        //   //   image: "image.png",
+        //   // });
+        // throw new Error(rs.message);
       },
     }),
   ],
@@ -73,5 +73,4 @@ const authOptions: NextAuthOptions = {
   //     signIn: "/signin",
   //   },
 };
-
 export default NextAuth(authOptions);

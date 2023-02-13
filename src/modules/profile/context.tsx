@@ -1,8 +1,9 @@
 import React, { createContext, useState } from 'react'
+import { IProfile } from './model'
 
 export const ProfileContext = createContext({
-    updateBannerPhoto: (file: File) => {},
-    updateMiniProfile: () => {}
+    profile: null,
+    updateProfile: (profile: IProfile) =>  {}
 })
 
 interface IProps {
@@ -11,18 +12,15 @@ interface IProps {
 
 export const ProfileContextProvider: React.FC<IProps> = ({children}) =>
 {
-    const updateBannerPhoto = (file: File) =>
+    const [profile, setProfile] = useState<IProfile>()
+    const updateProfile = (profile: IProfile) => 
     {
-        console.log(file)
-    }
-    const updateMiniProfile = () =>
-    {
-        console.log()
+        setProfile(profile)
     }
     
     return(
         <ProfileContext.Provider
-            value={{updateBannerPhoto, updateMiniProfile}}
+            value={{ updateProfile, profile }} 
         >
             {children}
         </ProfileContext.Provider>

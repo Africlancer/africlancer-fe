@@ -5,7 +5,7 @@ import  { MenuProps } from 'antd';
 import  { MoreOutlined, PlusCircleOutlined, RiseOutlined } from '@ant-design/icons'
 import { Progress } from 'antd';
 import { ApButton } from '@/src/components/button';
-import { ArrowRightIcon } from '@/src/components/icons/customIcons';
+import { ArrowRightIcon } from '@/src/components/icons';
 
 export const DashboardPage = () => {
   const items: MenuProps['items'] = [
