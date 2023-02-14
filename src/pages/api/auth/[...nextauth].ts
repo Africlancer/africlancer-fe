@@ -1,7 +1,6 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-
-console.log(process.env.TOKEN_SECRET, "process.env.TOKEN_SECRET");
+import jwt from "jsonwebtoken";
 
 const authOptions: NextAuthOptions = {
   secret: process.env.TOKEN_SECRET,
@@ -14,23 +13,32 @@ const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async jwt(params: any) {
-      console.log(params, "JWT");
-      const { token, user, account } = params;
-      if (account?.accessToken) {
-        token.accessToken = account.accessToken;
-      }
-      if (user?.roles) {
-        token.roles = user.roles.toString();
-      }
+      const { token } = params;
+
+      console.log(params, "jws...");
       return token;
     },
     async session(params: any) {
-      console.log(params, "session");
       const { session, token } = params;
+      session.user.name = token?.name;
+      session.user.id = token?.sub;
+
+      console.log(params, "process.env.TOKEN_SECRET");
+      session.token = jwt.sign(
+        {
+          user: "sabiridwan",
+          sub: "63eb6740cb05b1cfb7298e8f",
+          roles: ["user"],
+        },
+        `'ShVmYq3t6w9z$C&F)J@NcRfTjWnZr4u7'`,
+        {
+          algorithm: "HS256",
+        }
+      );
+
       return session;
     },
     async signIn(params) {
-      console.log(params, "signIn");
       return true;
     },
   },
@@ -54,18 +62,21 @@ const authOptions: NextAuthOptions = {
           },
           method: "POST",
           body: JSON.stringify({ username, password }),
-        }).then((rs) => rs.json());
+        })
+          .then((rs) => rs.json())
+          .then((rs) => {
 
-        if (rs.statusCode === 200)
-          // return Promise.resolve({
-          //   id: "123",
-          //   name: "sabi",
-          //   email: "abc@gmail.com",
-          //   image: "image.png",
-          // });
-        return { ...rs, token: rs?.access_token, user: rs.details };
+            console.log(rs,'RS RESULT...')
+            return {
+              ...rs,
+              ...rs?.details,
+              id: rs?.details?._id,
+              user: rs?.details,
+            };
+          });
 
-        throw new Error(rs.message);
+        if (rs?.error) throw new Error(rs.message);
+        return rs;
       },
     }),
   ],
@@ -75,5 +86,3 @@ const authOptions: NextAuthOptions = {
 };
 
 export default NextAuth(authOptions);
-
-
