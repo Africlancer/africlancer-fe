@@ -6,7 +6,8 @@ export const ProfileContext = createContext({
     updateProfile: (profile: IProfile) =>  {}
 })
 
-interface IProps {
+interface IProps 
+{
     children: React.ReactNode;
 }
 

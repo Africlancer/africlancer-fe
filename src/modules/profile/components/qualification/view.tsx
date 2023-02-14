@@ -9,19 +9,19 @@ import { QualificationView } from './components';
 
 
 type qualification = {
-    certificate: string,
+    title: string,
     conferringOrganization: string,
     startYear: string,
     summary: string
 }
 
-interface Iprops
+interface IProps
 {
     qualifications: qualification[],
     profileID: string
 }
 
-export const Qualifications: React.FC<Iprops> = ({qualifications, profileID}) => 
+export const Qualifications: React.FC<IProps> = ({qualifications, profileID}) => 
 {
     const items: MenuProps['items'] = [
         {
@@ -60,7 +60,7 @@ export const Qualifications: React.FC<Iprops> = ({qualifications, profileID}) =>
                 {
                     qualifications ?
                     qualifications.map(qualification => (
-                        <QualificationView startYear={ qualification.startYear } certificate={ qualification.startYear } conferringOrganization={ qualification.conferringOrganization } profileId={ profileID } summary={ qualification.summary }/>
+                        <QualificationView startYear={ qualification.startYear } certificate={ qualification.title } conferringOrganization={ qualification.conferringOrganization } profileId={ profileID } summary={ qualification.summary }/>
                     )) 
                     : <p className='text-skin-inverted'>No qualification has been added.</p>
                 }

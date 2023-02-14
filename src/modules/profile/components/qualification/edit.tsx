@@ -22,7 +22,7 @@ export const EditQualifications:React.FC<Iprops>  = ({ profileId, setModal}) => 
     if(qualification.professionalCertificate !== null && qualification.conferringOrganization !== null && qualification.summary !== null && qualification.startYear !== null)
     {
       addQualification({ variables : {
-        qualification: { professionalCertificate: qualification.professionalCertificate, conferringOrganization: qualification.conferringOrganization, summary: qualification.summary, startYear: qualification.startYear }
+        qualification: { title: qualification.professionalCertificate, conferringOrganization: qualification.conferringOrganization, summary: qualification.summary, startYear: qualification.startYear, profileId }
       }})
       .then((val) => { if(val) { successMsg(`Success`, `Qualification has been added.`) }} )
       .catch((err) => { if(err) { errorMsg("Error", err.message), console.log(err.message) }})
@@ -52,7 +52,7 @@ export const EditQualifications:React.FC<Iprops>  = ({ profileId, setModal}) => 
       <div className="flex w-full gap-5 mt-5">
       <div className='w-full'>
             <p className='mb-2'>Start Year</p>
-            <select onChange={({target}) =>  setQualification({ ...qualification, startYear: target.value})} name="month" id="month" className='w-full border rounded px-3 h-10'>
+            <select onChange={({target}) =>  setQualification({ ...qualification, startYear: parseInt(target.value)})} name="month" id="month" className='w-full border rounded px-3 h-10'>
               <option selected disabled>Select Year</option>
               {
                 years.map(year => (

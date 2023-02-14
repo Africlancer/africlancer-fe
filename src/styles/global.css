@@ -103,12 +103,6 @@ body
 }
 
 
-
-
-
-
-
-
 .cover-bg
 {
     background-image: url(../assets/images/test-bg.jpg);
@@ -127,7 +121,7 @@ body
     box-sizing: border-box;
   }
   
-  .fab-wrapper {
+  /* .fab-wrapper {
     position: fixed;
     bottom: 3rem;
     right: 3rem;
@@ -282,5 +276,8 @@ body
   .fab-wheel .fab-action-4 {
     left: 0;
     bottom: -1rem;
-  }
-  
+  } */
+.ant-image .ant-image-img
+{
+  object-fit: cover;
+}

@@ -5,6 +5,7 @@ import { message, Image } from 'antd'
 import React, { useContext, useRef, useState } from 'react'
 import { ProfileContext } from '../context'
 
+
 export const EditBannerPhoto = () =>
 {
   const { updateBannerPhoto } = useContext(ProfileContext)

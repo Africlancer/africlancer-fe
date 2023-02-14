@@ -2,7 +2,7 @@ import { ApButton } from "@/src/components/button";
 import { Footer } from "@/src/components/footer";
 import { Navbar, SubMenu } from "@/src/components/modal";
 import React, { useContext, useEffect, useState } from "react";
-import { ProfileInfo, Experience, Publication, Qualifications, Reviews, Portfolioitems, Verification, BannerPhoto, Certifications, 
+import { ProfileInfo, Experience, Publication, Banner, Qualifications, Reviews, Portfolioitems, Verification,  Certifications, 
  TopSkills, SimilarFreelancers, SimilarShowcases } from "./components";
 import  { MenuProps } from 'antd';
 import { Education } from "./education/view";
@@ -48,7 +48,7 @@ export const ProfilePage = () => {
         <SubMenu items={items} currentPage='improve-profile'/>
 
         <div className="relative pt-24">
-          <BannerPhoto/> 
+          <Banner banner={profile?.banner}/> 
           <div className="-translate-y-44 mt-20 w-full">
             <div className="px-6 pb-8">
             <ApButton
@@ -64,7 +64,7 @@ export const ProfilePage = () => {
                 <Reviews/>
                 <Experience/>
                 <Education/>
-                <Qualifications qualifications={profile?.qualifications} profileID='63e75fb890a2c8f7ebd648ce'/>
+                <Qualifications qualifications={profile?.qualification} profileID='63e75fb890a2c8f7ebd648ce'/>
                 <Publication publications={profile?.publications} profileID='63e75fb890a2c8f7ebd648ce'/>
               </div>
 

@@ -31,7 +31,7 @@ export const ProfileInfo: React.FC<IProps> = ({ profile }) => {
 
           {
             profile ?
-            <SectionThree hourlyRate={ profile.hourlyRate } setModal={ setModal }/>
+            <SectionThree hourlyRate={ profile?.hourlyRate } setModal={ setModal }/>
             : <></>
         }
       </div>

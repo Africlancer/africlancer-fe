@@ -7,10 +7,8 @@ const ADD_PUBLICATION = gql`
 `
 
 const ADD_QUALIFICATION = gql`
-    mutation AddOrUpdatePublications($publication: PublicationsInput!) {
-        addOrUpdatePublications(publication: $publication) {
-        j
-    }
+    mutation AddOrUpdateQualifications($qualification: QualificationInput!) {
+        addOrUpdateQualification(qualification: $qualification)
 }
 `
 const FIND_ONE_PROFILE = gql`
@@ -23,6 +21,7 @@ const FIND_ONE_PROFILE = gql`
             summary,
             recommendations,
             publications { title, publisher, summary }
+            qualification { title, conferringOrganization, summary, startYear }
         }
     }
 `
