@@ -33,6 +33,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.1",
     "autoprefixer": "^10.4.13",
     "image-data-uri": "^2.0.1",
     "postcss": "^8.4.21",
