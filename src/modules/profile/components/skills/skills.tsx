@@ -1,8 +1,8 @@
-import { ApButton, CustomOutlineButton } from '@/src/components/button';
+import { ApButton } from '@/src/components/button';
 import { EditIcon } from '@/src/components/icons';
 import React from 'react'
 
-export const TopSkills = () => 
+export const Skills = () => 
 {
     return (
             <div className="bg-skin-base rounded-xl w-full shadow-xl">

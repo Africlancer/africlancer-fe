@@ -2,11 +2,10 @@ import { ApButton } from "@/src/components/button";
 import { Footer } from "@/src/components/footer";
 import { Navbar, SubMenu } from "@/src/components/modal";
 import React, { useContext, useEffect, useState } from "react";
-import { ProfileInfo, Experience, Publication, Banner, Qualifications, Reviews, Portfolioitems, Verification,  Certifications, 
- TopSkills, SimilarFreelancers, SimilarShowcases } from "./components";
+import { ProfileInfo, Experience, Publication, Banner, Qualifications, Reviews, 
+Portfolioitems, Verification,  Certifications, SimilarFreelancers, SimilarShowcases,
+Skills, Education } from "./components";
 import  { MenuProps } from 'antd';
-import { Education } from "./education/view";
-import { Skills } from "./skills/view";
 import { useQuery } from "@apollo/client";
 import { FIND_ONE_PROFILE } from "./gql/query";
 import { ProfileContext } from "./context";
@@ -31,6 +30,7 @@ export const ProfilePage = () => {
       key: 'my-rewards',
     }
   ];
+  
   const { profile, updateProfile } = useContext(ProfileContext)
   const [user, setUser] = useState({})
   const { loading, error, data } = useQuery(FIND_ONE_PROFILE);
@@ -63,7 +63,7 @@ export const ProfilePage = () => {
                 <Portfolioitems/>
                 <Reviews/>
                 <Experience/>
-                <Education/>
+                <Education educations={profile?.education} profileID='63e75fb890a2c8f7ebd648ce'/>
                 <Qualifications qualifications={profile?.qualification} profileID='63e75fb890a2c8f7ebd648ce'/>
                 <Publication publications={profile?.publications} profileID='63e75fb890a2c8f7ebd648ce'/>
               </div>

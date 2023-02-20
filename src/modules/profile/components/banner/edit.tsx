@@ -3,7 +3,7 @@ import { clearPic, picInputHandler } from '@/src/custom'
 import { CloseOutlined, LoadingOutlined, SyncOutlined, UploadOutlined } from '@ant-design/icons'
 import { message, Image } from 'antd'
 import React, { useContext, useRef, useState } from 'react'
-import { ProfileContext } from '../context'
+import { ProfileContext } from '../../context'
 
 
 export const EditBannerPhoto = () =>

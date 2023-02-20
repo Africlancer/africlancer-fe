@@ -3,10 +3,8 @@ import { ArrowRightIcon } from '@/src/components/icons'
 import { ApModal } from '@/src/components/modal';
 import React, { useState } from 'react'
 import { EditQualifications } from './edit';
-import  { MoreOutlined } from '@ant-design/icons'
-import { Dropdown, MenuProps } from 'antd';
 import { QualificationView } from './components';
-
+import { Skeleton } from 'antd';
 
 type qualification = {
     title: string,
@@ -23,17 +21,6 @@ interface IProps
 
 export const Qualifications: React.FC<IProps> = ({qualifications, profileID}) => 
 {
-    const items: MenuProps['items'] = [
-        {
-            key: '1',
-            label: 'Edit',
-        },
-        {
-            key: '2',
-            label: 'Delete',
-        },
-    ];
-
     const [modal, setModal] = useState<{ open: boolean }>();
 
     return (
@@ -56,15 +43,20 @@ export const Qualifications: React.FC<IProps> = ({qualifications, profileID}) =>
                 </ApButton>
             </div>
 
-            <div className='px-5 py-5 flex flex-col gap-5'>
-                {
-                    qualifications ?
-                    qualifications.map(qualification => (
-                        <QualificationView startYear={ qualification.startYear } certificate={ qualification.title } conferringOrganization={ qualification.conferringOrganization } profileId={ profileID } summary={ qualification.summary }/>
-                    )) 
-                    : <p className='text-skin-inverted'>No qualification has been added.</p>
-                }
-            </div> 
+            {
+                qualifications ?
+                <div className='px-5 py-5 flex flex-col gap-5'>
+                    {
+                        qualifications ?
+                        qualifications.map(qualification => (
+                            <QualificationView startYear={ qualification.startYear } certificate={ qualification.title } conferringOrganization={ qualification.conferringOrganization } profileId={ profileID } summary={ qualification.summary }/>
+                        )) 
+                        : <p className='text-skin-inverted'>No qualification has been added.</p>
+                    }
+                </div> 
+                : <div className='px-5 py-5'><Skeleton active /></div>
+            }
+
         </div>
         <ApModal
             open={modal?.open}

@@ -30,7 +30,7 @@ const authOptions: NextAuthOptions = {
           sub: "63eb6740cb05b1cfb7298e8f",
           roles: ["user"],
         },
-        `'ShVmYq3t6w9z$C&F)J@NcRfTjWnZr4u7'`,
+        `ShVmYq3t6w9z$C&F)J@NcRfTjWnZr4u7`,
         {
           algorithm: "HS256",
         }

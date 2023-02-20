@@ -5,14 +5,12 @@ import useApNotification from "@/src/hooks/notification";
 import {
   DoubleRightOutlined, LoadingOutlined
 } from "@ant-design/icons";
-import { useMutation } from "@apollo/client";
 import { Form, Formik } from "formik";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import * as Yup from "yup";
-import { USER_SIGNIN } from "./gql/query";
 import { bgImages } from "./model";
 
 const FormikSchema = Yup.object().shape({
@@ -30,7 +28,7 @@ export const SigninPage = () => {
   const [loading, setLoading] = useState(false);
   const [bgImg, setBgImg] = useState<string>();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     let index = Math.floor(Math.random() * bgImages.length);
     let item = bgImages[index];
     setBgImg(item);

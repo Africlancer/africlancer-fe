@@ -2,6 +2,7 @@ import { ErrorMessage, useField } from "formik";
 import React from "react";
 
 interface IProps {
+  children: React.ReactNode
   label?: string;
   type?: string;
   name: string;
@@ -11,13 +12,13 @@ interface IProps {
   props?: {
     [x: string]: any;
   };
+  disabled?: boolean
 }
 
-const defaultInputBox = "border-skin-border border text-black outline-none w-full text-sm bg-skin-input px-5 py-3 flex items-center rounded mb-2";
-const defaultTextArea = "border w-full rounded p-3 h-40 resize-none"
+const defaultClassName= "w-full border rounded px-5 py-3.5";
 
-export const ApTextInput: React.FC<IProps> = (props: IProps) => {
-  const { name, type, label, className, ref } = props;
+export const ApSelectInput: React.FC<IProps> = (props: IProps) => {
+  const { name, type, label, className, ref, children, disabled } = props;
 
   const [field] = useField(name);
 
@@ -29,19 +30,14 @@ export const ApTextInput: React.FC<IProps> = (props: IProps) => {
             name={name}
             component="p"
         /></label>}
-      {type == "textarea" ? (
-        <textarea
-          {...props}
-          {...field}
-          className={`${defaultTextArea} ${className}`}
-        ></textarea>
-      ) : (
-        <input
-          {...props}
-          {...field}
-          className={`${defaultInputBox} ${className}`}
-        />
-      )}
+        <select
+            {...props}
+            {...field}
+            disabled={disabled}
+            className={`${defaultClassName} ${className}`}
+        >
+            {children}
+        </select>
       {
         !label &&
         <ErrorMessage

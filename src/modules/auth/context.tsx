@@ -33,7 +33,6 @@ const AuthContextProvider: React.FC<IProps> = ({ children }) => {
   const createSigninQuery = useSignInUser((rs) => {})
 
   const signUp = async (user: IUser): Promise<void> => {
-    console.log(user);
     await createUserQery[0]({ variables: { user } }).then((rs) => {
       if (rs.data?.createUser) {
         console.log("User created..");

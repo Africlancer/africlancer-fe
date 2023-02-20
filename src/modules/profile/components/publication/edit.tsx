@@ -1,33 +1,42 @@
 import { ApButton } from '@/src/components/button'
 import { useMutation } from '@apollo/client'
-import React, { useState } from 'react'
-import { ADD_PUBLICATION } from '../../gql/query'
-import { PlusOutlined, CloseOutlined, CloseCircleFilled } from '@ant-design/icons'
+import React from 'react'
+import { ADD_PUBLICATION, FIND_ONE_PROFILE } from '../../gql/query'
+import { PlusOutlined, CloseOutlined } from '@ant-design/icons'
 import useApNotification from "@/src/hooks/notification";
+import { Formik, Form } from 'formik'
+import { FormikSchema } from './constants'
+import { ApTextInput } from '@/src/components'
 
-interface Iprops
+interface IProps
 {
   profileId: string,
   setModal: any
 }
 
-export const EditPublication:React.FC<Iprops> = ({ profileId, setModal}) => {
+export const EditPublication: React.FC<IProps> = ({ profileId, setModal}) => {
 
   const { notificationContext, successMsg, errorMsg } = useApNotification();
-  const [addPublication] = useMutation(ADD_PUBLICATION)
-  const [publication, setPublication] = useState({title: null, publisher: null, summary: null})
+  const [addPublication] = useMutation(ADD_PUBLICATION, {
+    refetchQueries: [
+      { query: FIND_ONE_PROFILE }
+    ]
+  })
 
-  const addPublicationHandler = () =>
+  const handleSubmit = async(val) => 
   {
-    if(publication.publisher !== null && publication.title !== null && publication.summary !== null)
-    {
-      addPublication({ variables : {
-        publication: { title: publication.title, publisher: publication.publisher, summary: publication.summary, profileId }
-      }})
-      .then((val) => { if(val) { successMsg(`Success`, `Publication has been added.`) }} )
-      .catch((err) => { if(err) { errorMsg("Error", err.message), console.log(err.message) }})
-    }
-    else { errorMsg("Error", "Please fill all fields before proceeding.") }
+    addPublication({ variables : {
+      publication: { ...val, profileId }
+    }})
+    .then((val) => { if(val) { successMsg(`Success`, `Publication has been added.`)}} )
+    .catch(err => 
+    { 
+      if(err) 
+      {
+        let msg = err.message === "Failed to fetch" ? "Check Your Internet Connection" :  err.message
+        errorMsg("Error", msg) 
+      }
+    })
   }
 
   return (
@@ -37,40 +46,50 @@ export const EditPublication:React.FC<Iprops> = ({ profileId, setModal}) => {
         <h1 className='font-bold text-xl'>Add Publication</h1>
         <p className='mb-3'>Fill To Add New Publication</p>
 
-        <div className="flex w-full gap-5">
-        <div className='w-full'>
-          <p className='mb-2'>Publication Title</p>
-          <input type="text" onChange={({target}) =>  setPublication({ ...publication, title: target.value})} placeholder='Enter Publication Title' className='w-full border rounded p-3 h-10' />
-        </div>
+        <Formik
+            initialValues={{
+              title: "",
+              publisher: "",
+              summary: ""
+            }}
+            validationSchema={FormikSchema}
+            onSubmit={handleSubmit}
+        >
+          <Form>
+          <div className="flex w-full gap-8 mb-5">
+            <div className='w-full'>
+              <ApTextInput placeholder="Enter Publication Title" name="title" label='Publication Title'/>
+            </div>
 
-        <div className='w-full'>
-          <p className='mb-2'>Publisher</p>
-          <input type="text" placeholder='Enter Publisher'  onChange={({target}) =>  setPublication({ ...publication, publisher: target.value})} className='w-full border rounded p-3 h-10' />
-        </div>
-        </div>
+            <div className='w-full'>
+              <ApTextInput placeholder="Enter Name of Publisher" name="publisher" label='Publisher'/>
+            </div>
+          </div>
 
-        <div>
-          <p className='mb-2 mt-5'>Summary</p>
-          <textarea onChange={({target}) =>  setPublication({ ...publication, summary: target.value})}  placeholder='Enter a Description of The Publication' className='border w-full rounded p-3 h-40 resize-none'></textarea>
-        </div>
+          <div>
+            <ApTextInput placeholder="Enter Summary" name="summary" type='textarea' label='Summary'/>
+          </div>
 
-        <div className='gap-4 flex justify-end items-center mt-4'>
-          <ApButton
-            onClick={addPublicationHandler}
-            className='py-2.5 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2'
-          >
-            Add Publication
-            <PlusOutlined className='text-lg'/>
-          </ApButton>
+            <div className='gap-4 flex justify-end items-center mt-4'>
+              <ApButton
+                onClick={() => {}}
+                className='py-2.5 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2'
+                type="submit"
+              >
+                Add Publication
+                <PlusOutlined className='text-lg'/>
+              </ApButton>
 
-          <ApButton
-            onClick={() => setModal({ open: false })}
-            className='mr-3 py-2 border border-green-500 flex text-skin-accent rounded items-center p-3 justify-center gap-2'
-          >
-            Cancel
-            <CloseOutlined className='text-lg'/>
-          </ApButton>
-        </div>
+              <ApButton
+                onClick={() => setModal({ open: false })}
+                className='py-2 border border-green-500 flex text-skin-accent rounded items-center p-3 justify-center gap-2'
+              >
+                Cancel
+                <CloseOutlined className='text-lg'/>
+              </ApButton>
+            </div>
+          </Form>
+        </Formik>
       </div>
       </>
   )

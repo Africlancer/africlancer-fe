@@ -4,6 +4,7 @@ import { ApModal } from '@/src/components/modal';
 import React, { useState } from 'react'
 import { EditPublication } from './edit';
 import { PublicationView } from './components';
+import { Skeleton } from 'antd';
 
 type publication = {
     title: string,
@@ -11,13 +12,13 @@ type publication = {
     summary: string
 }
 
-interface Iprops
+interface IProps
 {
     publications: publication[],
     profileID: string
 }
 
-export const Publication: React.FC<Iprops> = ({publications, profileID}) => 
+export const Publication: React.FC<IProps> = ({publications, profileID}) => 
 {
     const [modal, setModal] = useState<{ open: boolean }>();
     
@@ -38,15 +39,19 @@ export const Publication: React.FC<Iprops> = ({publications, profileID}) =>
                 </ApButton>
             </div>
 
-            <div className='px-5 py-5 flex flex-col gap-5'>
-                {
-                    publications ? 
-                    publications.map(publication => (
-                        <PublicationView profileId='63e75fb890a2c8f7ebd648ce' summary={ publication.summary } title={ publication.title } publisher={ publication.publisher } />
-                    ))
-                    : <p className='text-skin-inverted'>No publication has been added.</p> 
-                }
-            </div> 
+            {
+                publications ?
+                    <div className='px-5 py-5 flex flex-col gap-5'>
+                    {
+                        publications ? 
+                        publications.map(publication => (
+                            <PublicationView profileId='63e75fb890a2c8f7ebd648ce' summary={ publication.summary } title={ publication.title } publisher={ publication.publisher } />
+                        ))
+                        : <p className='text-skin-inverted'>No publication has been added.</p> 
+                    }
+                </div> 
+                : <div className='px-5 py-5'><Skeleton active /></div>
+            }
         </div>
         <ApModal
             open={modal?.open}

@@ -11,6 +11,11 @@ const ADD_QUALIFICATION = gql`
         addOrUpdateQualification(qualification: $qualification)
 }
 `
+const ADD_EDUCATION = gql`
+    mutation AddOrUpdateEducation($education: EducationInput!) {
+        addOrUpdateEducation(education: $education)
+}
+`
 const FIND_ONE_PROFILE = gql`
     query FindOneProfile {
         findOneProfile {
@@ -22,6 +27,7 @@ const FIND_ONE_PROFILE = gql`
             recommendations,
             publications { title, publisher, summary }
             qualification { title, conferringOrganization, summary, startYear }
+            education { country, insitution, degree, startYear, endYear }
         }
     }
 `
@@ -32,4 +38,4 @@ const UPDATE_PROFILE = gql`
   }
 `
 
-export { ADD_PUBLICATION, ADD_QUALIFICATION, FIND_ONE_PROFILE, UPDATE_PROFILE }
+export { ADD_PUBLICATION, ADD_QUALIFICATION, FIND_ONE_PROFILE, UPDATE_PROFILE, ADD_EDUCATION }
