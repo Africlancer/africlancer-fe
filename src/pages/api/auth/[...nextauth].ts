@@ -1,9 +1,10 @@
+import jwt from "jsonwebtoken";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import jwt from "jsonwebtoken";
 
 const authOptions: NextAuthOptions = {
   secret: process.env.TOKEN_SECRET,
+
   jwt: {
     secret: process.env.TOKEN_SECRET,
   },
@@ -15,31 +16,26 @@ const authOptions: NextAuthOptions = {
     async jwt(params: any) {
       const { token } = params;
 
-      console.log(params, "jws...");
-      return token;
+      console.log(params, "JWT TOKEN");
+      return { ...token, user: params?.user?.user };
     },
+    //TODO use existing token or generate new token withouth calling user api by id.
     async session(params: any) {
       const { session, token } = params;
-      session.user.name = token?.name;
-      session.user.id = token?.sub;
-
-      console.log(params, "process.env.TOKEN_SECRET");
+      const user = await getUser(token.sub);
+      session.user = user;
       session.token = jwt.sign(
         {
-          user: "sabiridwan",
-          sub: "63eb6740cb05b1cfb7298e8f",
-          roles: ["user"],
+          user: user.username,
+          sub: token.sub,
+          roles: user.roles,
         },
-        `'ShVmYq3t6w9z$C&F)J@NcRfTjWnZr4u7'`,
+        process.env.TOKEN_SECRET,
         {
-          algorithm: "HS256",
+          expiresIn: "15m",
         }
       );
-
       return session;
-    },
-    async signIn(params) {
-      return true;
     },
   },
   providers: [
@@ -54,7 +50,6 @@ const authOptions: NextAuthOptions = {
           username: string;
           password: string;
         };
-        // Login logic
         const rs = await fetch(`${process.env.BASE_API}/auth/signin`, {
           headers: {
             Accept: "application/json",
@@ -65,24 +60,36 @@ const authOptions: NextAuthOptions = {
         })
           .then((rs) => rs.json())
           .then((rs) => {
-
-            console.log(rs,'RS RESULT...')
             return {
               ...rs,
-              ...rs?.details,
               id: rs?.details?._id,
-              user: rs?.details,
+              token: rs.access_token,
+              user: { ...rs?.details },
             };
           });
 
         if (rs?.error) throw new Error(rs.message);
+
+        console.log(rs, "RESULT..");
         return rs;
       },
     }),
   ],
-  //   pages: {
-  //     signIn: "/signin",
-  //   },
 };
 
 export default NextAuth(authOptions);
+
+const getUser = async (userId: string) => {
+  const rs = await fetch(
+    `${process.env.BASE_API}/user/retrieve-by-app/${userId}/${process.env.AP_ACCESS_TOKEN}`,
+    {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+    }
+  ).then((rs) => rs.json());
+
+  return rs;
+};
