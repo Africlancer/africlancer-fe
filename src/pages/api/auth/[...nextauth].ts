@@ -24,6 +24,7 @@ const authOptions: NextAuthOptions = {
       const { session, token } = params;
       const user = await getUser(token.sub);
       session.user = user;
+      session.refresh_token = user.refresh_token;
       session.token = jwt.sign(
         {
           user: user.username,

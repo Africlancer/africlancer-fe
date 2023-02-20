@@ -1,11 +1,23 @@
-import React, { useState, useContext, useEffect } from "react";
+import { getSession } from "next-auth/react";
 import { ProfilePage } from "../../modules/profile/page";
-import { useQuery } from "@apollo/client";
-import { FIND_ONE_PROFILE } from "@/src/modules/profile/gql/query";
-import { ProfileContext } from "@/src/modules/profile/context";
 
 const Profile = () => {
-  return <ProfilePage/>;
+  return <ProfilePage />;
 };
 
 export default Profile;
+
+export const getServerSideProps = async (context) => {
+  const session = await getSession(context);
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/signin",
+        permenant: false,
+      },
+    };
+  }
+  return {
+    props: {},
+  };
+};
