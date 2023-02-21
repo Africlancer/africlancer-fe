@@ -1,7 +1,7 @@
 import { ApButton } from "@/src/components/button";
 import { Footer } from "@/src/components/footer";
 import { Navbar, SubMenu } from "@/src/components/modal";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { ProfileInfo, Experience, Publication, Banner, Qualifications, Reviews, 
 Portfolioitems, Verification,  Certifications, SimilarFreelancers, SimilarShowcases,
 Skills, Education } from "./components";
@@ -9,6 +9,7 @@ import  { MenuProps } from 'antd';
 import { useQuery } from "@apollo/client";
 import { FIND_ONE_PROFILE } from "./gql/query";
 import { ProfileContext } from "./context";
+import { useSession } from "next-auth/react";
 
 
 export const ProfilePage = () => {
@@ -31,14 +32,15 @@ export const ProfilePage = () => {
     }
   ];
   
+  const sess = useSession()
+  const user: any = sess.data?.user
   const { profile, updateProfile } = useContext(ProfileContext)
-  const [user, setUser] = useState({})
   const { loading, error, data } = useQuery(FIND_ONE_PROFILE);
 
   useEffect(() => {
     if (loading) { console.log('Loading...') }
     else if (error) { console.log(`Error! ${error.message}`) }
-    else { updateProfile(data.findOneProfile); console.log(data.findOneProfile) }
+    else { updateProfile(data.findOneProfile) }
   })
 
   return (
@@ -62,10 +64,10 @@ export const ProfilePage = () => {
                 <ProfileInfo profile={profile} />
                 <Portfolioitems/>
                 <Reviews/>
-                <Experience/>
-                <Education educations={profile?.education} profileID='63e75fb890a2c8f7ebd648ce'/>
-                <Qualifications qualifications={profile?.qualification} profileID='63e75fb890a2c8f7ebd648ce'/>
-                <Publication publications={profile?.publications} profileID='63e75fb890a2c8f7ebd648ce'/>
+                <Experience experiences={profile?.experience} profileID={user?._id}/>
+                <Education educations={profile?.education} profileID={user?._id}/>
+                <Qualifications qualifications={profile?.qualification} profileID={user?._id}/>
+                <Publication publications={profile?.publications} profileID={user?._id}/>
               </div>
 
               <div className="flex flex-col gap-8">

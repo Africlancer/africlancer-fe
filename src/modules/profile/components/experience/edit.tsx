@@ -1,11 +1,11 @@
 import { ApButton } from '@/src/components/button'
 import { useMutation } from '@apollo/client'
 import React, { useState } from 'react'
-import { ADD_PUBLICATION, FIND_ONE_PROFILE } from '../../gql/query'
+import { ADD_EXPERIENCE, FIND_ONE_PROFILE } from '../../gql/query'
 import { PlusOutlined, CloseOutlined } from '@ant-design/icons'
 import useApNotification from "@/src/hooks/notification";
 import { Formik, Form } from 'formik'
-import { ApSelectInput, ApTextInput } from '@/src/components'
+import { ApCheckBox, ApSelectInput, ApTextInput } from '@/src/components'
 import * as Yup from "yup";
 import { years, months } from '../../model';
 
@@ -15,13 +15,17 @@ const FormikSchema = Yup.object().shape({
   company: Yup.string()
       .required("* required"),
   startMonth: Yup.string()
-      .required("* required"),
+      .required("* required").nullable(true),
   startYear: Yup.string()
-      .required("* required"),
-  endMonth: Yup.string()
-      .required("* required"),
-  endYear: Yup.string()
-      .required("* required"),
+      .required("* required").nullable(true),
+  endMonth: Yup.string().nullable(true).when("working", {
+    is: (working) => working === false,
+    then:  Yup.string().required("* required").nullable(true),
+  }),
+  endYear: Yup.string().nullable(true).when("working", {
+    is: (working) => working === false,
+    then:  Yup.string().required("* required").nullable(true),
+  }),
   summary: Yup.string()
       .required("* required."),
 });
@@ -34,58 +38,35 @@ interface IProps
 
 export const EditExperience: React.FC<IProps> = ({ profileId, setModal }) => {  
   const { notificationContext, successMsg, errorMsg } = useApNotification()
-  const [addExperience] = useMutation(ADD_PUBLICATION, {
+  const [addExperience] = useMutation(ADD_EXPERIENCE, {
     refetchQueries: [
       { query: FIND_ONE_PROFILE }
     ]
   })
-  const [experience, setExperience] = useState({title: null, summary: null, company: null,
-    startMonth: null, startYear: null, endMonth: null, endYear: null, working: false
-  })
-  
-  // const addExperienceHandler = () =>
-  // {
-  //   if(experience.title !== null && experience.summary !== null && experience.company !== null &&
-  //     experience.startMonth !== null && experience.startYear !== null && experience.company !== null )
-  //   {
-  //     console.log(experience)
-  //     if(experience.working === false && experience.endMonth !== null && experience.endYear !== null )
-  //     {
-  //       addExperience({ variables : {
-  //         publication: { title: experience.title, summary: experience.summary, company: experience.company, profileId, 
-  //           startMonth: experience.startMonth, startYear: experience.startYear, endMonth: experience.endMonth,
-  //           endYear: experience.endYear, working: experience.working
-  //         }
-  //       }})
-  //       .then((val) => { if(val) { successMsg(`Success`, `Experience has been added.`), console.log(val) }} )
-  //       .catch((err) => { if(err) { errorMsg("Error", err.message), console.log(err.message) }})  
-  //     }
-  //     else if(experience.working === true) 
-  //     {
-  //       addExperience({ variables : {
-  //         publication: { title: experience.title, summary: experience.summary, company: experience.company, profileId, 
-  //           startMonth: experience.startMonth, startYear: experience.startYear, endMonth: experience.endMonth,
-  //           endYear: experience.endYear, working: experience.working
-  //         }
-  //       }})
-  //       .then((val) => { if(val) { successMsg(`Success`, `Experience has been added.`), console.log(val) }} )
-  //       .catch((err) => { if(err) { errorMsg("Error", err.message), console.log(err.message) }})  
-  //     }
-  //     else { errorMsg("Error", "Please fill all fields before proceeding.") }
-  //   }
-  //   else { errorMsg("Error", "Please fill all fields before proceeding.") }
-  // }
 
   const [ disableEnd, setDisableEnd ] = useState(false)
   const workingCheckBox = (e) => 
   {
-    setExperience({ ...experience, working: e.target.checked })
     setDisableEnd(e.target.checked)
   }
 
   const handleSubmit = (val) =>
   {
-    console.log(val)
+    const endYear = !val.working ? parseInt(val.endYear) : null
+    const endMonth = !val.working ? val.endMonth : null
+
+    addExperience({ variables : {
+      experience: { ...val, endMonth, endYear, startYear: parseInt(val.startYear), profileId }
+    }})
+    .then((val) => { if(val) { successMsg(`Success`, `Experience has been added.`)}} )
+    .catch(err => 
+    { 
+      if(err) 
+      {
+        let msg = err.message === "Failed to fetch" ? "Check Your Internet Connection" :  err.message
+        errorMsg("Error", msg) 
+      }
+    })
   }
 
   return (
@@ -99,11 +80,12 @@ export const EditExperience: React.FC<IProps> = ({ profileId, setModal }) => {
             initialValues={{
               title: "",
               company: "",
-              startMonth: "",
-              startYear: "",
-              endMonth: "",
-              endYear: "",
-              summary: ""
+              startMonth: null,
+              startYear: null,
+              endMonth: null,
+              endYear: null,
+              summary: "",
+              working: false
             }}
             validationSchema={FormikSchema}
             onSubmit={handleSubmit}
@@ -126,6 +108,7 @@ export const EditExperience: React.FC<IProps> = ({ profileId, setModal }) => {
                   name="startMonth"
                   label='Start Month'
                 >
+                  <option selected disabled>Select Month</option>
                   {
                     months.map(month => (
                       <option value={month}>{month}</option>
@@ -139,12 +122,13 @@ export const EditExperience: React.FC<IProps> = ({ profileId, setModal }) => {
                   name="startYear"
                   label='Start Year'
                 >
+                 <option selected disabled>Select Year</option>
                   {
-                    years.map(month => (
-                      <option value={month}>{month}</option>
+                    years.map(year => (
+                      <option value={year}>{year}</option>
                     ))
                   }
-              </ApSelectInput>
+            </ApSelectInput>
           </div>         
           </div>
 
@@ -155,6 +139,7 @@ export const EditExperience: React.FC<IProps> = ({ profileId, setModal }) => {
                   label='End Month'
                   disabled={disableEnd}
                 >
+                  <option selected disabled>Select Month</option>
                   {
                     months.map(month => (
                       <option value={month}>{month}</option>
@@ -167,10 +152,12 @@ export const EditExperience: React.FC<IProps> = ({ profileId, setModal }) => {
               <ApSelectInput
                   name="endYear"
                   label='End Year'
+                  disabled={disableEnd}
                 >
+                  <option selected disabled>Select Year</option>
                   {
-                    years.map(month => (
-                      <option value={month}>{month}</option>
+                    years.map(year => (
+                      <option value={year}>{year}</option>
                     ))
                   }
               </ApSelectInput>
@@ -179,8 +166,7 @@ export const EditExperience: React.FC<IProps> = ({ profileId, setModal }) => {
       </div>
 
       <div className='flex gap-2 my-5'>
-        <input type="checkbox" onChange={(e) => workingCheckBox(e)} name='working'/>
-        <p>I'm Currently Working Here</p>
+        <ApCheckBox name='working' label="I'm Currently Working Here" onChange={workingCheckBox}/>
       </div>
 
       <div>

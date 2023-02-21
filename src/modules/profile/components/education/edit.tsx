@@ -11,7 +11,7 @@ import { ApSelectInput, ApTextInput } from '@/src/components'
 
 export const FormikSchema = Yup.object().shape({
   country: Yup.string()
-      .required("* required"),
+      .required("* required").nullable(true),
   insitution: Yup.string()
       .min(6, "Password Should be at Least 6 Characters.")
       .required("* required"),
@@ -19,9 +19,9 @@ export const FormikSchema = Yup.object().shape({
       .min(6, "Password Should be at Least 6 Characters.")
       .required("* required."),
   startYear: Yup.string()
-      .required("* required"),
+      .required("* required").nullable(true),
   endYear: Yup.string()
-      .required("* required"),
+      .required("* required").nullable(true),
 });
 
 interface IProps
@@ -63,11 +63,11 @@ export const EditEducation: React.FC<IProps> = ({ profileId, setModal }) => {
 
       <Formik
             initialValues={{
-              country: "",
+              country: null,
               insitution: "",
               degree: "",
-              startYear: "",
-              endYear: ""
+              startYear: null,
+              endYear: null
             }}
             validationSchema={FormikSchema}
             onSubmit={handleSubmit}
@@ -79,7 +79,7 @@ export const EditEducation: React.FC<IProps> = ({ profileId, setModal }) => {
                   name="country"
                   label='Country'
             >
-              <option selected>Select Country</option>
+              <option selected disabled>Select Country</option>
                 {
                   countries.map(country => (
                     <option value={country}>{country}</option>
@@ -105,7 +105,7 @@ export const EditEducation: React.FC<IProps> = ({ profileId, setModal }) => {
                   name="startYear"
                   label='Start Year'
                 >
-                <option selected>Select Year</option>
+                <option selected disabled>Select Year</option>
                 {
                   years.map(year => (
                     <option value={year}>{year}</option>
@@ -119,7 +119,7 @@ export const EditEducation: React.FC<IProps> = ({ profileId, setModal }) => {
                   name="endYear"
                   label='End Year'
                 >
-                <option selected>Select Year</option>
+                <option selected disabled>Select Year</option>
                 {
                   years.map(year => (
                     <option value={year}>{year}</option>

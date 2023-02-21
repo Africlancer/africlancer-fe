@@ -52,7 +52,7 @@ export const SubMenu = ({items, currentPage}) =>
     const [current, setCurrent] = useState(currentPage);
     const [subMenuItems, setSubMenuItems] = useState<MenuProps['items']>()
 
-    useLayoutEffect(() => 
+    useEffect(() => 
     {
       setSubMenuItems(items)
     }, [])

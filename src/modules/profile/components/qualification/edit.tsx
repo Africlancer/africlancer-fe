@@ -17,7 +17,7 @@ const FormikSchema = Yup.object().shape({
       .min(6, "Password Should be at Least 6 Characters.")
       .required("* required"),
   startYear: Yup.string()
-      .required("* required"),
+      .required("* required").nullable(true),
   summary: Yup.string()
       .min(6, "Password Should be at Least 6 Characters.")
       .required("* required."),
@@ -64,7 +64,7 @@ export const EditQualifications:React.FC<IProps>  = ({ profileId, setModal}) => 
             initialValues={{
               professionalCertificate: "",
               conferringOrganization: "",
-              startYear: "",
+              startYear: null,
               summary: ""
             }}
             validationSchema={FormikSchema}
@@ -87,6 +87,7 @@ export const EditQualifications:React.FC<IProps>  = ({ profileId, setModal}) => 
                   name="startYear"
                   label='Start Year'
                 >
+                   <option selected disabled>Select Year</option>
                   {
                     years.map(year => (
                       <option value={year}>{year}</option>
