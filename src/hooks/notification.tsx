@@ -3,7 +3,7 @@ import { notification } from "antd";
 
 export default function useApNotification() {
   const [api, contextHolder] = notification.useNotification();
-  const show = (title: string, message: string, isError?: boolean) => {
+  const show = (title: string, message: React.ReactNode, isError?: boolean) => {
 
     api.info({
       icon: (
@@ -13,18 +13,18 @@ export default function useApNotification() {
       message: title,
       description: (
         <div className="flex gap-3">
-          <p>{message}</p>
+          <p className="">{message}</p>
         </div>
       ),
       placement: "topLeft",
     });
   };
 
-  const successMsg = (title: string, message: string) => {
+  const successMsg = (title: string, message: React.ReactNode) => {
     show(title, message);
   };
 
-  const errorMsg = (title: string, message: string) => {
+  const errorMsg = (title: string, message: React.ReactNode) => {
     show(title, message, true);
   };
 
