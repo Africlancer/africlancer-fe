@@ -31,7 +31,7 @@ const FIND_ONE_PROFILE = gql`
             professionalHeadline,
             summary,
             recommendations,
-            publications { title, publisher, summary }
+            publication { title, publisher, summary }
             qualification { title, conferringOrganization, summary, startYear }
             education { country, insitution, degree, startYear, endYear }
             experience { title, company, startMonth, startYear, endMonth, endYear, working, summary }

@@ -34,6 +34,7 @@ export const ProfilePage = () => {
   
   const sess = useSession()
   const user: any = sess.data?.user
+  console.log(user)
   const { profile, updateProfile } = useContext(ProfileContext)
   const { loading, error, data } = useQuery(FIND_ONE_PROFILE);
 
@@ -46,7 +47,7 @@ export const ProfilePage = () => {
   return (
     <div className="h-full relative bg-skin-alt">
       <div className="profile-page relative">
-        <Navbar/>
+        <Navbar avatar={profile?.avatar}/>
         <SubMenu items={items} currentPage='improve-profile'/>
 
         <div className="relative pt-24">

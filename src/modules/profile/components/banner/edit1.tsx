@@ -5,7 +5,7 @@ import { CloseOutlined, LoadingOutlined } from '@ant-design/icons'
 import { useMutation } from '@apollo/client'
 import { Image } from 'antd'
 import React, { useRef, useState } from 'react'
-import { FIND_ONE_PROFILE, UPDATE_PROFILE } from '../../gql/query'
+import { UPDATE_PROFILE } from '../../gql/query'
 
 
 interface IProps
@@ -21,11 +21,7 @@ export const EditBannerPhoto: React.FC<IProps> = ({ setModal }) =>
   const [isBannerSelected, setIsBannerSelected] = useState(false)
   const [isBannerLoading, setIsBannerLoading] = useState(false)
   const { notificationContext, successMsg, errorMsg } = useApNotification();
-  const [updateProfile, {loading}] = useMutation(UPDATE_PROFILE,{
-    refetchQueries: [
-      { query: FIND_ONE_PROFILE }
-    ]
-  })
+  const [updateProfile] = useMutation(UPDATE_PROFILE)
 
 
   const clearPicHandler = () =>
@@ -62,12 +58,8 @@ export const EditBannerPhoto: React.FC<IProps> = ({ setModal }) =>
       updateProfile({ variables : {
         profile: { banner: banner.banner }
       }})
-      .then((val) => 
-      {
-        successMsg('Success', "Picture Uploaded Sucessfully")
-        setModal({ open: false }); clearPicHandler()
-      })
-      .catch((err) => errorMsg("Error", err.message))  
+      .then((val) => console.log(val))
+      .catch((err) => console.log(err))  
     }
   }
 
@@ -121,12 +113,12 @@ export const EditBannerPhoto: React.FC<IProps> = ({ setModal }) =>
         </div>
 
       <div className='flex gap-3 justify-end w-full'>
-        <ApButton onClick={updateBanner} loading={loading} loadingText='Saving Changes'>
+        <ApButton onClick={updateBanner}>
           Save Changes
           <ApSaveIcon className='w-4 h-4'/>
         </ApButton>
 
-        <ApButton onClick={() => { setModal({ open: false }); clearPicHandler() }} outline={true}>
+        <ApButton onClick={() => setModal({ open: false })} outline={true}>
           Cancel 
           <CloseOutlined className='text-lg'/>
         </ApButton>

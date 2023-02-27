@@ -1,12 +1,13 @@
-import { Dropdown, MenuProps } from "antd";
+import { Dropdown, MenuProps, Image, Skeleton } from "antd";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
+import NextImage from "next/image";
 import Link from "next/link";
 import { ApButton } from "../button";
 import { ArrowRightIcon } from "../icons";
 
-export const Navbar = () => {
-  const { data } = useSession();
+export const Navbar = ({avatar}) => {
+  const sess = useSession()
+  const user: any = sess.data?.user
 
   const items: MenuProps["items"] = [
     {
@@ -51,7 +52,7 @@ export const Navbar = () => {
     <header>
       <nav className="flex flex-wrap items-center justify-between w-full  py-2 z-50 md:py-0 px-10 text-lg text-skin-inverted bg-skin-nav fixed">
         <div>
-          <Image alt="logo" src="/africlancer.png" width={140} height={30} />
+          <NextImage alt="logo" src="/africlancer.png" width={140} height={30} />
         </div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -140,17 +141,26 @@ export const Navbar = () => {
             </li>
 
             <li className="flex items-center ml-5">
-              <div className="flex items-center text-lg">
-                <p className="font-bold text-lg">{data?.user?.name}</p>
-                <Dropdown
-                  trigger={["click", "hover"]}
-                  menu={{ items }}
-                  placement="bottomLeft"
-                  arrow
-                >
-                  <div className="cursor-pointer test-user-pic h-10 w-10 bg-center bg-cover rounded ml-5"></div>
-                </Dropdown>
-              </div>
+              {
+                avatar ? (
+                  <div className="flex items-center text-lg">
+                  <p className="font-bold text-lg">{user?.username}</p>
+                  <Dropdown
+                    trigger={["click"]}
+                    menu={{ items }}
+                    placement="bottomLeft"
+                    arrow
+                  >
+                    <Image preview={false} alt="usrimg" className="rounded ml-5 cursor-pointer" height={40} width={40} src={avatar}/>
+                  </Dropdown>
+                </div>
+                ) : (
+                  <div className="flex gap-2">
+                    <Skeleton.Input active size='large'/>
+                    <Skeleton.Image active style={{ height: '40px', width: '40px', padding: '10px' }}  /></div>
+                )
+              }
+
             </li>
           </ul>
         </div>

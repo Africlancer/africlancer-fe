@@ -281,3 +281,7 @@ body
 {
   object-fit: cover;
 }
+.ant-s .ant-skeleton
+{
+  width: 100%;
+}

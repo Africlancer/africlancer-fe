@@ -5,18 +5,22 @@ interface IProps
 {
   professionalHeadline: string,
   recommendations: string,
-  summary: string
+  summary: string,
+  email:string,
+  name:string
 }
 
-export const SectionTwo: React.FC<IProps> = ({professionalHeadline, recommendations, summary}) => {
+export const SectionTwo: React.FC<IProps> = ({professionalHeadline, recommendations, summary, email,
+  name
+}) => {
   return (
         <div className="ml-3 flex flex-col justify-between">
         <div>
-          <div className="flex items-end">
-            <h1 className="text-2xl text-skin-inverted font-bold">Paul A.</h1>
+          <div className="">
+            <h1 className="text-2xl text-skin-inverted font-bold">{name}</h1>
             <div className="flex items-center">
-              <p className="ml-2 text-lg text-gray-400">
-                paulandy32@gmail.com
+              <p className="text-lg text-gray-400">
+                { email }
               </p>
               <div className="bg-green-500 rounded-full h-2 w-2 ml-3"></div>
             </div>

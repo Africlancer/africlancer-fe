@@ -4,6 +4,7 @@ import React from "react";
 interface IProps {
   label?: string;
   type?: string;
+  inputType?: string
   name: string;
   className?: string;
   placeholder?: string;
@@ -14,10 +15,10 @@ interface IProps {
 }
 
 const defaultInputBox = "border-skin-border border text-black outline-none w-full text-sm bg-skin-input px-5 py-3 flex items-center rounded mb-2";
-const defaultTextArea = "border w-full rounded p-3 h-40 resize-none"
+const defaultTextArea = "border w-full rounded p-3 h-40 resize-none outline-none"
 
 export const ApTextInput: React.FC<IProps> = (props: IProps) => {
-  const { name, type, label, className, ref } = props;
+  const { name, type, label, className, inputType } = props;
 
   const [field] = useField(name);
 
@@ -37,6 +38,7 @@ export const ApTextInput: React.FC<IProps> = (props: IProps) => {
         ></textarea>
       ) : (
         <input
+          type={inputType}
           {...props}
           {...field}
           className={`${defaultInputBox} ${className}`}

@@ -4,7 +4,7 @@ import { CloseOutlined, LoadingOutlined, DoubleRightOutlined  } from '@ant-desig
 import React, { useRef, useState } from 'react'
 import { IProfile } from '../../model'
 import useApNotification from "@/src/hooks/notification";
-import { UPDATE_PROFILE } from '../../gql/query';
+import { FIND_ONE_PROFILE, UPDATE_PROFILE } from '../../gql/query';
 import { Image } from 'antd';
 import { ApButton, ApSaveIcon } from '@/src/components';
 import Link from 'next/link';
@@ -12,10 +12,12 @@ import Link from 'next/link';
 
 interface IProps{
   profile: IProfile;
+  setModal: any
 }
 
-export const EditProfileInfo: React.FC<IProps> = ({profile}) => {
+export const EditProfileInfo: React.FC<IProps> = ({profile, setModal}) => {
 
+  const genForm = useRef<HTMLFormElement>()
   const profilePic = useRef<HTMLInputElement>()
   const profileInputForm = useRef<HTMLFormElement>()
   const [avatar, setAvatar] = useState(null)
@@ -25,11 +27,15 @@ export const EditProfileInfo: React.FC<IProps> = ({profile}) => {
   const [hourlyRate, setHourlyRate] = useState(null)
   const [summary, setSummary] = useState(null)
   const { notificationContext, successMsg, errorMsg } = useApNotification();
-  const [updateProfile] = useMutation(UPDATE_PROFILE)
+  const [updateProfile, {loading}] = useMutation(UPDATE_PROFILE,{
+    refetchQueries: [
+      { query: FIND_ONE_PROFILE }
+    ]
+  })
 
   const fileInputHandler = async () =>
   {
-    const result = await useApImageDataURI(profilePic.current.files[0], 600000);
+    const result: any = await useApImageDataURI(profilePic.current.files[0], 600000);
     if(result?.data)
     {
       setAvatar({ avatar: result?.data})
@@ -42,21 +48,6 @@ export const EditProfileInfo: React.FC<IProps> = ({profile}) => {
       errorMsg("Error", result?.error)
       profileInputForm.current.reset()
     }
-    
-    // try 
-    // {
-    //     let file =  picInputHandler(
-    //     {inputRef: profilePic, inputButton: 'profile-pic-button', 
-    //     loader: 'profile-pic-loader', imgPreview: 'profile-pic-preview', inputForm: profileInputForm})
-    //     setProfilePicture(file)
-    // } 
-    // catch (error) 
-    // {
-    //   messageApi.open({
-    //     type: 'error',
-    //     content: error.message,
-    //   });
-    // }
   }
 
   const clearPicHandler = () =>
@@ -86,10 +77,29 @@ export const EditProfileInfo: React.FC<IProps> = ({profile}) => {
       updateProfile({ variables : {
         profile: variables
       }})
-      .then((val) => console.log(val))
-      .catch((err) => console.log(err))
+      .then((val) => 
+      {
+        successMsg('Success', 'Changes Saved')
+        setTimeout(() => {
+          closeModal()
+        }, 1000);
+      })
+      .catch((err) => errorMsg('Error', err.message))
     }
   }
+
+  const closeModal = () => 
+  {
+    setModal({ open: false })
+    genForm.current.reset()
+    setProfessionalHeadline(null)
+    setHourlyRate(null)
+    setSummary(null)
+    setAvatar(null)
+    setIsAvatarSelected(false)
+    setIsAvatarLoading(false)
+  }
+
 
   return (
     <>
@@ -142,6 +152,7 @@ export const EditProfileInfo: React.FC<IProps> = ({profile}) => {
           </div>
         }
 
+        <form ref={genForm}>
         <div className='ml-5 flex flex-col justify-between'>
           <div className='flex mb-3'>
             <div className='mr-3'>
@@ -150,7 +161,7 @@ export const EditProfileInfo: React.FC<IProps> = ({profile}) => {
             </div>
             <div>
               <p className='mb-1'>Hourly Rate - USD Per Hour</p>
-              <input type="number" onChange={(e) => setHourlyRate({hourlyRate: e.target.value})} className='w-64 border p-3 h-10' />
+              <input type="number" onChange={(e) => setHourlyRate({hourlyRate: parseInt(e.target.value)})} className='w-64 border p-3 h-10' />
             </div>
           </div>
 
@@ -159,6 +170,7 @@ export const EditProfileInfo: React.FC<IProps> = ({profile}) => {
             <textarea onChange={(e) => setSummary({summary: e.target.value})} className='border w-full rounded p-3 h-52 resize-none'></textarea>
           </div>
         </div>
+        </form>
       </div>
 
       <div className='flex justify-between items-center mt-4'>
@@ -169,12 +181,12 @@ export const EditProfileInfo: React.FC<IProps> = ({profile}) => {
       <div>
       
       <div className='flex gap-3'>
-        <ApButton onClick={uploadDetails}>
+        <ApButton onClick={uploadDetails} loading={loading} loadingText='Saving Changes...'>
           Save Changes
           <ApSaveIcon className='w-4 h-4'/>
         </ApButton>
 
-        <ApButton onClick={uploadDetails} outline={true}>
+        <ApButton onClick={() => closeModal()} outline={true}>
           Cancel 
           <CloseOutlined className='text-lg'/>
         </ApButton>

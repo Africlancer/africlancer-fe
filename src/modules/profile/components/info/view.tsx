@@ -4,6 +4,7 @@ import { IProfile } from "../../model";
 import { EditProfileInfo } from "./edit";
 import { Image, Skeleton } from 'antd';
 import { SectionThree, SectionTwo } from "./components";
+import { useSession } from "next-auth/react";
 
 interface IProps {
   profile: IProfile;
@@ -11,6 +12,8 @@ interface IProps {
 
 export const ProfileInfo: React.FC<IProps> = ({ profile }) => {
   const [modal, setModal] = useState<{ open: boolean }>();
+  const sess = useSession()
+  const user: any = sess.data?.user
 
   return (
     <>
@@ -18,13 +21,14 @@ export const ProfileInfo: React.FC<IProps> = ({ profile }) => {
         <div className="flex w-full">
           {
             profile?.avatar ?
-            <Image width='320px' src={profile.avatar}/>
+            <Image width='320px' height='320px' src={profile.avatar}/>
             :  <Skeleton.Image style={{ height: '320px', width: '320px' }} active />
           }
 
           {
             profile?.professionalHeadline ?
-            <SectionTwo summary={profile.summary} professionalHeadline={profile.professionalHeadline} recommendations={profile.recommendations}/>
+            <SectionTwo summary={profile.summary} professionalHeadline={profile.professionalHeadline}
+            recommendations={profile.recommendations} email={user?.email} name={user?.name} />
             : <div className="mt-1 ml-5 w-full"><Skeleton active paragraph={{ rows: 9 }} /></div>
           }
         </div>
@@ -43,7 +47,7 @@ export const ProfileInfo: React.FC<IProps> = ({ profile }) => {
         }}
         width={970}
       >
-        <EditProfileInfo profile={profile} />
+        <EditProfileInfo profile={profile} setModal={setModal} />
       </ApModal>
     </>
   );
