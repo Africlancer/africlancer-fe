@@ -5,15 +5,20 @@ import { ADD_PUBLICATION, FIND_ONE_PROFILE } from '../../gql/query'
 import { PlusOutlined, CloseOutlined } from '@ant-design/icons'
 import useApNotification from "@/src/hooks/notification";
 import { Formik, Form } from 'formik'
-import { FormikSchema } from './constants'
 import { ApTextInput } from '@/src/components'
+import * as Yup from "yup";
+
+const FormikSchema = Yup.object().shape({
+
+});
 
 interface IProps
 {
-  setModal: any
+  setModal: any,
+  modal: any
 }
 
-export const EditPublication: React.FC<IProps> = ({setModal}) => {
+export const UpdatePublication: React.FC<IProps> = ({setModal, modal}) => {
 
   const { notificationContext, successMsg, errorMsg } = useApNotification();
   const [addPublication, {loading}] = useMutation(ADD_PUBLICATION, {
@@ -24,11 +29,12 @@ export const EditPublication: React.FC<IProps> = ({setModal}) => {
 
   const handleSubmit = async(val) => 
   {
+    const payload = { ...val, _id: modal.data._id}
     addPublication({ variables : {
-      publication: { ...val }
+      publication: payload
     }})
     .then((val) => { 
-      if(val) { successMsg(`Success`, `Publication has been added.`)
+      if(val) { successMsg(`Success`, `Publication has been updated.`)
         setTimeout(() => {
           setModal({ open: false })
         }, 1000);
@@ -48,14 +54,14 @@ export const EditPublication: React.FC<IProps> = ({setModal}) => {
       <>
         {notificationContext}
         <div>
-        <h1 className='font-bold text-xl'>Add Publication</h1>
-        <p className='mb-3'>Fill To Add New Publication</p>
+        <h1 className='font-bold text-xl'>Update Publication</h1>
+        <p className='mb-3'>Fill To Update Publication</p>
 
         <Formik
             initialValues={{
-              title: "",
-              publisher: "",
-              summary: ""
+              title: modal.data.title,
+              publisher: modal.data.publisher,
+              summary: modal.data.summary
             }}
             validationSchema={FormikSchema}
             onSubmit={handleSubmit}
@@ -82,7 +88,7 @@ export const EditPublication: React.FC<IProps> = ({setModal}) => {
                 type="submit"
                 loading={loading}
               >
-                Add Publication
+                Update Publication
                 <PlusOutlined className='text-lg'/>
               </ApButton>
 

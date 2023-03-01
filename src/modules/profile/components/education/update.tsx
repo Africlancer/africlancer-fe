@@ -35,7 +35,7 @@ export const UpdateEducation: React.FC<IProps> = ({ setModal, modal }) => {
       education: payload
     }})
     .then((val) => { 
-      if(val) { successMsg(`Success`, `Education Info has been added.`)
+      if(val) { successMsg(`Success`, `Education Info has been updated.`)
         setTimeout(() => {
           setModal({ open: false })
         }, 1000);

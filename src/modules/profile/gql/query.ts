@@ -54,6 +54,12 @@ const DELETE_EXPERIENCE = gql`
         deleteExperience(experienceID: $experienceID)
   }
 `  
+const DELETE_PUBLICATION = gql`
+    mutation DeletePublication($publicationID: String!){
+        deletePublication(publicationID: $publicationID)
+  }
+`  
+
 
 export { DELETE_EXPERIENCE, DELETE_EDUCATION, ADD_PUBLICATION, ADD_QUALIFICATION, FIND_ONE_PROFILE, 
-UPDATE_PROFILE, ADD_EDUCATION, ADD_EXPERIENCE }
+UPDATE_PROFILE, ADD_EDUCATION, ADD_EXPERIENCE, DELETE_PUBLICATION }

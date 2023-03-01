@@ -9,7 +9,7 @@ import { countries, years } from '../../model';
 import { Formik, Form } from 'formik'
 import { ApSelectInput, ApTextInput } from '@/src/components'
 
-export const FormikSchema = Yup.object().shape({
+const FormikSchema = Yup.object().shape({
   country: Yup.string()
       .required("* required").nullable(true),
   insitution: Yup.string()

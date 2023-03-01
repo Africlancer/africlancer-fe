@@ -5,11 +5,13 @@ import React, { useState } from 'react'
 import { EditPublication } from './edit';
 import { PublicationView } from './components';
 import { Skeleton } from 'antd';
+import { UpdatePublication } from './update';
 
 type publication = {
     title: string,
     publisher: string,
     summary: string
+    _id: string
 }
 
 interface IProps
@@ -20,7 +22,8 @@ interface IProps
 export const Publication: React.FC<IProps> = ({publications}) => 
 {
     const [modal, setModal] = useState<{ open: boolean }>();
-    
+    const [updateModal, setUpdateModal] = useState<{ open: boolean, data?: any }>();
+
     return (
         <>
          <div className='bg-skin-base col-span-2 shadow-xl w-full rounded-xl cs4:mb-0 mb-6'>
@@ -40,13 +43,13 @@ export const Publication: React.FC<IProps> = ({publications}) =>
 
             {
                 publications ?
-                    <div className='px-5 py-5 flex flex-col gap-5'>
+                    <div className='px-5 pt-5 flex flex-col gap-5'>
                     {
                         publications.length > 0 ? 
                         publications.map(publication => (
-                            <PublicationView summary={ publication.summary } title={ publication.title } publisher={ publication.publisher } />
+                            <div key={publication._id}><PublicationView publication={publication} length={publications.length} setModal={setUpdateModal}/></div>     
                         ))
-                        : <p className='text-skin-inverted'>No publication has been added.</p> 
+                        : <p className='text-skin-inverted mb-5'>No publication has been added.</p> 
                     }
                 </div> 
                 : <div className='px-5 py-5'><Skeleton active /></div>
@@ -60,6 +63,17 @@ export const Publication: React.FC<IProps> = ({publications}) =>
             width={970}
         >
             <EditPublication setModal={setModal}/>
+        </ApModal>
+
+        
+        <ApModal
+            open={updateModal?.open}
+            onDismiss={() => {
+            setUpdateModal({ open: false });
+            }}
+            width={970}
+        >
+            <UpdatePublication setModal={setUpdateModal} modal={updateModal}/>
         </ApModal>
         </>
     );
