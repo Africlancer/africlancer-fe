@@ -92,7 +92,7 @@ export const EditBannerPhoto: React.FC<IProps> = ({ setModal }) =>
                 <Image width='600px' height='380px' src={banner.banner}/>
               </div>
               : 
-                <button className='h-[380px] w-[600px] flex justify-center items-center border-dashed border-2 border-gray-200'>
+                <button className='h-[380px] w-[600px] c'>
                 <div className='file-input-button relative h-full w-full flex items-center justify-center' id='profile-pic-button'>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="text-gray-200 w-20 h-20 text-center">
                     <path d="M12 9a3.75 3.75 0 100 7.5A3.75 3.75 0 0012 9z" />

@@ -15,10 +15,9 @@ type publication = {
 interface IProps
 {
     publications: publication[],
-    profileID: string
 }
 
-export const Publication: React.FC<IProps> = ({publications, profileID}) => 
+export const Publication: React.FC<IProps> = ({publications}) => 
 {
     const [modal, setModal] = useState<{ open: boolean }>();
     
@@ -43,9 +42,9 @@ export const Publication: React.FC<IProps> = ({publications, profileID}) =>
                 publications ?
                     <div className='px-5 py-5 flex flex-col gap-5'>
                     {
-                        publications ? 
+                        publications.length > 0 ? 
                         publications.map(publication => (
-                            <PublicationView profileId='63e75fb890a2c8f7ebd648ce' summary={ publication.summary } title={ publication.title } publisher={ publication.publisher } />
+                            <PublicationView summary={ publication.summary } title={ publication.title } publisher={ publication.publisher } />
                         ))
                         : <p className='text-skin-inverted'>No publication has been added.</p> 
                     }
@@ -60,7 +59,7 @@ export const Publication: React.FC<IProps> = ({publications, profileID}) =>
             }}
             width={970}
         >
-            <EditPublication profileId={ profileID } setModal={setModal}/>
+            <EditPublication setModal={setModal}/>
         </ApModal>
         </>
     );

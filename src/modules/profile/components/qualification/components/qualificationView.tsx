@@ -9,10 +9,9 @@ interface Iprops
     conferringOrganization: string,
     startYear: string,
     summary: string,
-    profileId: string
 }
 
-export const QualificationView: React.FC<Iprops> = ({ certificate, conferringOrganization, startYear, summary, profileId }) => {
+export const QualificationView: React.FC<Iprops> = ({ certificate, conferringOrganization, startYear, summary }) => {
     const deleteQualification = () =>
     {
 

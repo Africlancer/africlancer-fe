@@ -10,11 +10,10 @@ import { ApTextInput } from '@/src/components'
 
 interface IProps
 {
-  profileId: string,
   setModal: any
 }
 
-export const EditPublication: React.FC<IProps> = ({ profileId, setModal}) => {
+export const EditPublication: React.FC<IProps> = ({setModal}) => {
 
   const { notificationContext, successMsg, errorMsg } = useApNotification();
   const [addPublication] = useMutation(ADD_PUBLICATION, {
@@ -26,7 +25,7 @@ export const EditPublication: React.FC<IProps> = ({ profileId, setModal}) => {
   const handleSubmit = async(val) => 
   {
     addPublication({ variables : {
-      publication: { ...val, profileId }
+      publication: { ...val }
     }})
     .then((val) => { if(val) { successMsg(`Success`, `Publication has been added.`)}} )
     .catch(err => 

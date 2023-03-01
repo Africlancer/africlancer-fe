@@ -8,10 +8,9 @@ interface IProps
     title: string,
     publisher: string,
     summary: string,
-    profileId: string
 }
 
-export const PublicationView: React.FC<IProps> = ({ title, publisher, summary, profileId }) => {
+export const PublicationView: React.FC<IProps> = ({ title, publisher, summary }) => {
     const deletePublication = () =>
     {
 

@@ -34,10 +34,10 @@ export const ProfilePage = () => {
   
   const sess = useSession()
   const user: any = sess.data?.user
-  console.log(user)
+
   const { profile, updateProfile } = useContext(ProfileContext)
   const { loading, error, data } = useQuery(FIND_ONE_PROFILE);
-
+  console.log(data)
   useEffect(() => {
     if (loading) { console.log('Loading...') }
     else if (error) { console.log(`Error! ${error.message}`) }
@@ -65,10 +65,10 @@ export const ProfilePage = () => {
                 <ProfileInfo profile={profile} />
                 <Portfolioitems/>
                 <Reviews/>
-                <Experience experiences={profile?.experience} profileID={user?._id}/>
-                <Education educations={profile?.education} profileID={user?._id}/>
-                <Qualifications qualifications={profile?.qualification} profileID={user?._id}/>
-                <Publication publications={profile?.publications} profileID={user?._id}/>
+                <Experience experiences={profile?.experience}/>
+                <Education educations={profile?.education}/>
+                <Qualifications qualifications={profile?.qualification}/>
+                <Publication publications={profile?.publication}/>
               </div>
 
               <div className="flex flex-col gap-8">

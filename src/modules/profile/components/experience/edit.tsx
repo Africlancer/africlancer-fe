@@ -32,11 +32,10 @@ const FormikSchema = Yup.object().shape({
 
 interface IProps
 {
-  profileId: string,
   setModal: any
 }
 
-export const EditExperience: React.FC<IProps> = ({ profileId, setModal }) => {  
+export const EditExperience: React.FC<IProps> = ({ setModal }) => {  
   const { notificationContext, successMsg, errorMsg } = useApNotification()
   const [addExperience] = useMutation(ADD_EXPERIENCE, {
     refetchQueries: [
@@ -56,7 +55,7 @@ export const EditExperience: React.FC<IProps> = ({ profileId, setModal }) => {
     const endMonth = !val.working ? val.endMonth : null
 
     addExperience({ variables : {
-      experience: { ...val, endMonth, endYear, startYear: parseInt(val.startYear), profileId }
+      experience: { ...val, endMonth, endYear, startYear: parseInt(val.startYear) }
     }})
     .then((val) => { if(val) { successMsg(`Success`, `Experience has been added.`)}} )
     .catch(err => 

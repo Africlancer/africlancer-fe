@@ -16,10 +16,9 @@ type qualification = {
 interface IProps
 {
     qualifications: qualification[],
-    profileID: string
 }
 
-export const Qualifications: React.FC<IProps> = ({qualifications, profileID}) => 
+export const Qualifications: React.FC<IProps> = ({qualifications}) => 
 {
     const [modal, setModal] = useState<{ open: boolean }>();
 
@@ -47,9 +46,9 @@ export const Qualifications: React.FC<IProps> = ({qualifications, profileID}) =>
                 qualifications ?
                 <div className='px-5 py-5 flex flex-col gap-5'>
                     {
-                        qualifications ?
+                        qualifications.length > 0 ?
                         qualifications.map(qualification => (
-                            <QualificationView startYear={ qualification.startYear } certificate={ qualification.title } conferringOrganization={ qualification.conferringOrganization } profileId={ profileID } summary={ qualification.summary }/>
+                            <QualificationView startYear={ qualification.startYear } certificate={ qualification.title } conferringOrganization={ qualification.conferringOrganization } summary={ qualification.summary }/>
                         )) 
                         : <p className='text-skin-inverted'>No qualification has been added.</p>
                     }
@@ -65,7 +64,7 @@ export const Qualifications: React.FC<IProps> = ({qualifications, profileID}) =>
             }}
             width={970}
         >
-            <EditQualifications profileId={ profileID } setModal={setModal}/>
+            <EditQualifications setModal={setModal}/>
         </ApModal>
         </>
     );

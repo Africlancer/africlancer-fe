@@ -14,6 +14,7 @@ export const Certifications = () => {
                 </svg>                 
                 </div>
 
+
                 <Link href='/get-certified'>
                 <ApButton
                     onClick={() => {}}

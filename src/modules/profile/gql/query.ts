@@ -1,8 +1,8 @@
 import { useMutation, gql } from "@apollo/client";
 
 const ADD_PUBLICATION = gql`
-    mutation AddOrUpdatePublications($publication: PublicationsInput!) {
-        addOrUpdatePublications(publication: $publication)
+    mutation AddOrUpdatePublication($publication: PublicationInput!) {
+        addOrUpdatePublication(publication: $publication)
 }
 `
 
@@ -31,10 +31,10 @@ const FIND_ONE_PROFILE = gql`
             professionalHeadline,
             summary,
             recommendations,
-            publication { title, publisher, summary }
-            qualification { title, conferringOrganization, summary, startYear }
-            education { country, insitution, degree, startYear, endYear }
-            experience { title, company, startMonth, startYear, endMonth, endYear, working, summary }
+            publication { title, publisher, summary, _id  }
+            qualification { title, conferringOrganization, summary, startYear, _id  }
+            education { country, insitution, degree, startYear, endYear, _id }
+            experience { title, company, startMonth, startYear, endMonth, endYear, working, summary, _id  }
         }
     }
 `
@@ -44,5 +44,10 @@ const UPDATE_PROFILE = gql`
     updateProfile(profile: $profile)
   }
 `
+const DELETE_EDUCATION = gql`
+    mutation DeleteEducation($educationID: String!){
+        deleteEducation(educationID: $educationID)
+  }
+` 
 
-export { ADD_PUBLICATION, ADD_QUALIFICATION, FIND_ONE_PROFILE, UPDATE_PROFILE, ADD_EDUCATION, ADD_EXPERIENCE }
+export { DELETE_EDUCATION, ADD_PUBLICATION, ADD_QUALIFICATION, FIND_ONE_PROFILE, UPDATE_PROFILE, ADD_EDUCATION, ADD_EXPERIENCE }

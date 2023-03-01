@@ -10,7 +10,7 @@ import * as Yup from "yup";
 import { years } from '../../model';
 
 const FormikSchema = Yup.object().shape({
-  professionalCertificate: Yup.string()
+  title: Yup.string()
       .min(6, "Username should be at list 6 char.")
       .required("* required"),
   conferringOrganization: Yup.string()
@@ -25,11 +25,10 @@ const FormikSchema = Yup.object().shape({
 
 interface IProps
 {
-  profileId: string,
   setModal: any
 }
 
-export const EditQualifications:React.FC<IProps>  = ({ profileId, setModal}) => {
+export const EditQualifications:React.FC<IProps>  = ({setModal}) => {
   const [addQualification] = useMutation(ADD_QUALIFICATION, {
     refetchQueries: [
       { query: FIND_ONE_PROFILE }
@@ -40,9 +39,9 @@ export const EditQualifications:React.FC<IProps>  = ({ profileId, setModal}) => 
   const handleSubmit = async(val) => 
   {
     addQualification({ variables : {
-      qualification: { ...val, profileId }
+      qualification: { ...val, startYear: parseInt(val.startYear) }
     }})
-    .then((val) => { if(val) { successMsg(`Success`, `Publication has been added.`)}} )
+    .then((val) => { if(val) { successMsg(`Success`, `Qualification has been added.`)}} )
     .catch(err => 
     { 
       if(err) 
@@ -62,7 +61,7 @@ export const EditQualifications:React.FC<IProps>  = ({ profileId, setModal}) => 
 
       <Formik
             initialValues={{
-              professionalCertificate: "",
+              title: "",
               conferringOrganization: "",
               startYear: null,
               summary: ""
@@ -73,7 +72,7 @@ export const EditQualifications:React.FC<IProps>  = ({ profileId, setModal}) => 
       <Form>
         <div className="flex w-full gap-8">
           <div className='w-full'>
-            <ApTextInput placeholder="Enter Professional Certificate or Award" name="professionalCertificate" label='Professional Certificate or Award'/>
+            <ApTextInput placeholder="Enter Professional Certificate or Award" name="title" label='Professional Certificate or Award'/>
           </div>
 
           <div className='w-full'>

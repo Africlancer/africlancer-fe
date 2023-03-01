@@ -20,11 +20,10 @@ type experience = {
 interface IProps
 {
     experiences: experience[],
-    profileID: string
 }
 
 
-export const Experience: React.FC<IProps> = ({ experiences, profileID  }) => 
+export const Experience: React.FC<IProps> = ({ experiences }) => 
 {
     const [modal, setModal] = useState<{ open: boolean }>();
 
@@ -49,13 +48,9 @@ export const Experience: React.FC<IProps> = ({ experiences, profileID  }) =>
                 experiences ?
                 <div className='px-5 py-5 flex flex-col gap-5'>
                     {
-                        experiences ? 
+                        experiences.length > 0 ? 
                         experiences.map(experience => (
-                            <ExperienceItem profileId='63e75fb890a2c8f7ebd648ce' summary={ experience.summary } title={ experience.title } 
-                            company={ experience.company } startMonth={ experience.startMonth } 
-                            startYear={ experience.startYear } endMonth={ experience.endMonth }   
-                            endYear={ experience.endYear } working={ experience.working }
-                            />
+                            <ExperienceItem experience={experience}/>
                         ))
                         : <p className='text-skin-inverted'>No experience has been added.</p> 
                     }
@@ -71,7 +66,7 @@ export const Experience: React.FC<IProps> = ({ experiences, profileID  }) =>
             }}
             width={970}
         >
-            <EditExperience profileId={ profileID } setModal={setModal}/>
+            <EditExperience setModal={setModal}/>
         </ApModal>
         </>
     );

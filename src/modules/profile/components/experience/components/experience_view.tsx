@@ -3,7 +3,7 @@ import  { MoreOutlined } from '@ant-design/icons'
 import { Dropdown, MenuProps  } from 'antd';
 import { ApButton, ApPopConfirm } from '@/src/components';
 
-interface IProps
+type Experience = 
 {
     title: string,
     company: string,
@@ -13,11 +13,14 @@ interface IProps
     endYear: number,
     working: boolean,
     summary: string,
-    profileId: string
 }
 
-const ExperienceItem: React.FC<IProps> = ({ title, company, startMonth, startYear, endMonth, 
-    endYear, working, summary, profileId }) => {
+interface IProps
+{
+    experience: Experience
+}
+
+const ExperienceItem: React.FC<IProps> = ({ experience }) => {
 
     const deleteExperience = () =>
     {
@@ -45,16 +48,17 @@ const ExperienceItem: React.FC<IProps> = ({ title, company, startMonth, startYea
             ),
         },
     ];
-
+    
+    console.log(experience)
   return (
     <>
     <div className='flex justify-between items-start'>
         <div>
-            <h1 className='font-bold mb-2'>Title - { title }</h1>
-            <p className='font-bold'>Company - { company }</p>
-            <p className='mb-3'>{ startMonth } { startYear } - { working ? 'till date' 
-            : `${endMonth} ${endYear}` }</p>
-            <p>{ summary }</p>
+            <h1 className='font-bold mb-2'>Title - { experience.title }</h1>
+            <p className='font-bold'>Company - { experience.company }</p>
+            <p className='mb-3'>{ experience.startMonth } { experience.startYear } - { experience.working ? 'till date' 
+            : `${experience.endMonth} ${experience.endYear}` }</p>
+            <p>{ experience.summary }</p>
         </div>
         <Dropdown trigger={["click"]} menu={{ items }} placement="bottom" arrow={{ pointAtCenter: true }}>
             <MoreOutlined className='text-2xl'/>

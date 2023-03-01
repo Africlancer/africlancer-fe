@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import { EditEducation } from './edit';
 import { EducationView } from './components';
 import { Skeleton } from 'antd';
+import { UpdateEducation } from './update';
 
 type education = {
     country: string,
@@ -17,12 +18,12 @@ type education = {
 interface IProps
 {
     educations: education[],
-    profileID: string
 }
 
-export const Education: React.FC<IProps> = ({educations, profileID}) =>
+export const Education: React.FC<IProps> = ({educations}) =>
 {
-    const [modal, setModal] = useState<{ open: boolean }>();
+    const [modal, setModal] = useState<{ open: boolean, data?: any }>();
+    const [updateModal, setUpdateModal] = useState<{ open: boolean, data?: any }>();
 
     return (
         <>
@@ -45,15 +46,13 @@ export const Education: React.FC<IProps> = ({educations, profileID}) =>
 
             {
                 educations ?
-                <div className='px-5 py-5 flex flex-col gap-5'>
+                <div className='px-5 pt-5 flex flex-col gap-5'>
                     {
                         educations.length > 0 ? 
                         educations.map(education => (
-                            <EducationView profileId='63e75fb890a2c8f7ebd648ce' country={ education.country } 
-                            institution={ education.insitution } degree={ education.degree } 
-                            startYear={ education.startYear } endYear={ education.endYear }  />
+                            <EducationView length={educations.length} education={education} setModal={setUpdateModal} />
                         ))
-                        : <p className='text-skin-inverted'>No education info has been added.</p> 
+                        : <p className='text-skin-inverted mb-5'>No education info has been added.</p> 
                     }
                 </div> 
                 : <div className='px-5 py-5'><Skeleton active /></div>
@@ -66,7 +65,17 @@ export const Education: React.FC<IProps> = ({educations, profileID}) =>
             }}
             width={970}
         >
-            <EditEducation profileId={ profileID } setModal={setModal}/>
+            <EditEducation setModal={setModal}/>
+        </ApModal>
+
+        <ApModal
+            open={updateModal?.open}
+            onDismiss={() => {
+            setUpdateModal({ open: false });
+            }}
+            width={970}
+        >
+            <UpdateEducation setModal={setUpdateModal} modal={updateModal}/>
         </ApModal>
         </>
     );

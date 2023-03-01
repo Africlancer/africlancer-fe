@@ -9,38 +9,30 @@ import { countries, years } from '../../model';
 import { Formik, Form } from 'formik'
 import { ApSelectInput, ApTextInput } from '@/src/components'
 
-export const FormikSchema = Yup.object().shape({
-  country: Yup.string()
-      .required("* required").nullable(true),
-  insitution: Yup.string()
-      .min(6, "Password Should be at Least 6 Characters.")
-      .required("* required"),
-  degree: Yup.string()
-      .min(6, "Password Should be at Least 6 Characters.")
-      .required("* required."),
-  startYear: Yup.string()
-      .required("* required").nullable(true),
-  endYear: Yup.string()
-      .required("* required").nullable(true),
+const FormikSchema = Yup.object().shape({
+
 });
 
 interface IProps
 {
   setModal: any,
+  modal: any
 }
 
-export const EditEducation: React.FC<IProps> = ({ setModal }) => {
+export const UpdateEducation: React.FC<IProps> = ({ setModal, modal }) => {
   const { notificationContext, successMsg, errorMsg } = useApNotification();
   const [addEducation, {loading}] = useMutation(ADD_EDUCATION, {
     refetchQueries: [
       { query: FIND_ONE_PROFILE }
     ]
   })
-    
+  
   const handleSubmit = async(val) => 
-  {    
+  {
+    const payload = { ...val, _id: modal.data._id, endYear: parseInt(val.endYear), 
+    startYear: parseInt(val.startYear) } 
     addEducation({ variables : {
-      education: { ...val, endYear: parseInt(val.endYear), startYear: parseInt(val.startYear) }
+      education: payload
     }})
     .then((val) => { 
       if(val) { successMsg(`Success`, `Education Info has been added.`)
@@ -63,13 +55,12 @@ export const EditEducation: React.FC<IProps> = ({ setModal }) => {
     <>
     {notificationContext}
     <div>
-      <h1 className='font-bold text-xl'>Add Education</h1>
-      <p className='mb-3'>Fill To Add New Education</p>
+      <h1 className='font-bold text-xl'>Update Education</h1>
+      <p className='mb-3'>Fill To Update Education</p>
 
       <Formik
-            initialValues={{
-              country: null, insitution: "", degree: "", startYear: null, endYear: null
-            }}
+            initialValues={{ country: modal.data.country, insitution: modal.data.insitution, 
+            degree: modal.data.degree, startYear: modal.data.startYear, endYear: modal.data.endYear}}
             validationSchema={FormikSchema}
             onSubmit={handleSubmit}
         >
@@ -138,7 +129,7 @@ export const EditEducation: React.FC<IProps> = ({ setModal }) => {
               loading={loading}
               className='py-2.5 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2'
               >
-              Add Education
+              Update Education
               <PlusOutlined className='text-lg'/>
             </ApButton>
 
