@@ -48,6 +48,12 @@ const DELETE_EDUCATION = gql`
     mutation DeleteEducation($educationID: String!){
         deleteEducation(educationID: $educationID)
   }
-` 
+`
+const DELETE_EXPERIENCE = gql`
+    mutation DeleteExperience($experienceID: String!){
+        deleteExperience(experienceID: $experienceID)
+  }
+`  
 
-export { DELETE_EDUCATION, ADD_PUBLICATION, ADD_QUALIFICATION, FIND_ONE_PROFILE, UPDATE_PROFILE, ADD_EDUCATION, ADD_EXPERIENCE }
+export { DELETE_EXPERIENCE, DELETE_EDUCATION, ADD_PUBLICATION, ADD_QUALIFICATION, FIND_ONE_PROFILE, 
+UPDATE_PROFILE, ADD_EDUCATION, ADD_EXPERIENCE }

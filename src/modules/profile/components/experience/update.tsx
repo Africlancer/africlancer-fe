@@ -10,32 +10,15 @@ import * as Yup from "yup";
 import { years, months } from '../../model';
 
 const FormikSchema = Yup.object().shape({
-  title: Yup.string()
-      .required("* required"),
-  company: Yup.string()
-      .required("* required"),
-  startMonth: Yup.string()
-      .required("* required").nullable(true),
-  startYear: Yup.string()
-      .required("* required").nullable(true),
-  endMonth: Yup.string().nullable(true).when("working", {
-    is: (working) => working === false,
-    then:  Yup.string().required("* required").nullable(true),
-  }),
-  endYear: Yup.string().nullable(true).when("working", {
-    is: (working) => working === false,
-    then:  Yup.string().required("* required").nullable(true),
-  }),
-  summary: Yup.string()
-      .required("* required."),
 });
 
 interface IProps
 {
   setModal: any
+  modal: any
 }
 
-export const EditExperience: React.FC<IProps> = ({ setModal }) => {  
+export const UpdateExperience: React.FC<IProps> = ({ setModal, modal }) => {  
   const { notificationContext, successMsg, errorMsg } = useApNotification()
   const [addExperience, {loading}] = useMutation(ADD_EXPERIENCE, {
     refetchQueries: [
@@ -54,16 +37,11 @@ export const EditExperience: React.FC<IProps> = ({ setModal }) => {
     const endYear = !val.working ? parseInt(val.endYear) : null
     const endMonth = !val.working ? val.endMonth : null
 
+    const payload = { ...val, endMonth, _id: modal.data._id, endYear, startYear: parseInt(val.startYear) }
     addExperience({ variables : {
-      experience: { ...val, endMonth, endYear, startYear: parseInt(val.startYear) }
+      experience: payload
     }})
-    .then((val) => { 
-      if(val) { successMsg(`Success`, `Experience has been added.`)
-        setTimeout(() => {
-          setModal({ open: false })
-        }, 1000);
-      }
-    })
+    .then((val) => { if(val) { successMsg(`Success`, `Experience has been updated.`)}} )
     .catch(err => 
     { 
       if(err) 
@@ -78,19 +56,19 @@ export const EditExperience: React.FC<IProps> = ({ setModal }) => {
     <>
     {notificationContext}
     <div>
-      <h1 className='font-bold text-xl'>Add Experience</h1>
-      <p className='mb-3'>Fill To Add New Experience</p>
+      <h1 className='font-bold text-xl'>Update Experience</h1>
+      <p className='mb-3'>Fill To Update Experience</p>
 
       <Formik
             initialValues={{
-              title: "",
-              company: "",
-              startMonth: null,
-              startYear: null,
-              endMonth: null,
-              endYear: null,
-              summary: "",
-              working: false
+              title: modal.data.title,
+              company: modal.data.company,
+              startMonth: modal.data.startMonth,
+              startYear: modal.data.startYear,
+              endMonth: modal.data.endMonth,
+              endYear: modal.data.endYear,
+              summary: modal.data.summary,
+              working: modal.data.working
             }}
             validationSchema={FormikSchema}
             onSubmit={handleSubmit}
@@ -185,7 +163,7 @@ export const EditExperience: React.FC<IProps> = ({ setModal }) => {
             loading={loading}
             className='py-2.5 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2'
           >
-            Add Experience
+            Update Experience
             <PlusOutlined className='text-lg'/>
           </ApButton>
 

@@ -12,13 +12,14 @@ interface IProps {
   props?: {
     [x: string]: any;
   };
-  disabled?: boolean
+  disabled?: boolean,
+  value?: any
 }
 
-const defaultClassName= "w-full border rounded px-5 py-3.5";
+const defaultClassName= "w-full border rounded px-5 py-3 outline-none focus:border-green-500";
 
 export const ApSelectInput: React.FC<IProps> = (props: IProps) => {
-  const { name, type, label, className, ref, children, disabled } = props;
+  const { name, type, label, className, value, children, disabled } = props;
 
   const [field] = useField(name);
 
@@ -31,6 +32,7 @@ export const ApSelectInput: React.FC<IProps> = (props: IProps) => {
             component="p"
         /></label>}
         <select
+            value={value}
             {...props}
             {...field}
             disabled={disabled}

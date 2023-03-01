@@ -12,7 +12,8 @@ type education = {
     insitution: string,
     degree: string,
     startYear: number,
-    endYear: number
+    endYear: number,
+    _id: string
 }
 
 interface IProps
@@ -50,7 +51,7 @@ export const Education: React.FC<IProps> = ({educations}) =>
                     {
                         educations.length > 0 ? 
                         educations.map(education => (
-                            <EducationView length={educations.length} education={education} setModal={setUpdateModal} />
+                            <div key={education._id}><EducationView length={educations.length} education={education} setModal={setUpdateModal} /></div>
                         ))
                         : <p className='text-skin-inverted mb-5'>No education info has been added.</p> 
                     }

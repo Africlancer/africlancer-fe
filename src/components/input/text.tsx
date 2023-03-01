@@ -14,8 +14,8 @@ interface IProps {
   };
 }
 
-const defaultInputBox = "border-skin-border border text-black outline-none w-full text-sm bg-skin-input px-5 py-3 flex items-center rounded mb-2";
-const defaultTextArea = "border w-full rounded p-3 h-40 resize-none outline-none"
+const defaultInputBox = "focus:border-green-500 border-skin-border border text-black outline-none w-full text-sm bg-skin-input px-5 py-3 flex items-center rounded mb-2";
+const defaultTextArea = "focus:border-green-500 border w-full rounded p-3 h-40 resize-none outline-none"
 
 export const ApTextInput: React.FC<IProps> = (props: IProps) => {
   const { name, type, label, className, inputType } = props;

@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import { EditExperience } from './edit';
 import ExperienceItem from './components/experience_view';
 import { Skeleton } from 'antd';
+import { UpdateExperience } from './update';
 
 type experience = {
     title: string,
@@ -15,6 +16,7 @@ type experience = {
     endYear: number,
     working: boolean,
     summary: string,
+    _id: string
 }
 
 interface IProps
@@ -26,6 +28,7 @@ interface IProps
 export const Experience: React.FC<IProps> = ({ experiences }) => 
 {
     const [modal, setModal] = useState<{ open: boolean }>();
+    const [updateModal, setUpdateModal] = useState<{ open: boolean, data?: any }>();
 
     return (
         <>
@@ -46,13 +49,13 @@ export const Experience: React.FC<IProps> = ({ experiences }) =>
 
             {
                 experiences ?
-                <div className='px-5 py-5 flex flex-col gap-5'>
+                <div className='px-5 pt-5 flex flex-col gap-5'>
                     {
                         experiences.length > 0 ? 
                         experiences.map(experience => (
-                            <ExperienceItem experience={experience}/>
+                           <div key={experience._id}><ExperienceItem length={experiences.length} setModal={setUpdateModal} experience={experience}/></div>
                         ))
-                        : <p className='text-skin-inverted'>No experience has been added.</p> 
+                        : <p className='text-skin-inverted mb-5'>No experience has been added.</p> 
                     }
                 </div> 
                 : <div className='px-5 py-5'><Skeleton active /></div>
@@ -67,6 +70,16 @@ export const Experience: React.FC<IProps> = ({ experiences }) =>
             width={970}
         >
             <EditExperience setModal={setModal}/>
+        </ApModal>
+
+        <ApModal
+            open={updateModal?.open}
+            onDismiss={() => {
+            setUpdateModal({ open: false });
+            }}
+            width={970}
+        >
+            <UpdateExperience setModal={setUpdateModal} modal={updateModal}/>
         </ApModal>
         </>
     );

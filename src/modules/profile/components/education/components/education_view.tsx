@@ -64,7 +64,7 @@ export const EducationView: React.FC<IProps> = ({ education, setModal, length })
         <div className={`flex justify-between items-start ${length > 0 ? 'border-b pb-5' : ''}`}>
             <div>
                 <h1 className='font-bold mb-2'>Country - { education.country }</h1>
-                <p className='font-bold'>Institution - { education.institution }</p>
+                <p className='font-bold'>Institution - { education.insitution }</p>
                 <p className=''>Degree - { education.degree }</p>
                 <p className=''>{ education.startYear } - { education.endYear }</p>
             </div>

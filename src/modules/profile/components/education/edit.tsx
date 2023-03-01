@@ -79,11 +79,12 @@ export const EditEducation: React.FC<IProps> = ({ setModal }) => {
             <ApSelectInput
                   name="country"
                   label='Country'
+                  value=''
             >
               <option selected disabled>Select Country</option>
                 {
                   countries.map(country => (
-                    <option value={country}>{country}</option>
+                    <option key={country} value={country}>{country}</option>
                   ))
                 }
             </ApSelectInput>
@@ -105,11 +106,12 @@ export const EditEducation: React.FC<IProps> = ({ setModal }) => {
             <ApSelectInput
                   name="startYear"
                   label='Start Year'
+                  value=''
                 >
                 <option selected disabled>Select Year</option>
                 {
                   years.map(year => (
-                    <option value={year}>{year}</option>
+                    <option key={year} value={year}>{year}</option>
                   ))
                 }
             </ApSelectInput>
@@ -119,11 +121,12 @@ export const EditEducation: React.FC<IProps> = ({ setModal }) => {
           <ApSelectInput
                   name="endYear"
                   label='End Year'
+                  value=''
                 >
                 <option selected disabled>Select Year</option>
                 {
                   years.map(year => (
-                    <option value={year}>{year}</option>
+                    <option key={year} value={year}>{year}</option>
                   ))
                 }
             </ApSelectInput>
