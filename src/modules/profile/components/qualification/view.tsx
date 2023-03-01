@@ -5,12 +5,14 @@ import React, { useState } from 'react'
 import { EditQualifications } from './edit';
 import { QualificationView } from './components';
 import { Skeleton } from 'antd';
+import { UpdateQualification } from './update';
 
 type qualification = {
     title: string,
     conferringOrganization: string,
     startYear: string,
     summary: string
+    _id: string
 }
 
 interface IProps
@@ -21,6 +23,7 @@ interface IProps
 export const Qualifications: React.FC<IProps> = ({qualifications}) => 
 {
     const [modal, setModal] = useState<{ open: boolean }>();
+    const [updateModal, setUpdateModal] = useState<{ open: boolean, data?: any }>();
 
     return (
         <>
@@ -44,13 +47,13 @@ export const Qualifications: React.FC<IProps> = ({qualifications}) =>
 
             {
                 qualifications ?
-                <div className='px-5 py-5 flex flex-col gap-5'>
+                <div className='px-5 pt-5 flex flex-col gap-5'>
                     {
                         qualifications.length > 0 ?
                         qualifications.map(qualification => (
-                            <QualificationView startYear={ qualification.startYear } certificate={ qualification.title } conferringOrganization={ qualification.conferringOrganization } summary={ qualification.summary }/>
+                            <div key={qualification._id}><QualificationView qualification={qualification} length={qualifications.length} setModal={setUpdateModal}/></div>     
                         )) 
-                        : <p className='text-skin-inverted'>No qualification has been added.</p>
+                        : <p className='text-skin-inverted mb-5'>No qualification has been added.</p>
                     }
                 </div> 
                 : <div className='px-5 py-5'><Skeleton active /></div>
@@ -65,6 +68,16 @@ export const Qualifications: React.FC<IProps> = ({qualifications}) =>
             width={970}
         >
             <EditQualifications setModal={setModal}/>
+        </ApModal>
+
+        <ApModal
+            open={updateModal?.open}
+            onDismiss={() => {
+            setUpdateModal({ open: false });
+            }}
+            width={970}
+        >
+            <UpdateQualification setModal={setUpdateModal} modal={updateModal}/>
         </ApModal>
         </>
     );
