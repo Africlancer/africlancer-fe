@@ -16,7 +16,7 @@ interface IProps {
   value?: any
 }
 
-const defaultClassName= "w-full border rounded px-5 py-3 outline-none focus:border-green-500";
+const defaultClassName= "w-full border rounded px-5 py-2.5 outline-none focus:border-green-500";
 
 export const ApSelectInput: React.FC<IProps> = (props: IProps) => {
   const { name, type, label, className, value, children, disabled } = props;

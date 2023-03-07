@@ -21,7 +21,7 @@ export const ProfileInfo: React.FC<IProps> = ({ profile }) => {
         <div className="flex w-full">
           {
             profile?.avatar ?
-            <Image width='320px' height='320px' src={profile.avatar}/>
+            <Image alt="" width='320px' height='320px' src={profile.avatar}/>
             :  <Skeleton.Image style={{ height: '320px', width: '320px' }} active />
           }
 

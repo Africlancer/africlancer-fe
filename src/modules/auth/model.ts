@@ -9,7 +9,6 @@ export interface IUser {
 
 export const bgImages = [
   'https://img.freepik.com/free-photo/abstract-background-with-red-lines_1361-3531.jpg?w=740&t=st=1675121861~exp=1675122461~hmac=b722bdae7bea9b2483ed913f99738b990a30ecf7759d904867bd2c96ad0c3d0f',
-  'https://img.freepik.com/free-photo/gray-abstract-wireframe-technology-background_53876-101941.jpg?t=st=1675121854~exp=1675122454~hmac=4f896d7788f517cd1bf0225bf9e43cc9937f1d65fa82af0ddc791a7e570b665e',
   'https://img.freepik.com/premium-photo/succulent-abstract-green-tropical-forest-leaves-close-up_88135-40084.jpg?w=826',
   'https://img.freepik.com/free-vector/yellow-background-with-halftone-lines-design_1017-30148.jpg?w=826&t=st=1675122690~exp=1675123290~hmac=3fcab7c2cb4f9935d7feb78d9271448798962c85620d225d94c06f60031e7d73',
   'https://img.freepik.com/premium-photo/abstract-painting-color-texture-modern-futuristic-pattern-loseup-painting-colorful-background_88135-37873.jpg?w=826',

@@ -17,7 +17,7 @@ export const EmailTemplatePage = () => {
                 <p className=" text-sm justify-between  text-black font-medium">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Velit, consequuntur? Odio rem commodi officiis, sapiente repellendus itaque repudiandae magnam alias sit. Iusto nostrum odio dignissimos ipsam ut quisquam eos pariatur.</p>
                 </div>
             <div className=" w-full flex-col text-green-600 mb-4 text-right">
-                <p className=' text-right'>Didn't get an email?</p>
+                <p className='text-right'>Didn&apos;t get an email?</p>
             </div> 
               <button
             

@@ -45,7 +45,7 @@ export const SettingsPage = () => {
   return (
     <div className="h-full relative bg-skin-alt">
     <div className="relative">
-      <Navbar/>
+      <Navbar avatar=''/>
       <SubMenu items={items} currentPage='profile'/>
     </div>
     <div className="relative pt-36 flex px-10 pb-10">

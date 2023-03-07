@@ -6,6 +6,7 @@ import  { MoreOutlined, PlusCircleOutlined, RiseOutlined } from '@ant-design/ico
 import { Progress } from 'antd';
 import { ApButton } from '@/src/components/button';
 import { ArrowRightIcon } from '@/src/components/icons';
+import Image from 'next/image';
 
 export const DashboardPage = () => {
   const items: MenuProps['items'] = [
@@ -42,7 +43,7 @@ export const DashboardPage = () => {
   return (
     <div className="h-full relative bg-skin-alt">
     <div className="profile-page relative">
-      <Navbar/>
+      <Navbar avatar=''/>
       <SubMenu items={items} currentPage='dashboard'/>
 
       <div className="text-skin-inverted relative pt-32 pb-10 mb-20 px-10">
@@ -51,7 +52,8 @@ export const DashboardPage = () => {
             <div className='bg-skin-base rounded-lg shadow-lg p-7'>
             <div className='flex justify-between items-start'>
             <div className='flex gap-3 mb-5'>
-              <img className='h-10 w-10 object-center object-cover' src='https://img.freepik.com/free-photo/waist-up-portrait-handsome-serious-unshaven-male-keeps-hands-together-dressed-dark-blue-shirt-has-talk-with-interlocutor-stands-against-white-wall-self-confident-man-freelancer_273609-16320.jpg?w=740&t=st=1675069509~exp=1675070109~hmac=825fe5c3c97bb5473c64d1fc5022a56cfe17ef7db359dd378ea08d3ed640e2f0'/>
+              {/* <Image height={10} width={10} alt='som'  src='/public/test-user.png'/> */}
+              <div className='bg-gray-100 h-10 w-10'></div>
               <div>
                 <div className='flex gap-3'>
                   <h1>Matt</h1>
@@ -81,7 +83,8 @@ export const DashboardPage = () => {
             <div className='bg-skin-base rounded-lg shadow-lg p-7'>
             <div className='flex justify-between items-start'>
             <div className='flex gap-3 mb-5'>
-              <img className='h-10 w-10 object-center object-cover' src='https://img.freepik.com/free-photo/waist-up-portrait-handsome-serious-unshaven-male-keeps-hands-together-dressed-dark-blue-shirt-has-talk-with-interlocutor-stands-against-white-wall-self-confident-man-freelancer_273609-16320.jpg?w=740&t=st=1675069509~exp=1675070109~hmac=825fe5c3c97bb5473c64d1fc5022a56cfe17ef7db359dd378ea08d3ed640e2f0'/>
+              {/* <Image height={10} width={10} alt='som'  src='/public/test-user.png'/> */}
+              <div className='bg-gray-100 h-10 w-10'></div>
               <div>
                 <div className='flex gap-3'>
                   <h1>Matt</h1>
@@ -111,7 +114,8 @@ export const DashboardPage = () => {
             <div className='bg-skin-base rounded-lg shadow-lg p-7'>
             <div className='flex justify-between items-start'>
             <div className='flex gap-3 mb-5'>
-              <img className='h-10 w-10 object-center object-cover' src='https://img.freepik.com/free-photo/waist-up-portrait-handsome-serious-unshaven-male-keeps-hands-together-dressed-dark-blue-shirt-has-talk-with-interlocutor-stands-against-white-wall-self-confident-man-freelancer_273609-16320.jpg?w=740&t=st=1675069509~exp=1675070109~hmac=825fe5c3c97bb5473c64d1fc5022a56cfe17ef7db359dd378ea08d3ed640e2f0'/>
+              {/* <Image height={10} width={10} alt='som'  src='/public/test-user.png'/> */}
+              <div className='bg-gray-100 h-10 w-10'></div>
               <div>
                 <div className='flex gap-3'>
                   <h1>Matt</h1>
@@ -141,7 +145,8 @@ export const DashboardPage = () => {
             <div className='bg-skin-base rounded-lg shadow-lg p-7'>
             <div className='flex justify-between items-start'>
             <div className='flex gap-3 mb-5'>
-              <img className='h-10 w-10 object-center object-cover' src='https://img.freepik.com/free-photo/waist-up-portrait-handsome-serious-unshaven-male-keeps-hands-together-dressed-dark-blue-shirt-has-talk-with-interlocutor-stands-against-white-wall-self-confident-man-freelancer_273609-16320.jpg?w=740&t=st=1675069509~exp=1675070109~hmac=825fe5c3c97bb5473c64d1fc5022a56cfe17ef7db359dd378ea08d3ed640e2f0'/>
+              {/* <Image height={10} width={10} alt='som'  src='/public/test-user.png'/> */}
+              <div className='bg-gray-100 h-10 w-10'></div>
               <div>
                 <div className='flex gap-3'>
                   <h1>Matt</h1>
@@ -171,7 +176,8 @@ export const DashboardPage = () => {
             <div className='bg-skin-base rounded-lg shadow-lg p-7'>
             <div className='flex justify-between items-start'>
             <div className='flex gap-3 mb-5'>
-              <img className='h-10 w-10 object-center object-cover' src='https://img.freepik.com/free-photo/waist-up-portrait-handsome-serious-unshaven-male-keeps-hands-together-dressed-dark-blue-shirt-has-talk-with-interlocutor-stands-against-white-wall-self-confident-man-freelancer_273609-16320.jpg?w=740&t=st=1675069509~exp=1675070109~hmac=825fe5c3c97bb5473c64d1fc5022a56cfe17ef7db359dd378ea08d3ed640e2f0'/>
+              {/* <Image height={10} width={10} alt='som'  src='/public/test-user.png'/> */}
+              <div className='bg-gray-100 h-10 w-10'></div>
               <div>
                 <div className='flex gap-3'>
                   <h1>Matt</h1>
@@ -201,7 +207,8 @@ export const DashboardPage = () => {
             <div className='bg-skin-base rounded-lg shadow-lg p-7'>
             <div className='flex justify-between items-start'>
             <div className='flex gap-3 mb-5'>
-              <img className='h-10 w-10 object-center object-cover' src='https://img.freepik.com/free-photo/waist-up-portrait-handsome-serious-unshaven-male-keeps-hands-together-dressed-dark-blue-shirt-has-talk-with-interlocutor-stands-against-white-wall-self-confident-man-freelancer_273609-16320.jpg?w=740&t=st=1675069509~exp=1675070109~hmac=825fe5c3c97bb5473c64d1fc5022a56cfe17ef7db359dd378ea08d3ed640e2f0'/>
+              {/* <Image height={10} width={10} alt='som'  src='/public/test-user.png'/> */}
+              <div className='bg-gray-100 h-10 w-10'></div>
               <div>
                 <div className='flex gap-3'>
                   <h1>Matt</h1>
@@ -231,7 +238,8 @@ export const DashboardPage = () => {
             <div className='bg-skin-base rounded-lg shadow-lg p-7'>
             <div className='flex justify-between items-start'>
             <div className='flex gap-3 mb-5'>
-              <img className='h-10 w-10 object-center object-cover' src='https://img.freepik.com/free-photo/waist-up-portrait-handsome-serious-unshaven-male-keeps-hands-together-dressed-dark-blue-shirt-has-talk-with-interlocutor-stands-against-white-wall-self-confident-man-freelancer_273609-16320.jpg?w=740&t=st=1675069509~exp=1675070109~hmac=825fe5c3c97bb5473c64d1fc5022a56cfe17ef7db359dd378ea08d3ed640e2f0'/>
+              {/* <Image height={10} width={10} alt='som'  src='/public/test-user.png'/> */}
+              <div className='bg-gray-100 h-10 w-10'></div>
               <div>
                 <div className='flex gap-3'>
                   <h1>Matt</h1>
@@ -261,7 +269,8 @@ export const DashboardPage = () => {
             <div className='bg-skin-base rounded-lg shadow-lg p-7'>
             <div className='flex justify-between items-start'>
             <div className='flex gap-3 mb-5'>
-              <img className='h-10 w-10 object-center object-cover' src='https://img.freepik.com/free-photo/waist-up-portrait-handsome-serious-unshaven-male-keeps-hands-together-dressed-dark-blue-shirt-has-talk-with-interlocutor-stands-against-white-wall-self-confident-man-freelancer_273609-16320.jpg?w=740&t=st=1675069509~exp=1675070109~hmac=825fe5c3c97bb5473c64d1fc5022a56cfe17ef7db359dd378ea08d3ed640e2f0'/>
+              {/* <Image height={10} width={10} alt='som'  src='/public/test-user.png'/> */}
+              <div className='bg-gray-100 h-10 w-10'></div>
               <div>
                 <div className='flex gap-3'>
                   <h1>Matt</h1>

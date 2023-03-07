@@ -30,7 +30,7 @@ export const SecondSection = () => {
                 </svg>                
                 <h1 className='font-medium text-cusf2'>Hire Freelancers</h1>            
             </div>
-                <p className='text-lg text-skin-inverted'>No job is too big or too small. We've got freelancers for jobs of any size or budget, across 1800+ skills.</p>
+                <p className='text-lg text-skin-inverted'>No job is too big or too small. We&apos;ve got freelancers for jobs of any size or budget, across 1800+ skills.</p>
             </div>
 
             <div className='bg-skin-base rounded-lg w-full flex flex-col justify-center shadow-lg p-5'>
@@ -38,7 +38,7 @@ export const SecondSection = () => {
                 <DollarCircleFilled className='text-skin-accent' style={{fontSize: '30px'}}/>
                 <h1 className='font-medium text-cusf2 text-skin-accent'>Pay Safely</h1>            
               </div>
-                <p className='text-lg text-skin-inverted'>Only pay for work when it has been completed and you're 100% satisfied with the quality using our milestone payment system.</p>
+                <p className='text-lg text-skin-inverted'>Only pay for work when it has been completed and you&apos;re 100% satisfied with the quality using our milestone payment system.</p>
             </div>
 
             <div className='bg-skin-base rounded-lg w-full shadow-lg p-6'>

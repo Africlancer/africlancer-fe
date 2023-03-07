@@ -12,7 +12,7 @@ export const Banner = ({banner}) =>
       <div className="w-full relative h-96">
         {
           banner ? 
-          <Image src={banner} width='100%' height='100%' />
+          <Image alt='' src={banner} width='100%' height='100%' />
           : <div className='w-full ant-s'><Skeleton.Image className='w-full' style={{ height: '384px', minWidth: '100%' }} active /></div>
         }
         {/* <div className="cover-bg w-full relative md:bg-center md:bg-cover bg-center bg-cover h-96"> */}

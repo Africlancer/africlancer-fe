@@ -58,7 +58,7 @@ export const SectionTwo: React.FC<IProps> = ({professionalHeadline, recommendati
           <p className="mb-2 text-skin-inverted">{ summary }</p>
           <p className="mb-1 text-skin-inverted">
             <ApClockIcon/>
-            It's currently 3:12 PM here
+            It&apos;s currently 3:12 PM here
           </p>
 
           <p className="mb-1 text-skin-inverted">

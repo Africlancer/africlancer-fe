@@ -1,8 +1,10 @@
 import React from 'react'
-import { ProjectPage } from '../modules'
+import { PostProjectPage } from '../modules/project/post/page'
 
 const PostProject = () => {
-  return <ProjectPage/>
+  return <PostProjectPage/>
 }
 
 export default PostProject
+
+

@@ -55,7 +55,7 @@ export const SubMenu = ({items, currentPage}) =>
     useEffect(() => 
     {
       setSubMenuItems(items)
-    }, [])
+    }, [items])
 
     const onClick: MenuProps['onClick'] = (e) => {
         console.log('click ', e);

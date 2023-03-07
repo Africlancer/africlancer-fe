@@ -74,7 +74,7 @@ export const UpdateEducation: React.FC<IProps> = ({ setModal, modal }) => {
               <option selected disabled>Select Country</option>
                 {
                   countries.map(country => (
-                    <option value={country}>{country}</option>
+                    <option key={country} value={country}>{country}</option>
                   ))
                 }
             </ApSelectInput>
@@ -100,7 +100,7 @@ export const UpdateEducation: React.FC<IProps> = ({ setModal, modal }) => {
                 <option selected disabled>Select Year</option>
                 {
                   years.map(year => (
-                    <option value={year}>{year}</option>
+                    <option key={year} value={year}>{year}</option>
                   ))
                 }
             </ApSelectInput>
@@ -114,7 +114,7 @@ export const UpdateEducation: React.FC<IProps> = ({ setModal, modal }) => {
                 <option selected disabled>Select Year</option>
                 {
                   years.map(year => (
-                    <option value={year}>{year}</option>
+                    <option key={year} value={year}>{year}</option>
                   ))
                 }
             </ApSelectInput>

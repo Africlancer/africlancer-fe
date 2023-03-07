@@ -6,7 +6,7 @@ export const ThirdSection = () => {
     <div>
       <div className='px-10 py-20'>
       <div className='border-b border-skin-border w-full pb-5 text-skin-inverted'>
-            <h1 className='text-cusf font-bold'>What's Great About It ?</h1>
+            <h1 className='text-cusf font-bold'>What&apos;s Great About It ?</h1>
             <p className='text-lg ring-offset-indigo-800'>Get the best top quality service only on Africlancer</p>
         </div>
 
