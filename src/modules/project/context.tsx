@@ -16,7 +16,7 @@ const ProjectContext = React.createContext<IState>({
 
 const useProjectState = () => {
     const context = React.useContext(ProjectContext);
-    if (context === undefined) throw new Error("contenxt doest not exist");
+    if (context === undefined) throw new Error("context doest not exist");
     return context;
 };
 
@@ -29,7 +29,9 @@ const ProjectContextProvider: React.FC<IProps> = ({ children }) => {
   
     const createProject = async (project: IProject): Promise<void> => {
       await createProjectQuery[0]({ variables: { project } }).then((rs) => {
-        if (rs.data?.createUser) {
+        console.log('kkk')
+        
+        if (rs.data?.createProject) {
           console.log("Project created..");
         }
       });

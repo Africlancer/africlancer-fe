@@ -7,20 +7,33 @@ import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 import { UploadOutlined } from '@ant-design/icons';
 
 const FormikSchema = Yup.object().shape({
-    name: Yup.string()
-      .required("* Project Name is Required"),
-    description: Yup.string()
-      .required("* Project Description is Required."),
+  type: Yup.string()
+      .required("* Payment Type is Required"),
+    minBudget: Yup.string()
+      .required("* Minimum Budget is Required."),
+    maxBudget: Yup.string()
+      .required("* Maximum Budget is Required.")
 });
 
-export const FormTwo = () => {
+export const FormTwo = ({project, setProject, setProjectState, projectState}) => {
+
+  const handleNext = (val) => 
+  {
+    setProject({...project, type: val.type, minBudget: val.minBudget, maxBudget: val.maxBudget})
+    setProjectState({...projectState, loading: true})
+    setTimeout(() => {
+      setProjectState({loading: false, loaded: true}) 
+    }, 3000);
+  }
+
   return (
     <Formik
     initialValues={{
-      name: "",
-      description: ""
+      type: "",
+      minBudget: "",
+      maxBudget: ""
     }}
-    onSubmit={() => {}}
+    onSubmit={handleNext}
     validationSchema={FormikSchema}
     >
       <Form className='w-[800px] flex-col flex gap-10 -translate-y-36 bg-skin-base px-8 pt-8 shadow-md rounded-md'>
@@ -40,12 +53,12 @@ export const FormTwo = () => {
             <p className='text-sm mb-3'>Hire based on an hourly rate and pay for hours billed
             or, agree on a price and release payment when the job is done.</p>
             <ApSelectInput
-                  name="endYear"
+                  name="type"
                   value=''
-            >
+              >
                 <option selected disabled>Select Payment</option>
-                <option value="hour">Pay by the hour</option>
-                <option value="fixed">Pay fixed price</option>
+                <option value="HOURLY_RATE">Pay by the hour</option>
+                <option value="FIXED_PRICE">Pay fixed price</option>
             </ApSelectInput>
         </div>
 
@@ -53,15 +66,15 @@ export const FormTwo = () => {
             <h1 className='font-bold text-2xl mb-2'>What is your estimated budget ?</h1>
             <p className='text-sm mb-3'>Enter up to 5 skills that best describe your project. Freelancers will use these skills to find projects they are most interested and experienced in.</p>
             <div className='flex gap-4'>
-                <ApTextInput placeholder='Enter Skill Here' name='name'/>
-                <ApTextInput placeholder='Enter Skill Here' name='name'/>
+                <ApTextInput label='Min Budget' placeholder='Enter Min Budget' name='minBudget'/>
+                <ApTextInput label='Max Budget' placeholder='Enter Max Budget' name='maxBudget'/>
             </div>
         </div>
 
         <div className='flex justify-end  pb-5'>
           <ApButton
           >
-            Post Project
+            Proceed
           </ApButton>
         </div>
       </Form>

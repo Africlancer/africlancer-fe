@@ -7,13 +7,15 @@ import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 import { UploadOutlined } from '@ant-design/icons';
 
 const FormikSchema = Yup.object().shape({
-    name: Yup.string()
-      .required("* Project Name is Required"),
-    description: Yup.string()
-      .required("* Project Description is Required."),
+  title: Yup.string()
+    .required("* Project Title is Required"),
+  details: Yup.string()
+    .required("* Project Description is Required."),
+  summary: Yup.string()
+  .required("* Project Summary is Required."),
 });
 
-export const FormOne = ({setShowFormTwo}) => {
+export const FormOne = ({setShowFormTwo, project, setProject}) => {
     const [fileList, setFileList] = useState<UploadFile[]>([]);
     const [uploading, setUploading] = useState(false);
 
@@ -31,23 +33,27 @@ export const FormOne = ({setShowFormTwo}) => {
         },
         fileList,
     };
-    const handleNext = () => 
+
+    const handleNext = (val) => 
     {
+      setProject({...project, title: val.title, details: val.details, summary: val.summary})
       setShowFormTwo(true)
     }
 
   return (
     <Formik
     initialValues={{
-      name: "",
-      description: ""
+      title: "",
+      details: "",
+      summary: ''
     }}
     onSubmit={handleNext}
     validationSchema={FormikSchema}
     >
       <Form className='w-[800px] flex-col flex gap-5 -translate-y-36 bg-skin-base px-8 pt-8 shadow-md rounded-md'>
-        <ApTextInput placeholder='e.g, Build me a website' name='name' label='Choose a name for your project'/>
-        <ApTextInput placeholder='Describe your project here...' type='textarea' name='description' label='Tell us more about your project'/>
+        <ApTextInput placeholder='e.g, Build me a website' name='title' label='Choose a name for your project'/>
+        <ApTextInput placeholder='Describe your project here...' type='textarea' name='details' label='Tell us more about your project'/>
+        <ApTextInput placeholder='Enter Summary for your project here...' type='textarea' name='summary' label='Summary for project'/>
         <div className='border p-4'>
         <Upload {...props}>
           <Button icon={<UploadOutlined />}>Select File</Button>

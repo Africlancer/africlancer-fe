@@ -5,7 +5,7 @@ import { getSession } from "next-auth/react";
 console.log(process.env.GRAPHQL_URL, " process.env.GRAPHQL_URL");
 
 const httpLink = createHttpLink({
-  uri: "https://africlancer.asynctechs.com/graphql",  // "" http://159.223.91.232:6110/graphql
+  uri:  "http://localhost:5500/graphql" //"https://africlancer.asynctechs.com/graphql",  //"" http://159.223.91.232:6110/graphql
 });
 
 const authLink = setContext(async (_, { headers }) => {
