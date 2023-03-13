@@ -30,7 +30,7 @@ export const ApButton: React.FC<Iprops> = ({outline, className, children, onClic
 
   return (
       <button
-      type={type}
+      type={type ? type : 'submit'}
       className={className ? className : defaultClassName}
       onClick={onClick}
       disabled={loading}

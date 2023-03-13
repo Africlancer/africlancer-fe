@@ -7,6 +7,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'project-hero-pattern': "url('../../public/abs.jpg')",
+        'browse-hero-pattern': "url('../../public/b-h.jpg')",
+      },
       screens: 
       {
         cs: '1300px',
