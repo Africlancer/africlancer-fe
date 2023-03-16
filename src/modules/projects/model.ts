@@ -3,6 +3,17 @@ export interface IProject
 
 }
 
+export enum ProjectStatus{
+    BIDDING_OPEN = "OPEN",
+    BIDDING_CLOSE = "CLOSE",
+    COMPLETED = "COMPLETED"
+}
+
+export enum ProjectType{
+    FIXED_PRICE = "FIXED",
+    HOURLY_RATE = "HOURLY"
+}
+
 export const bgImages = [
     'https://img.freepik.com/free-photo/abstract-background-with-red-lines_1361-3531.jpg?w=740&t=st=1675121861~exp=1675122461~hmac=b722bdae7bea9b2483ed913f99738b990a30ecf7759d904867bd2c96ad0c3d0f',
     'https://img.freepik.com/premium-photo/succulent-abstract-green-tropical-forest-leaves-close-up_88135-40084.jpg?w=826',
