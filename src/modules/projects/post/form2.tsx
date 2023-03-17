@@ -58,6 +58,7 @@ export const FormTwo = ({project, setProject, setProjectState, projectState}) =>
               >
                 <option selected disabled>Select Payment</option>
                 <option value="HOURLY_RATE">Pay by the hour</option>
+                <option value="HOURLY_RATE">Pay by the hour</option>
                 <option value="FIXED_PRICE">Pay fixed price</option>
             </ApSelectInput>
         </div>

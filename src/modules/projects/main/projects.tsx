@@ -113,7 +113,7 @@ export const ProjectsPage = () => {
         </div>
         {
           projects ? projects?.map((project) => (
-                <ProjectItem project={project}/>
+                <ProjectItem project={project} length={projects?.length}/>
               //   <Link href={`/browse/projects/project/${project._id}`}>
               //   <div className='p-5 hover:bg-black/5 cursor-pointer'>
               //     <h1 className='text-skin-accent text-3xl font-bold'>{project.title}</h1>
