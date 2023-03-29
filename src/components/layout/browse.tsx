@@ -5,17 +5,22 @@ import { Footer } from '../footer';
 import { ApSearchInput } from '../input/search';
 import { Navbar } from '../navbar';
 import { ApButton } from '../button';
+import Link from 'next/link';
 
 const items: MenuProps['items'] = [
   {
     label: (
-      <p className='font-bold text-xl py-3'>Projects</p>
+     <Link href="/browse/projects">
+        <span className='font-bold text-xl'>Projects</span>
+     </Link>
     ),
     key: 'projects',
   },
   {
     label: (
-      <p className='font-bold text-xl py-3'>Freelancers</p>
+      <Link href="/browse/freelancers">
+         <span className='font-bold text-xl'>Freelancers</span>
+      </Link>
     ),
     key: 'freelancers',
   },
@@ -23,10 +28,10 @@ const items: MenuProps['items'] = [
 
 interface IProps 
 {
-    FilterComponent: React.FC<{fetchAllProjects}>,
+    FilterComponent: React.FC<{browseFunc}>,
     MainContent: React.FC,
     page: "projects" | "freelancers"
-    fetchAllProjects? :any
+    browseFunc? :any
 }
 
 const BrowseSubMenu = ({page}) => 
@@ -62,7 +67,7 @@ const BrowseSubMenu = ({page}) =>
     )
 }
 
-export const BrowseLayout: React.FC<IProps> = ({FilterComponent, MainContent, page, fetchAllProjects}) => {
+export const BrowseLayout: React.FC<IProps> = ({FilterComponent, MainContent, page, browseFunc}) => {
   return (
     <div>
     <div className="h-full relative bg-skin-alt">
@@ -87,9 +92,9 @@ export const BrowseLayout: React.FC<IProps> = ({FilterComponent, MainContent, pa
 
             
         <div className='-translate-y-20 px-10'>
-          <div className='flex justify-between gap-10'>
+          <div className='flex justify-between gap-10 items-start'>
             <div className="bg-skin-base w-[400px] shadow-md rounded-md">
-                <FilterComponent fetchAllProjects={fetchAllProjects}/>
+                <FilterComponent browseFunc={browseFunc}/>
             </div>
             <div className='w-full bg-skin-base shadow-md rounded-md'>
                 <BrowseSubMenu page={page}/>

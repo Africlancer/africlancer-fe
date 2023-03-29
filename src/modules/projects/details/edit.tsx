@@ -5,24 +5,27 @@ import { useQuery } from '@apollo/client'
 import { useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
 import { useBiddingContext } from '../../bidding/context'
+import { CreateBid } from '../../bidding/create'
 import { FIND_ONE_BID } from '../../bidding/gql/query'
 import { useProjectContext } from '../context'
+import { ProjectStatus } from '../model'
 import { Details } from './components/details'
 import { Proposals } from './components/proposals'
+import {ClockCircleFilled} from '@ant-design/icons'
 import { BidEditor } from '../../bidding/main'
+import { FIND_ONE_PROFILE } from '../../profile/gql/query'
 import { AboutClient } from './components/client'
+import EditProject from '../edit'
 import { ProjectDetailsSubMenu } from './components/submenu'
 
-export const ProjectDetailsPage = ({id}) => {
+export const EditProjectPage = ({id, edit}) => {
     const {fetchProject, activeProject, hasBiddingEnded, daysLeft} = useProjectContext()
     const {getTotalBids, projectTotalBids, findBids, projectBids, getAverageBid, averageBid} = useBiddingContext()
     const session:any = useSession()
 
-    const {data, loading} = useQuery(FIND_ONE_BID, {
-        variables: {query: {userID: session?.data?.user?._id, projectID: id }}
-    })
-    
-
+    const [showProposals, setShowProposals] = useState(false)
+    const [showEdit, setShowEdit] = useState(false)
+    const userProfile = useQuery(FIND_ONE_PROFILE);
     const [current, setCurrent] = useState('details');
 
     useEffect(() => {
@@ -95,15 +98,25 @@ export const ProjectDetailsPage = ({id}) => {
              <div className='flex flex-col gap-10 w-full'>
                 <div className='bg-skin-base shadow-md rounded-md min-w-[60%]'>
                     <ProjectDetailsSubMenu current={current} setCurrent={setCurrent}/>
-                    <div className='bg-skin-base shadow-md rounded-md min-w-[60%]'>
-                        {
-                            current === 'proposals' ? <Proposals userProposal={data?.findOneBid.userID} projectBids={projectBids}/>
-                            : <Details details={activeProject?.details} summary={activeProject?.summary}/>
-                        }
+                    
+                    <div>
+                    {
+                        showEdit ? (
+                            <EditProject project={activeProject} setShowEdit={setShowEdit}/>
+                        ) : (
+                            <div>
+                                <div className='bg-skin-base shadow-md rounded-md min-w-[60%]'>
+                                    {
+                                        current === 'proposals' ? <Proposals isEdit={true} projectBids={projectBids}/>
+                                        : <Details setShowEdit={setShowEdit} isEdit={true} details={activeProject?.details} summary={activeProject?.summary}/>
+                                    }
+                                </div>
+                            </div>
+                        )
+                    } 
                     </div>
                 </div>
 
-                <BidEditor projectID={activeProject?._id}/>
              </div>
 
             <div className="bg-skin-base w-[40%] shadow-md rounded-md">

@@ -37,8 +37,8 @@ export const ProjectItem = ({project, length}) => {
                       </div>
   
                       <div className='flex flex-col items-end'>
-                        <p className='text-lg flex gap-1'><span>Total num of bids -</span> {data?.totalBids} </p>
-                        <p className='font-bold text-lg gap-2'> <span className='text-base'>Average Bid -</span>
+                        <p className=' flex gap-1'><span>Total bids -</span> {data?.totalBids} </p>
+                        <p className='font-bold gap-1 flex'> <span>Average Bid -</span>
                           ${avgBid.data?.averageBids ? avgBid.data?.averageBids : 0} USD</p>
                       </div>
                     </div>

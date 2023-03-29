@@ -4,38 +4,18 @@ import { Menu } from 'antd';
 
 const items: MenuProps['items'] = [
   {
-    label: 'Open Projects',
-    key: 'op',
+    label: 'Details',
+    key: 'details',
   },
   {
-    label: 'Work in Progress',
-    key: 'wip',
-  },
-  {
-    label: 'Past Projects',
-    key: 'pp',
-  },
-  {
-    label: 'Open Contests',
-    key: 'oc',
-  },
-  {
-    label: 'Pending Prizes',
-    key: 'pps',
-  },
-  {
-    label: 'Prizes Released',
-    key: 'pr',
-  },
-  {
-    label: 'Quotes',
-    key: 'q',
+    label: 'Proposals',
+    key: 'proposals',
   },
 ];
 
-export const ProjectSubMenu = ({}) => 
+export const ProjectDetailsSubMenu = ({setCurrent, current}) => 
 {
-    const [current, setCurrent] = useState('op');
+   // const [current, setCurrent] = useState('details');
     const [subMenuItems, setSubMenuItems] = useState<MenuProps['items']>()
 
     useEffect(() => 

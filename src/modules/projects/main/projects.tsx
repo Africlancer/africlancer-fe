@@ -6,7 +6,7 @@ import {InfoCircleFilled} from '@ant-design/icons'
 import { useBiddingContext } from '../../bidding/context';
 import {ProjectItem} from './components/item'
 
-const FilterComponent = ({fetchAllProjects}) =>
+const FilterComponent = ({browseFunc: fetchAllProjects}) =>
 {
   const [filterQuery, setFilterQuery] = useState<{}>({})
   const typeFormRef = useRef<HTMLFormElement>()
@@ -100,7 +100,7 @@ export const ProjectsPage = () => {
   const {getTotalBids, projectTotalBids} = useBiddingContext()
 
   useEffect(() => {
-    fetchAllProjects({})
+    fetchAllProjects({}, false)
   },[])
 
   const MainContent = () =>
@@ -128,6 +128,6 @@ export const ProjectsPage = () => {
   }
 
   return (
-    <BrowseLayout fetchAllProjects={fetchAllProjects} FilterComponent={FilterComponent} MainContent={MainContent} page="projects" />
+    <BrowseLayout browseFunc={fetchAllProjects} FilterComponent={FilterComponent} MainContent={MainContent} page="projects" />
   )
 }

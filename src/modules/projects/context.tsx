@@ -1,18 +1,22 @@
 import React, { useState } from 'react'
-import { useCreateProject, useFindAllProjects, useFindProject } from './gql/query';
+import { useCreateProject, useFindAllProjects, useFindProject, useUpdateProject } from './gql/query';
 import {IProject} from './model'
+import useApNotification from '@/src/hooks/notification'
 
 interface IProjectState {
+    notificationContext: React.ReactElement<any, string | React.JSXElementConstructor<any>>
     hasBiddingEnded: boolean
     daysLeft: number
     projects: any,
     activeProject: any
     createProject: (project: IProject) => Promise<void>
-    fetchAllProjects: (query) => void
+    updateProject: (project: IProject) => Promise<void>
+    fetchAllProjects: (query, fullSearch) => void
     fetchProject: (query) => void
 }
 
 const ProjectContext = React.createContext<IProjectState>({
+    notificationContext: null,
     hasBiddingEnded: null,
     daysLeft: null,
     projects: [],
@@ -20,8 +24,9 @@ const ProjectContext = React.createContext<IProjectState>({
     createProject(project) {
       return null;
     },
+    updateProject(project) {return null},
     fetchProject(query) {},
-    fetchAllProjects(query) {},
+    fetchAllProjects(query, fullSearch) {},
 });
 
 const useProjectContext = () => {
@@ -35,6 +40,8 @@ interface IProps {
 }
 
 const ProjectContextProvider: React.FC<IProps> = ({ children }) => {
+   const { notificationContext, successMsg, errorMsg } = useApNotification();
+
     const [projects, setProjects] = useState([])
     const [activeProject, setActiveProject] = useState([])
     const [hasBiddingEnded, setHasBiddingEnded] = useState<boolean>()
@@ -43,16 +50,18 @@ const ProjectContextProvider: React.FC<IProps> = ({ children }) => {
     const fetchAllProjectsQuery = useFindAllProjects()
     const fetchProjectQuery = useFindProject()
     const createProjectQuery = useCreateProject((rs) => {});
+    const updateProjectQuery = useUpdateProject((rs) => {});
 
-    const fetchAllProjects = (query) =>
+    const fetchAllProjects = (query, fullSearch) =>
     {
       return fetchAllProjectsQuery[0]({
         variables: {
-          query: query
+          query: query,
+          fullSearch: fullSearch
         }
       }).then((res) => {
         setProjects(res.data.findProjectsFilter)
-        console.log(res.data.findProjectsFilter)
+        console.log(res.data)
       })
       .catch((err) => console.log(err))
     }
@@ -98,7 +107,16 @@ const ProjectContextProvider: React.FC<IProps> = ({ children }) => {
 
     const createProject = async (project: IProject): Promise<void> => {
       await createProjectQuery[0]({ variables: { project } }).then((rs) => {
-        console.log('kkk')
+        
+        if (rs.data?.createProject) {
+          console.log("Project created..");
+        }
+      });
+    };
+
+    const updateProject = async (project: IProject): Promise<void> => {
+      await updateProjectQuery[0]({ variables: { project } }).then((rs) => {
+        console.log(rs)
         
         if (rs.data?.createProject) {
           console.log("Project created..");
@@ -109,7 +127,7 @@ const ProjectContextProvider: React.FC<IProps> = ({ children }) => {
     return (
       <ProjectContext.Provider
         value={{ projects, createProject, fetchAllProjects, activeProject, fetchProject,
-          hasBiddingEnded, daysLeft
+          hasBiddingEnded, daysLeft, updateProject, notificationContext
         }}
       >
         {children}

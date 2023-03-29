@@ -8,6 +8,19 @@ const CREATE_BID = gql`
         }
     }
 `
+
+const UPDATE_BID = gql`
+    mutation UpdateBid($id: String!, $bid: QueryBidInput!) {
+        updateBid(id: $id, bid: $bid)
+    }
+`
+
+const DELETE_BID = gql`
+    mutation DeleteBid($id: String!){
+      deleteBid(id: $id)
+    }
+`
+
 const TOTAL_BIDS = gql`
   query TotalBids($projectId: String!) {
       totalBids(projectId: $projectId)
@@ -23,7 +36,7 @@ const AVERAGE_BID = gql`
 const FIND_ONE_BID = gql`
   query FindOneBid($query: QueryBidInput!){
     findOneBid(query:$query){
-        userID,
+        _id, proposal, userID, projectID, isAwarded, budget, deliveredIn
       }
   }
 `
@@ -45,6 +58,32 @@ export const useCreateBid = (callback: (rs: any) => void) => {
         console.log(error);
       },
     });
+}
+
+export const useDeleteBid = (callback: (rs: any) => void) => {
+  return useMutation(DELETE_BID, {
+    onCompleted: (rs) => {
+      if (rs?.deleteBid) {
+        callback(rs?.deleteBid);
+      }
+    },
+    onError: (error: any) => {
+      console.log(error);
+    },
+  });
+}
+
+export const useUpdateBid = (callback: (rs: any) => void) => {
+  return useMutation(UPDATE_BID, {
+    onCompleted: (rs) => {
+      if (rs?.updateBid) {
+        callback(rs?.updateBid);
+      }
+    },
+    onError: (error: any) => {
+      console.log(error);
+    },
+  });
 }
 
 export const useTotalBids = () => {
@@ -71,4 +110,4 @@ export const useFindBids = () => {
   })
 }
 
-export {FIND_ONE_BID, TOTAL_BIDS, AVERAGE_BID}
+export {FIND_ONE_BID, TOTAL_BIDS, AVERAGE_BID, UPDATE_BID, DELETE_BID}

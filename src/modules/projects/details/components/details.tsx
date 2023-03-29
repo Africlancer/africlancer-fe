@@ -1,19 +1,18 @@
 import { ApButton } from '@/src/components'
 import React from 'react'
 
-export const Details = ({summary, details, showProposals, setShowProposals}) => {
+interface IProps 
+{
+    summary: any
+    details: any
+    isEdit?: any
+    setShowEdit?: any
+}
+
+export const Details: React.FC<IProps> = ({summary, details, isEdit, setShowEdit}) => {
 
   return (
     <div>
-        <div className='px-5 py-3 border-b flex flex-row justify-between items-center'>
-            <h1 className='text-xl font-bold'>Project Details</h1>
-            <ApButton
-                onClick={() => setShowProposals(true)}
-            >
-                View Proposals
-            </ApButton>
-        </div>
-
         <div className='px-5 py-5'>
             <div>
                 <p className='font-bold mb-2'>Summary</p>
@@ -30,6 +29,10 @@ export const Details = ({summary, details, showProposals, setShowProposals}) => 
                 <div>
 
                 </div>
+            </div>
+
+            <div className='flex justify-end'>
+                { isEdit && <ApButton onClick={() => setShowEdit(true)}>Edit Project</ApButton>}
             </div>
         </div>
     </div>

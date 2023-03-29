@@ -37,6 +37,7 @@ export const ProfilePage = () => {
 
   const { profile, updateProfile } = useContext(ProfileContext)
   const { loading, error, data } = useQuery(FIND_ONE_PROFILE);
+  
   console.log(data)
   useEffect(() => {
     if (loading) { console.log('Loading...') }
