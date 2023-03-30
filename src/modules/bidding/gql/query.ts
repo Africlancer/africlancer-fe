@@ -100,7 +100,11 @@ export const useAverageBid = () => {
 
 export const useFindOneBid = () => {
   return useLazyQuery(FIND_ONE_BID, {
-    fetchPolicy: "no-cache"
+    fetchPolicy: "no-cache",
+    
+    onCompleted(data) {
+      
+    },
   })
 }
 
@@ -110,4 +114,4 @@ export const useFindBids = () => {
   })
 }
 
-export {FIND_ONE_BID, TOTAL_BIDS, AVERAGE_BID, UPDATE_BID, DELETE_BID}
+export {FIND_ONE_BID, TOTAL_BIDS, AVERAGE_BID, UPDATE_BID, DELETE_BID, FIND_BIDS}

@@ -5,32 +5,24 @@ import {InfoCircleFilled} from '@ant-design/icons'
 import { useBiddingContext } from './context'
 import { DELETE_BID, UPDATE_BID } from './gql/query'
 import { useMutation } from '@apollo/client'
+import { useSession } from 'next-auth/react'
 
-export const EditBid = ({userBid, projectID}) => {
+export const EditBid = ({userBid, projectID, refetch}) => {
     const [showForm, setShowForm] = useState(false)
-    const [updateBid, {loading}] = useMutation(UPDATE_BID, {
+    const {deleteBid, updateBid, loading} = useBiddingContext()
+    const session:any = useSession()
 
-    })
-
-    const {deleteBid} = useBiddingContext()
-    
     const handleSubmit = (val) => 
     {
-        updateBid({ variables : {
-            id: userBid._id,
-            bid: { projectID }
-          }})
-          .then((val) => { 
-            console.log(val)
-          })
-          .catch(err => 
-          { 
-            console.log(err)
-          })
-        // updateBid({
-        //     projectID: 'oo',
-        //     ...val
-        // })
+        setShowForm(false)
+        updateBid(userBid?._id, {
+            ...val
+        }, refetch, {userID: session?.data?.user?._id, projectID })
+    }
+
+    const handleDelete = () =>
+    {
+        deleteBid(userBid._id, refetch, {userID: session?.data?.user?._id, projectID })
     }
 
   return (
@@ -53,7 +45,7 @@ export const EditBid = ({userBid, projectID}) => {
             </h1>
 
             <div className='flex justify-end items-center gap-4'>
-                <ApButton onClick={() => deleteBid(userBid._id)}>
+                <ApButton onClick={() =>  handleDelete()}>
                     Retract
                 </ApButton>
 
@@ -89,6 +81,7 @@ export const EditBid = ({userBid, projectID}) => {
                         <div className='flex justify-end mt-5 gap-4'>
                             <ApButton
                                 loading={loading}
+
                             >
                                 Edit Bid
                             </ApButton>

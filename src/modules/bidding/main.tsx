@@ -7,21 +7,16 @@ import { EditBid } from './edit'
 import { FIND_ONE_BID } from './gql/query'
 
 export const BidEditor = ({projectID}) => {
-
-    console.log(projectID);
-    
-    const {notificationContext, findOneBid, userBid} = useBiddingContext()
+    const {notificationContext, userBid, setUserBid} = useBiddingContext()
     const session:any = useSession()
-
-    const {data, loading} = useQuery(FIND_ONE_BID, {
-        variables: {query: {userID: session?.data?.user?._id, projectID }}
+    const {data, loading, error, refetch} = useQuery(FIND_ONE_BID, {
+        variables: {query: {userID: session?.data?.user?._id, projectID }},
     })
 
-    console.log(data)
-
-    // useEffect(() => {
-    //     findOneBid({userID: session?.data?.user?._id, projectID: projectID})
-    // },[])
+    useEffect(() => {
+        console.log(data)
+        setUserBid(data?.findOneBid)
+    }, [data, loading, error])
 
   return (
     <>
@@ -31,8 +26,8 @@ export const BidEditor = ({projectID}) => {
                 !loading ? 
                 <div>
                     {
-                        data?.findOneBid ? <EditBid projectID={projectID} userBid={data?.findOneBid}/>
-                        : <CreateBid query={{userID: session?.data?.user?._id, projectID: projectID}} projectID={projectID}/>                
+                        userBid ? <EditBid refetch={refetch} projectID={projectID} userBid={userBid}/>
+                        : <CreateBid refetch={refetch} query={{userID: session?.data?.user?._id, projectID: projectID}} projectID={projectID}/>                
                     }
                 </div> : <></>
             }

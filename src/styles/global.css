@@ -294,3 +294,17 @@ body
 {
   width: 100%;
 }
+.ant-popover-content .ant-popover-inner
+{
+  padding: 0px;
+}
+.ant-popconfirm-inner-content .ant-popconfirm-description
+{
+  padding: 0px;
+  margin: 0px;
+}
+.ant-popconfirm-inner-content .ant-popconfirm-message
+{
+  padding: 0px;
+  margin: 0px;
+}

@@ -4,7 +4,7 @@ import {InfoCircleFilled} from '@ant-design/icons'
 import { ApButton, ApTextInput } from '@/src/components'
 import { useBiddingContext } from './context'
 
-export const CreateBid = ({ projectID, query }) => {
+export const CreateBid = ({ projectID, query, refetch }) => {
 
     const {createBid, loading} = useBiddingContext()
 
@@ -16,7 +16,7 @@ export const CreateBid = ({ projectID, query }) => {
             // proposal: val.proposal,
             // deliveredIn: parseInt(val.deliveredIn),
             // budget: parseInt(val.budget)
-        }, query)
+        }, query, refetch)
     }
 
   return (
