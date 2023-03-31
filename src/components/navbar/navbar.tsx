@@ -1,9 +1,11 @@
+import Notification from "@/src/modules/notification";
 import { Dropdown, MenuProps, Image, Skeleton } from "antd";
 import { useSession } from "next-auth/react";
 import NextImage from "next/image";
 import Link from "next/link";
 import { ApButton } from "../button";
-import { ArrowRightIcon } from "../icons";
+import { ApNotificationIcon, ArrowRightIcon } from "../icons";
+import { ApPopConfirm } from "../popconfirm";
 
 export const Navbar = ({avatar}) => {
   const sess = useSession()
@@ -95,20 +97,14 @@ export const Navbar = ({avatar}) => {
 
             <li className="flex items-center">
               <div className="border-l border-skin-border h-10 w-2 mx-5"></div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                className="w-6 h-6 block"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
-                />
-              </svg>
+              <ApPopConfirm
+                    icon={<div></div>}
+                    placement='bottom'
+                    popButton={ApNotificationIcon}
+                    //title=''
+                >
+                  <Notification/>
+                </ApPopConfirm>
             </li>
 
             <li className="flex items-center ml-4">
