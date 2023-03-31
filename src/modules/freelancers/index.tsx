@@ -8,22 +8,83 @@ const FilterComponent = ({browseFunc: fetchFree}) =>
         <div>
             <h1 className='text-xl font-bold px-5 py-3 border-b'>Filters</h1>
             <div className='px-5 py-3 border-b'>
-          <h1 className='font-bold mb-2'>Payment Type</h1>
           <div className='flex justify-between'>
-          <form >
-            <div className='flex items-center gap-2'>
-                <input type="radio" name="type" value='FIXED_PRICE' 
-                /*onChange={({ target }) => setFilterQuery({...filterQuery, type: target.value})}*//>
-                <p>Fixed Price</p>
-            </div>
-            <div className='flex items-center gap-2'>
-                <input type="radio" value='HOURLY_RATE' name="type" id="" 
-                /*onChange={({ target }) => setFilterQuery({...filterQuery, type: target.value})}*//>
-                <p>Hourly Rate</p>
-            </div>
+          <form>
+              <div>
+              <div className='flex items-center justify-between'>
+                <p className='font-bold'>Hourly Rate</p>
+                <p className='text-skin-accent cursor-pointer'>Clear</p>
+              </div>
+              <div className='flex justify-between gap-4 mt-3'>
+                <div>
+                  <p className='mb-2'>Min</p>
+                  <input placeholder='0' className='border border-gray-400 py-2 rounded-md w-32 px-5 ' type='text'/>
+                </div>
+                  
+                <div>
+                  <p className='mb-2'>Max</p>
+                  <input placeholder='80+' className='border border-gray-400 py-2 rounded-md w-32 mr-10 px-5' type='text'/>
+                </div>
+              </div>
+              </div>
+
+              <div className='mt-8'>
+              <div className='flex items-center justify-between'>
+                <p className='font-bold'>Skills</p>
+                <p className='text-skin-accent cursor-pointer'>Clear</p>
+              </div>
+              <div className='mt-3'>
+                  <input placeholder="Seacrh Skills" className='border border-gray-400 py-2 rounded-md w-80 px-5' type='text'/>
+              </div>
+              </div>
+
+            <br />
+            <div className='mt-8'>
+              <div className='flex items-center justify-between'>
+                <p className='font-bold'>Countries</p>
+                <p className='text-skin-accent cursor-pointer'>Clear</p>
+              </div>
+              <div className='mt-3'>
+                  <input placeholder="Seacrh Countries" className='border border-gray-400 py-2 rounded-md w-80 px-5' type='text'/>
+              </div>
+              </div>
+         
+          <h1 className='font-bold mb-2 mt-6'>Online</h1>
+          <div className='flex justify-between'></div>
+          <div>Online Freelancers Only</div>
+          <br />
+          <h1 className='font-bold mb-2'>Rating</h1>
+          <div className='flex justify-between'></div>
+          <br />
+          <div>
+              <div className='flex items-center justify-between'>
+                <p className='font-bold'>Reviews</p>
+                <p className='text-skin-accent cursor-pointer'>Clear</p>
+              </div>
+              <div className='flex justify-between gap-4 mt-3'>
+                <div>
+                  <p className='mb-2'>Min</p>
+                  <input placeholder='0' className='border border-gray-500 py-2 rounded-md w-32 px-5' type='text'/>
+                </div>
+
+                <div>
+                  <p className='mb-2'>Max</p>
+                  <input placeholder='500+' className='border border-gray-400 py-2 rounded-md w-32 px-5 mr-10' type='text'/>
+                </div>
+              </div>
+              </div>
+
+          <br />
+          <div className='mt-8'>
+              <div className='flex items-center justify-between'>
+                <p className='font-bold'>Exams</p>
+                <p className='text-skin-accent cursor-pointer'>Clear</p>
+              </div>
+              <div className='mt-3'>
+                  <input placeholder="Seacrh Exams" className='border border-gray-400 py-2 rounded-md w-80 px-5' type='text'/>
+              </div>
+              </div>
           </form>
-            <p className='text-skin-accent cursor-pointer' 
-            /*onClick={() => clearQuery("type", typeFormRef)}*/>Clear</p>
           </div>
        </div>
 
@@ -60,7 +121,7 @@ export const FreelancersPage = () => {
                     <p className='font-bold text-xl'>$85</p>
                     <p>per hour</p>
                 </div>
-
+                
                 <ApButton>Request Quote</ApButton>
             </div>
             </div>
