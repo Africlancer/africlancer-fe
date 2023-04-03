@@ -14,7 +14,7 @@ import { AboutClient } from './components/client'
 import { ProjectDetailsSubMenu } from './components/submenu'
 
 export const ProjectDetailsPage = ({id}) => {
-    const {fetchProject, activeProject, hasBiddingEnded, daysLeft} = useProjectContext()
+    const {fetchProject, activeProject, hasBiddingEnded, daysLeft, status} = useProjectContext()
     const {getTotalBids, projectTotalBids, findBids, projectBids, getAverageBid, averageBid} = useBiddingContext()
     const session:any = useSession()
 
@@ -42,15 +42,23 @@ export const ProjectDetailsPage = ({id}) => {
             <div className='relative h-72 w-full bg-browse-hero-pattern bg-center bg-cover'>
                 <div className='absolute h-full w-full bg-black/50 text-white flex flex-col'>
                     <div className='px-10 pt-8 flex justify-between mb-10'>
-                        <div>
-                            <div className='flex items-center mb-2'>
-                            <h1 className='text-5xl font-bold mr-3'>{activeProject?.title}</h1>
-
-                                    {
-                                        activeProject?.status === 'BIDDING_OPEN' && 
-                                        <div className='bg-blue-500 py-1 px-2 text-[13px] font-bold rounded'>OPEN</div>
-                                    }
+                        <div className='w-full'>
+                            <div className='flex w-full items-center justify-between mb-2'>
+                                <h1 className='text-5xl font-bold mr-3'>{activeProject?.title}</h1>
+                                {
+                                    status &&
+                                    <div className='flex gap-2 items-center'>
+                                        <h1 className='font-medium'>Bidding Status <span className='ml-1'>:</span></h1>
+                                        <div className={`${status === "OPEN" ? 'bg-blue-500' 
+                                            :  status === "CLOSED" ? 'bg-red-500' : ''}
+                                            py-1 px-2 text-[13px] font-bold rounded`}
+                                        >
+                                            {status}
+                                        </div>
+                                    </div>
+                                }
                             </div>
+
                             <div className='flex items-center gap-1'>
                                 <p className='font-medium'>Project Budget: </p>
                                 <p className='font-medium'>${activeProject?.minBudget} - {activeProject?.maxBudget} USD</p>
@@ -97,7 +105,7 @@ export const ProjectDetailsPage = ({id}) => {
                     <ProjectDetailsSubMenu current={current} setCurrent={setCurrent}/>
                     <div className='bg-skin-base shadow-md rounded-md min-w-[60%]'>
                         {
-                            current === 'proposals' ? <Proposals userProposal={data?.findOneBid.userID} projectBids={projectBids}/>
+                            current === 'proposals' ? <Proposals userProposal={data?.findOneBid.userID} projectId={id}/>
                             : <Details details={activeProject?.details} summary={activeProject?.summary}/>
                         }
                     </div>

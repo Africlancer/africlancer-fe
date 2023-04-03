@@ -8,7 +8,7 @@ interface IBiddingState
     notificationContext: React.ReactElement<any, string | React.JSXElementConstructor<any>>
     loading: boolean
     projectTotalBids: number
-    projectBids: [],
+    projectBids: any,
     averageBid: number,
     userBid: any,
     createBid: (bid, query, refetchFunc) => void
@@ -60,7 +60,7 @@ const BiddingContextProvider: React.FC<IProps> = ({children}) => {
     const findOneBidQuery = useFindOneBid()
     const findBidsQuery = useFindBids()
     const [ projectTotalBids, setProjectTotalBids ] = useState<number>()
-    const [ projectBids, setProjectBids] = useState<[]>([])
+    const [ projectBids, setProjectBids] = useState<any>([])
     const [ averageBid, setAverageBid ] = useState<number>()
     const [ loading, setLoading ] = useState(false)
     const [ userBid, setUserBid ] = useState(null) 
@@ -74,6 +74,8 @@ const BiddingContextProvider: React.FC<IProps> = ({children}) => {
             successMsg('Successs', 'Your bid has been placed.')
             setLoading(false)
             refetchFunc({query})
+            getTotalBids(query.projectID)
+            getAverageBid(query.projectID)
         })
         .catch((err) => {console.log(err); errorMsg('Error', err.message); setLoading(false)})
     }
@@ -87,6 +89,8 @@ const BiddingContextProvider: React.FC<IProps> = ({children}) => {
             successMsg('Successs', 'Your bid has been deleted.')
             setLoading(false)
             setUserBid(null)
+            getTotalBids(id)
+            getAverageBid(id)
         })
         .catch((err) => {console.log(err); errorMsg('Error', err.message); setLoading(false)})
     }
@@ -100,6 +104,8 @@ const BiddingContextProvider: React.FC<IProps> = ({children}) => {
             successMsg('Successs', 'Your bid has been updated.')
             setLoading(false)
             refetchFunc({query: refetchQuery})
+            getTotalBids(refetchQuery.projectID)
+            getAverageBid(refetchQuery.projectID)
         })
         .catch((err) => {console.log(err); errorMsg('Error', err.message); setLoading(false)})
     }

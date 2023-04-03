@@ -1,4 +1,5 @@
 import { ApButton } from '@/src/components'
+import { useBiddingContext } from '@/src/modules/bidding/context'
 import { FIND_ONE_PROFILE } from '@/src/modules/profile/gql/query'
 import { useQuery } from '@apollo/client'
 import { Image } from 'antd'
@@ -11,34 +12,32 @@ interface IProps
   isEdit?: boolean
   userProfile?: any
   userProposal?: any
-  projectBids?: any
+  projectId?: any
 }
 
-export const Proposals: React.FC<IProps> = ({isEdit, userProposal, projectBids}) => {
+export const Proposals: React.FC<IProps> = ({isEdit, userProposal, projectId}) => {
 
   const sess = useSession()
   const user: any = sess.data?.user
   const [userBid, setUserBid] = useState<any[]>()
   const [otherBids, setOtherBids] = useState<[]>()
   const userProfile = useQuery(FIND_ONE_PROFILE);
+  const {findBids, projectBids} = useBiddingContext()
 
   useEffect(( ) => {
-    
+    findBids({projectID: projectId}, user?._id)
+
     if(!isEdit)
     {
       if(userProposal)
       {
-        setUserBid(projectBids.filter(item => item.userID === userProposal))
+        setUserBid(projectBids.filter((item) => item?.userID === userProposal))
         setOtherBids(projectBids.filter(item => item.userID !== userProposal))  
       }
       else {setOtherBids(projectBids)}
     }
-
   },[])
-
-  useEffect(() => {
-    console.log(userProfile);
-  })
+  console.log(projectBids)
 
   return (
     <div>

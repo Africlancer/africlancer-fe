@@ -6,6 +6,7 @@ import useApNotification from '@/src/hooks/notification'
 interface IProjectState {
     notificationContext: React.ReactElement<any, string | React.JSXElementConstructor<any>>
     hasBiddingEnded: boolean
+    status: any
     daysLeft: number
     projects: any,
     activeProject: any
@@ -18,6 +19,7 @@ interface IProjectState {
 const ProjectContext = React.createContext<IProjectState>({
     notificationContext: null,
     hasBiddingEnded: null,
+    status: null,
     daysLeft: null,
     projects: [],
     activeProject: {},
@@ -46,6 +48,7 @@ const ProjectContextProvider: React.FC<IProps> = ({ children }) => {
     const [activeProject, setActiveProject] = useState([])
     const [hasBiddingEnded, setHasBiddingEnded] = useState<boolean>()
     const [daysLeft, setDaysLeft] = useState<number>()
+    const [status, setStatus] = useState<string>(null)
 
     const fetchAllProjectsQuery = useFindAllProjects()
     const fetchProjectQuery = useFindProject()
@@ -87,6 +90,7 @@ const ProjectContextProvider: React.FC<IProps> = ({ children }) => {
         const dateInPast = (firstDate, secondDate) => {
           if(firstDate.setHours(0,0,0,0) <= secondDate.setHours(0,0,0,0)) {
              setHasBiddingEnded(true)
+             setStatus('CLOSED')
           } 
           
           else
@@ -94,6 +98,7 @@ const ProjectContextProvider: React.FC<IProps> = ({ children }) => {
             let difference = firstDate.getTime() - secondDate.getTime();
             let totalDays = Math.ceil(difference / (1000 * 3600 * 24));
             setHasBiddingEnded(false)
+            setStatus('OPEN')
             setDaysLeft(totalDays)
           }
         }
@@ -127,7 +132,7 @@ const ProjectContextProvider: React.FC<IProps> = ({ children }) => {
     return (
       <ProjectContext.Provider
         value={{ projects, createProject, fetchAllProjects, activeProject, fetchProject,
-          hasBiddingEnded, daysLeft, updateProject, notificationContext
+          hasBiddingEnded, daysLeft, updateProject, notificationContext, status
         }}
       >
         {children}
