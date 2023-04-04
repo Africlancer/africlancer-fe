@@ -5,21 +5,22 @@ import Link from 'next/link';
 import {InfoCircleFilled} from '@ant-design/icons'
 import { useBiddingContext } from '../../bidding/context';
 import {ProjectItem} from './components/item'
+import { LoadingOutlined } from "@ant-design/icons";
 
 const FilterComponent = ({browseFunc: fetchAllProjects}) =>
 {
-  const [filterQuery, setFilterQuery] = useState<{}>({})
+  const [filterQuery, setFilterQuery] = useState<any>({})
   const typeFormRef = useRef<HTMLFormElement>()
   const budgetFormRef = useRef<HTMLFormElement>()
 
   useEffect(() => {
-    console.log('filterTouched')
-    fetchAllProjects({...filterQuery})
+   // console.log('filterTouched', filterQuery)
+    fetchAllProjects({...filterQuery}, false)
   },[filterQuery])
 
   const clearQuery = (field: "type" | "budget", form) =>
   {        
-    let newQuery = filterQuery 
+    let newQuery:any = filterQuery 
     form.current.reset()
 
     switch (field) {
@@ -44,12 +45,12 @@ const FilterComponent = ({browseFunc: fetchAllProjects}) =>
           <form ref={typeFormRef}>
             <div className='flex items-center gap-2'>
                 <input type="radio" name="type" value='FIXED_PRICE' 
-                onChange={({ target }) => setFilterQuery({...filterQuery, type: target.value})}/>
+                onClick={() => setFilterQuery({...filterQuery, type: 'FIXED_PRICE'})}/>
                 <p>Fixed Price</p>
             </div>
             <div className='flex items-center gap-2'>
                 <input type="radio" value='HOURLY_RATE' name="type" id="" 
-                onChange={({ target }) => setFilterQuery({...filterQuery, type: target.value})}/>
+                onClick={() => setFilterQuery({...filterQuery, type: 'HOURLY_RATE'})}/>
                 <p>Hourly Rate</p>
             </div>
           </form>
@@ -78,14 +79,30 @@ const FilterComponent = ({browseFunc: fetchAllProjects}) =>
                 <p>Min Budget</p>
                 <input disabled={filterQuery.type ? false : true} className='focus:border-green-500 border-skin-border border text-black outline-none w-full text-sm bg-skin-input px-5 py-3 flex items-center rounded mb-2 disabled:cursor-not-allowed' 
                 type="number"
-                onChange={({ target }) => setFilterQuery({...filterQuery, minBudget: parseInt(target.value)})}/>
+                onChange={({ target }) => {
+                  if(target.value === '')
+                  {
+                    let temp = filterQuery
+                    delete temp?.minBudget
+                    setFilterQuery({...temp})
+                  }
+                  else{setFilterQuery({...filterQuery, minBudget: parseInt(target.value)})}
+                }}/>
             </div>
 
             <div className='flex flex-col gap-2'>
                 <p>Max Budget</p>
                 <input disabled={filterQuery.type ? false : true} className='focus:border-green-500 border-skin-border border text-black outline-none w-full text-sm bg-skin-input px-5 py-3 flex items-center rounded mb-2 disabled:cursor-not-allowed' 
                 type="number"  
-                onChange={({ target }) => setFilterQuery({...filterQuery, maxBudget: parseInt(target.value)})}/>
+                onChange={({ target }) => {
+                  if(target.value === '')
+                  {
+                    let temp = filterQuery
+                    delete temp?.maxBudget
+                    setFilterQuery({...temp})
+                  }
+                  else{setFilterQuery({...filterQuery, maxBudget: parseInt(target.value)})}
+                }}/>
             </div>
           </form>
        </div>
@@ -105,22 +122,43 @@ export const ProjectsPage = () => {
   const MainContent = () =>
   {    
     return(
-      <div>
+      <div className=''>
         <div className='flex justify-between py-3 border-b px-5'>
           <h1 className='text-lg font-bold'>Top Results</h1>
           <p>Sort By</p>
         </div>
         {
-          projects ? projects?.map((project) => (
-                <ProjectItem project={project} length={projects?.length}/>
-              //   <Link href={`/browse/projects/project/${project._id}`}>
-              //   <div className='p-5 hover:bg-black/5 cursor-pointer'>
-              //     <h1 className='text-skin-accent text-3xl font-bold'>{project.title}</h1>
-              //     <p className='mb-3'>Budget ${project.minBudget} - {project.maxBudget}</p>
-              //     <p>{project.summary}</p>
-              //   </div>
-              // </Link>
-          )) : <></>
+          projects ? (
+            <div>
+              {
+                projects?.length > 0 ? (
+                    projects?.map((project) => (
+                        <ProjectItem project={project} length={projects?.length}/>
+                      //   <Link href={`/browse/projects/project/${project._id}`}>
+                      //   <div className='p-5 hover:bg-black/5 cursor-pointer'>
+                      //     <h1 className='text-skin-accent text-3xl font-bold'>{project.title}</h1>
+                      //     <p className='mb-3'>Budget ${project.minBudget} - {project.maxBudget}</p>
+                      //     <p>{project.summary}</p>
+                      //   </div>
+                      // </Link>
+                  ))
+                ) : (
+                  <div className='flex items-center justify-center h-[200px]'>
+                    <p className='flex items-center gap-3'>
+                        No Projects Found
+                    </p>
+                  </div>
+                )
+              }
+            </div>
+          ) : (
+            <div className='flex items-center justify-center h-[200px]'>
+                <p className='flex items-center gap-3'>
+                    <LoadingOutlined  style={{fontSize: 14}} spin/>
+                    Fetching Projects, Please Wait...
+                </p>
+            </div>
+          )
         }
       </div>
     )

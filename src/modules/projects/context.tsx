@@ -21,7 +21,7 @@ const ProjectContext = React.createContext<IProjectState>({
     status: null,
     loading: false,
     daysLeft: null,
-    projects: [],
+    projects: null,
     activeProject: {},
     createProject(project) {
       return null;
@@ -43,7 +43,7 @@ interface IProps {
 }
 
 const ProjectContextProvider: React.FC<IProps> = ({ children, notificationMsg }) => {
-    const [projects, setProjects] = useState([])
+    const [projects, setProjects] = useState(null)
     const [activeProject, setActiveProject] = useState([])
     const [hasBiddingEnded, setHasBiddingEnded] = useState<boolean>()
     const [daysLeft, setDaysLeft] = useState<number>()
@@ -64,7 +64,7 @@ const ProjectContextProvider: React.FC<IProps> = ({ children, notificationMsg })
         }
       }).then((res) => {
         setProjects(res.data.findProjectsFilter)
-        console.log(res.data)
+        //console.log(res.data)
       })
       .catch((err) => console.log(err))
     }

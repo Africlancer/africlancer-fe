@@ -11,9 +11,7 @@ export const MainContent = () =>
   useEffect(() => {    
     fetchAllFreelancers({})
   },[])
- 
-  console.log(freelancers);
-  
+   
   return(
     <div>
         <div className='flex justify-between py-3 border-b px-5'>

@@ -19,7 +19,6 @@ const FreelancerItem = ({item}) => {
         }
     },[loading])
 
-    console.log(item, data);
     
   return (
     <div>
