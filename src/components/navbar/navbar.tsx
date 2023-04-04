@@ -5,7 +5,12 @@ import Link from "next/link";
 import { ApButton } from "../button";
 import { ArrowRightIcon } from "../icons";
 
-export const Navbar = ({avatar}) => {
+interface IProps 
+{
+  avatar?: any
+}
+
+export const Navbar: React.FC<IProps> = ({avatar}) => {
   const sess = useSession()
   const user: any = sess.data?.user
 
@@ -50,7 +55,7 @@ export const Navbar = ({avatar}) => {
 
   return (
     <header>
-      <nav className="flex flex-wrap items-center justify-between w-full  py-2 z-50 md:py-0 px-10 text-lg text-skin-inverted bg-skin-nav fixed">
+      <nav className="shadow-md flex flex-wrap items-center justify-between w-full  py-2 z-50 md:py-0 px-10 text-lg text-skin-inverted bg-skin-nav fixed">
         <div>
           <NextImage alt="logo" src="/africlancer.png" width={140} height={30} />
         </div>
