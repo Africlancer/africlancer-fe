@@ -22,7 +22,9 @@ export const Proposals: React.FC<IProps> = ({isEdit, userProposal, projectId}) =
   const [userBid, setUserBid] = useState<any[]>()
   const [otherBids, setOtherBids] = useState<[]>()
   const userProfile = useQuery(FIND_ONE_PROFILE);
-  const {findBids, projectBids} = useBiddingContext()
+  const {findBids, projectBids, } = useBiddingContext()
+  const [awardedBids, setAwardedBids] = useState<[]>()
+  const [unawardedBids, setUnawardedBids] = useState<[]>()
 
   useEffect(( ) => {
     findBids({projectID: projectId}, user?._id)
@@ -34,10 +36,15 @@ export const Proposals: React.FC<IProps> = ({isEdit, userProposal, projectId}) =
         setUserBid(projectBids.filter((item) => item?.userID === userProposal))
         setOtherBids(projectBids.filter(item => item.userID !== userProposal))  
       }
-      else {setOtherBids(projectBids)}
+
+      else 
+      {
+        setAwardedBids(projectBids.filter((item) => item?.isAwarded === true))
+        setUnawardedBids(projectBids.filter((item) => item?.isAwarded === false))
+        //setOtherBids(projectBids)
+      }
     }
   },[])
-  console.log(projectBids)
 
   return (
     <div>
@@ -94,14 +101,22 @@ export const Proposals: React.FC<IProps> = ({isEdit, userProposal, projectId}) =
           <div>
             {
               !isEdit ? (
-                  otherBids?.length > 0 ? otherBids?.map((bid) => (
-                      <OtherBids bid={bid}/>
-                  )) : <p className='text-center'>No Bids</p>
-                
+                  <div>
+                    {
+                        awardedBids?.length > 0 ? otherBids?.map((bid: any) => (
+                          <OtherBids key={bid?._id} bid={bid}/>
+                        )) : <p className='text-center'>No Bids</p>
+                    }
+                    
+                    {
+                      unawardedBids?.length > 0 ? otherBids?.map((bid: any) => (
+                          <OtherBids key={bid?._id} bid={bid}/>
+                      )) : <p className='text-center'>No Bids</p>
+                    }
+                  </div>                
               ) : (
-                
-                projectBids?.length > 0 ? projectBids?.map((bid) => (
-                      <OtherBids bid={bid}/>
+                projectBids?.length > 0 ? projectBids?.map((bid: any) => (
+                      <OtherBids key={bid?._id} projectId={projectId} isEdit={isEdit} bid={bid}/>
                   )) : <p className='text-center'>No Bids</p>
               )
             }

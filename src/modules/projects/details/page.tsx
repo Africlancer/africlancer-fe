@@ -36,7 +36,7 @@ export const ProjectDetailsPage = ({id}) => {
   return (
     <div>
       <div className="h-full relative bg-skin-alt">
-      <Navbar avatar=''/>
+      <Navbar/>
       
       <div className='pt-14'>
             <div className='relative h-72 w-full bg-browse-hero-pattern bg-center bg-cover'>

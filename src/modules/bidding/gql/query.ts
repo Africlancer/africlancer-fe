@@ -21,6 +21,18 @@ const DELETE_BID = gql`
     }
 `
 
+const AWARD_BID = gql`
+    mutation AwardBid($projectId: String!, $bidId: String!){
+      awardBid(projectId: $projectId, bidId: $bidId)
+    }
+`
+
+const UNAWARD_BID = gql`
+    mutation UnawardBid($projectId: String!, $bidId: String!){
+      unawardBid(projectId: $projectId, bidId: $bidId)
+    }
+`
+
 const TOTAL_BIDS = gql`
   query TotalBids($projectId: String!) {
       totalBids(projectId: $projectId)
@@ -43,7 +55,7 @@ const FIND_ONE_BID = gql`
 const FIND_BIDS = gql`
   query FindBids($query: QueryBidInput!) {
     findBids(query: $query)
-    { proposal, userID, projectID, isAwarded, budget, deliveredIn }
+    { _id, proposal, userID, projectID, isAwarded, budget, deliveredIn }
   }
 `  
 
@@ -78,6 +90,32 @@ export const useUpdateBid = (callback: (rs: any) => void) => {
     onCompleted: (rs) => {
       if (rs?.updateBid) {
         callback(rs?.updateBid);
+      }
+    },
+    onError: (error: any) => {
+      console.log(error);
+    },
+  });
+}
+
+export const useAwardBid = (callback: (rs: any) => void) => {
+  return useMutation(AWARD_BID, {
+    onCompleted: (rs) => {
+      if (rs?.awardBid) {
+        callback(rs?.awardBid);
+      }
+    },
+    onError: (error: any) => {
+      console.log(error);
+    },
+  });
+}
+
+export const useUnawardBid = (callback: (rs: any) => void) => {
+  return useMutation(UNAWARD_BID, {
+    onCompleted: (rs) => {
+      if (rs?.unawardBid) {
+        callback(rs?.unawardBid);
       }
     },
     onError: (error: any) => {

@@ -23,23 +23,22 @@ export const EditProjectPage = ({id, edit}) => {
     const {getTotalBids, projectTotalBids, findBids, projectBids, getAverageBid, averageBid} = useBiddingContext()
     const session:any = useSession()
 
-    const [showProposals, setShowProposals] = useState(false)
     const [showEdit, setShowEdit] = useState(false)
     const userProfile = useQuery(FIND_ONE_PROFILE);
     const [current, setCurrent] = useState('details');
 
     useEffect(() => {
-        console.log(activeProject);
         fetchProject({_id: id})
         findBids({projectID: id}, session?.data?.user?._id)
         getTotalBids(id)
         getAverageBid(id)
     }, [])
 
+    
   return (
-    <div>
+        <div>
       <div className="h-full relative bg-skin-alt">
-      <Navbar avatar=''/>
+      <Navbar/>
       
       <div className='pt-14'>
             <div className='relative h-72 w-full bg-browse-hero-pattern bg-center bg-cover'>
@@ -107,7 +106,7 @@ export const EditProjectPage = ({id, edit}) => {
                             <div>
                                 <div className='bg-skin-base shadow-md rounded-md min-w-[60%]'>
                                     {
-                                        current === 'proposals' ? <Proposals isEdit={true} projectBids={projectBids}/>
+                                        current === 'proposals' ? <Proposals projectId={id} isEdit={true}/>
                                         : <Details setShowEdit={setShowEdit} isEdit={true} details={activeProject?.details} summary={activeProject?.summary}/>
                                     }
                                 </div>
@@ -129,6 +128,6 @@ export const EditProjectPage = ({id, edit}) => {
       <div className="">
       <Footer/>
     </div>
-    </div>
+        </div>
   )
 }

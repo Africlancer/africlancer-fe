@@ -10,17 +10,21 @@ import Link from 'next/link';
 const items: MenuProps['items'] = [
   {
     label: (
-     <Link href="/browse/projects">
-        <span className='font-bold text-xl'>Projects</span>
-     </Link>
+      <div className='py-[2.8px]'>
+        <Link href="/browse/projects">
+          <span className='font-medium text-lg'>Projects</span>
+        </Link>
+      </div>
     ),
     key: 'projects',
   },
   {
     label: (
-      <Link href="/browse/freelancers">
-         <span className='font-bold text-xl'>Freelancers</span>
-      </Link>
+        <div className='py-[2.8px]'>
+        <Link href="/browse/freelancers">
+          <span className='font-medium text-lg'>Freelancers</span>
+        </Link>
+        </div>
     ),
     key: 'freelancers',
   },
@@ -71,16 +75,18 @@ export const BrowseLayout: React.FC<IProps> = ({FilterComponent, MainContent, pa
   return (
     <div>
     <div className="h-full relative bg-skin-alt">
-      <Navbar avatar=''/>
+      <Navbar/>
       
       <div className='pt-14'>
-      <div className='relative h-96 w-full bg-browse-hero-pattern bg-center bg-cover'>
+      <div className='relative h-80 w-full bg-browse-hero-pattern bg-center bg-cover'>
             <div className='absolute h-full w-full bg-black/40 text-white flex flex-col justify-between'>
                 <div className='px-10 pt-8'>
                     <h1 className='text-5xl font-bold mb-5'>Browse</h1>
                     <p className='mb-5'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum ut, vel assumenda odio pariatur officia repudiandae! Est et reprehenderit, voluptatibus fuga quo ut nobis dolore aut non sit tempora expedita facilis aperiam distinctio consequatur delectus libero a, possimus quod voluptates aspernatur cum. Magnam ab nesciunt doloremque nostrum, aperiam rem voluptatem.</p>
-                    <div className='flex flex-row gap-2'>
+                    <div className='flex flex-row gap-2 w-full'>
+                        <div className='flex flex-col w-full'>
                         <ApSearchInput />
+                        </div>
                         <ApButton>
                           Save
                         </ApButton>
@@ -91,9 +97,9 @@ export const BrowseLayout: React.FC<IProps> = ({FilterComponent, MainContent, pa
         </div> 
 
             
-        <div className='-translate-y-20 px-10'>
+        <div className='-translate-y-10 px-10'>
           <div className='flex justify-between gap-10 items-start'>
-            <div className="bg-skin-base w-[400px] shadow-md rounded-md">
+            <div className="bg-skin-base w-[450px] shadow-md rounded-md">
                 <FilterComponent browseFunc={browseFunc}/>
             </div>
             <div className='w-full bg-skin-base shadow-md rounded-md'>

@@ -35,7 +35,6 @@ const FilterComponent = ({browseFunc: fetchAllProjects}) =>
     }
   }
 
-
   return (
     <div>
        <h1 className='text-xl font-bold px-5 py-3 border-b'>Filters</h1>

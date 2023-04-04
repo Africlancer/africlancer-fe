@@ -9,8 +9,8 @@ const CREATE_PROJECT = gql`
   }
 `
 const UPDATE_PROJECT = gql`
-      mutation UpdateProject($project: QueryProjectInput!) {
-        updateProject(project: $project)
+      mutation UpdateProject($id: String!, $project: QueryProjectInput!) {
+        updateProject(id: $id, project: $project)
   }
 `
 
@@ -79,8 +79,8 @@ export const useCreateProject = (callback: (rs: any) => void) => {
 export const useUpdateProject = (callback: (rs: any) => void) => {
   return useMutation(UPDATE_PROJECT, {
     onCompleted: (rs) => {
-      if (rs?.createProject) {
-        callback(rs?.createProject);
+      if (rs?.updateProject) {
+        callback(rs?.updateProject);
       }
     },
     onError: (error: any) => {

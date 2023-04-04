@@ -7,7 +7,7 @@ import { EditBid } from './edit'
 import { FIND_ONE_BID } from './gql/query'
 
 export const BidEditor = ({projectID}) => {
-    const {notificationContext, userBid, setUserBid} = useBiddingContext()
+    const {userBid, setUserBid} = useBiddingContext()
     const session:any = useSession()
     const {data, loading, error, refetch} = useQuery(FIND_ONE_BID, {
         variables: {query: {userID: session?.data?.user?._id, projectID }},
@@ -19,8 +19,6 @@ export const BidEditor = ({projectID}) => {
     }, [data, loading, error])
 
   return (
-    <>
-        {notificationContext}
         <div>
             {
                 !loading ? 
@@ -32,6 +30,5 @@ export const BidEditor = ({projectID}) => {
                 </div> : <></>
             }
         </div>
-    </>
   )
 }

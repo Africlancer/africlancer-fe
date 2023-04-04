@@ -11,21 +11,19 @@ interface IProps
 
 const EditProject: React.FC<IProps> = ({project, setShowEdit}) => {
 
-    const {updateProject, notificationContext} = useProjectContext()
+    const {updateProject,  loading} = useProjectContext()    
 
     const handleSubmit = (val) => 
     {
-        updateProject({
-            _id: project._id,
-            titl: val.title,
+        updateProject(project?._id, {
+            title: val.title,
             summary: val.summary,
             details: val.details
         })
+        setShowEdit(false)
     }
 
   return (
-    <>
-    {notificationContext}
     <div className='bg-skin-base shadow-md rounded-md min-w-[60%] p-5'>
       <Formik
       initialValues={{
@@ -42,13 +40,12 @@ const EditProject: React.FC<IProps> = ({project, setShowEdit}) => {
             <ApTextInput name='skills' label='Skills'/>
 
             <div className='flex justify-end gap-4'>
-            <ApButton type='submit'>Save Changes</ApButton>
+            <ApButton type='submit' loading={loading}>Save Changes</ApButton>
             <ApButton type='button' outline onClick={() => setShowEdit(false)}>Cancel</ApButton>
             </div>
         </Form>
       </Formik>
     </div>
-    </>
   )
 }
 

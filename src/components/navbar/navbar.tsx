@@ -1,4 +1,6 @@
 import Notification from "@/src/modules/notification";
+import { FIND_USER_AVATAR } from "@/src/modules/profile/gql/query";
+import { useQuery } from "@apollo/client";
 import { Dropdown, MenuProps, Image, Skeleton } from "antd";
 import { useSession } from "next-auth/react";
 import NextImage from "next/image";
@@ -7,10 +9,11 @@ import { ApButton } from "../button";
 import { ApNotificationIcon, ArrowRightIcon } from "../icons";
 import { ApPopConfirm } from "../popconfirm";
 
-export const Navbar = ({avatar}) => {
+export const Navbar = ({}) => {
   const sess = useSession()
   const user: any = sess.data?.user
 
+  const {data, loading, error} = useQuery(FIND_USER_AVATAR)
   const items: MenuProps["items"] = [
     {
       key: "1",
@@ -95,8 +98,7 @@ export const Navbar = ({avatar}) => {
               </Link>
             </li>
 
-            <li className="flex items-center">
-              <div className="border-l border-skin-border h-10 w-2 mx-5"></div>
+            <li className="flex items-center ml-5">
               <ApPopConfirm
                     icon={<div></div>}
                     placement='bottom'
@@ -136,10 +138,12 @@ export const Navbar = ({avatar}) => {
               </div>
             </li>
 
-            <li className="flex items-center ml-5">
+            <li className="flex items-center">
+             
               {
-                avatar ? (
+                data ? (
                   <div className="flex items-center text-lg">
+                     <div className="border-l h-10 w-2 mx-5"></div>
                   <p className="font-bold text-lg">{user?.username}</p>
                   <Dropdown
                     trigger={["click"]}
@@ -147,7 +151,7 @@ export const Navbar = ({avatar}) => {
                     placement="bottomLeft"
                     arrow
                   >
-                    <Image preview={false} alt="usrimg" className="rounded ml-5 cursor-pointer" height={40} width={40} src={avatar}/>
+                    <Image preview={false} alt="usrimg" className="rounded ml-3 cursor-pointer" height={40} width={40} src={data?.findOneProfile?.avatar}/>
                   </Dropdown>
                 </div>
                 ) : (

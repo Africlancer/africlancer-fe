@@ -1,11 +1,21 @@
+import { ApButton } from '@/src/components'
+import { useBiddingContext } from '@/src/modules/bidding/context'
 import { FIND_PROFILES, FIND_USERS } from '@/src/modules/profile/gql/query'
 import { useQuery } from '@apollo/client'
 import { Image } from 'antd'
+import { useSession } from 'next-auth/react'
 import React, { useEffect } from 'react'
 
-export const OtherBids = ({bid}) => {
+interface IProps 
+{
+  bid: any
+  isEdit?: boolean
+  projectId?: string
+}
 
-    const {data, loading} = useQuery(FIND_PROFILES, {
+export const OtherBids: React.FC<IProps> = ({bid, isEdit, projectId}) => {
+
+    const {data} = useQuery(FIND_PROFILES, {
         variables: {query: {_id: bid.userID }}
     })
 
@@ -13,6 +23,8 @@ export const OtherBids = ({bid}) => {
         variables: {query: {profileID: bid.userID }}
     })
 
+    const {awardBid, loading, unawardBid} = useBiddingContext()
+    
   return (
     <div>
     <div className='flex justify-between mb-5'>
@@ -34,6 +46,24 @@ export const OtherBids = ({bid}) => {
     <h1>
       {bid.proposal}
     </h1>
+
+    {
+      isEdit ? (
+        <div className='flex justify-end items-center gap-4'>
+            {
+              bid?.isAwarded ? (
+                <ApButton loading={loading} outline onClick={() => unawardBid(projectId, bid?._id)}>
+                   Unaward Bid          
+                </ApButton>
+              ) : (
+                  <ApButton loading={loading} onClick={() => awardBid(projectId, bid?._id)}>
+                    Award Bid 
+                  </ApButton>
+              )
+            }
+        </div>
+      ) : <></>
+    }
   </div>
   )
 }

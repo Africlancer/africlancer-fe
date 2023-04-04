@@ -1,11 +1,10 @@
 import useApNotification from '@/src/hooks/notification'
 import { useLazyQuery } from '@apollo/client'
 import React, { useState } from 'react'
-import { FIND_ONE_BID, useAverageBid, useCreateBid, useDeleteBid, useFindBids, useFindOneBid, useTotalBids, useUpdateBid } from './gql/query'
+import { FIND_ONE_BID, useAverageBid, useAwardBid, useCreateBid, useDeleteBid, useFindBids, useFindOneBid, useTotalBids, useUnawardBid, useUpdateBid } from './gql/query'
 
 interface IBiddingState 
 {
-    notificationContext: React.ReactElement<any, string | React.JSXElementConstructor<any>>
     loading: boolean
     projectTotalBids: number
     projectBids: any,
@@ -18,11 +17,12 @@ interface IBiddingState
     getAverageBid: (projectId) => void
     findOneBid: (query) => void
     findBids: (query, userId?) => void
+    awardBid: (projectId, bidId) => void
+    unawardBid: (projectId, bidId) => void
     setUserBid: React.Dispatch<any>
 }
 
 const BiddingContext = React.createContext<IBiddingState>({
-    notificationContext: null,
     loading: false,
     projectTotalBids: 0,
     projectBids: [],
@@ -35,7 +35,9 @@ const BiddingContext = React.createContext<IBiddingState>({
     getAverageBid(projectId) {},
     findOneBid(query) {},
     findBids(query, userId?) {},
-    setUserBid(){}
+    setUserBid(){},
+    awardBid(projectId, bidId) {},
+    unawardBid(projectId, bidId) {},
 })
 
 const useBiddingContext = () =>
@@ -46,15 +48,17 @@ const useBiddingContext = () =>
 }
 
 interface IProps {
+    notificationMsg: any
     children: React.ReactNode;
 }
 
-const BiddingContextProvider: React.FC<IProps> = ({children}) => {
-    const { notificationContext, successMsg, errorMsg } = useApNotification();
-
-    const createBidQuery = useCreateBid((rs) => {}, )
+const BiddingContextProvider: React.FC<IProps> = ({notificationMsg, children}) => {
+    const createBidQuery = useCreateBid((rs) => {})
     const deleteBidQuery = useDeleteBid((rs) => {})
     const updateBidQuery = useUpdateBid((rs) => {})
+    const awardBidQuery = useAwardBid((rs) => {})
+    const unawardBidQuery = useUnawardBid((rs) => {})
+
     const projectTotalBidsQuery = useTotalBids()
     const averageBidQuery = useAverageBid()
     const findOneBidQuery = useFindOneBid()
@@ -71,13 +75,13 @@ const BiddingContextProvider: React.FC<IProps> = ({children}) => {
         setLoading(true)
         await createBidQuery[0]({ variables: { bid } }).then((rs) => {
             //console.log(rs)
-            successMsg('Successs', 'Your bid has been placed.')
+            notificationMsg?.successMsg('Successs', 'Your bid has been placed.')
             setLoading(false)
             refetchFunc({query})
             getTotalBids(query.projectID)
             getAverageBid(query.projectID)
         })
-        .catch((err) => {console.log(err); errorMsg('Error', err.message); setLoading(false)})
+        .catch((err) => {notificationMsg?.errorMsg('Error', err.message); setLoading(false)})
     }
 
     const deleteBid = async(id, refetchFunc, refetchQuery) => 
@@ -86,13 +90,13 @@ const BiddingContextProvider: React.FC<IProps> = ({children}) => {
         await deleteBidQuery[0]({  
             variables: { id } }).then((rs) => {
             //console.log(rs)
-            successMsg('Successs', 'Your bid has been deleted.')
+            notificationMsg?.successMsg('Successs', 'Your bid has been deleted.')
             setLoading(false)
             setUserBid(null)
             getTotalBids(id)
             getAverageBid(id)
         })
-        .catch((err) => {console.log(err); errorMsg('Error', err.message); setLoading(false)})
+        .catch((err) => {notificationMsg?.errorMsg('Error', err.message); setLoading(false)})
     }
 
     const updateBid = async(id, bid, refetchFunc, refetchQuery) => 
@@ -101,13 +105,37 @@ const BiddingContextProvider: React.FC<IProps> = ({children}) => {
         await updateBidQuery[0]({
             variables: { id, bid } }).then((rs) => {
             //console.log(rs)
-            successMsg('Successs', 'Your bid has been updated.')
+            notificationMsg?.successMsg('Success', 'Your bid has been updated.')
             setLoading(false)
             refetchFunc({query: refetchQuery})
             getTotalBids(refetchQuery.projectID)
             getAverageBid(refetchQuery.projectID)
         })
-        .catch((err) => {console.log(err); errorMsg('Error', err.message); setLoading(false)})
+        .catch((err) => {notificationMsg?.errorMsg('Error', err.message); setLoading(false)})
+    }
+
+    const awardBid = async (projectId, bidId) =>
+    {
+        setLoading(true)
+        await awardBidQuery[0]({
+            variables: { projectId, bidId } }).then((rs) => {
+            notificationMsg?.successMsg('Success', 'Bid has been awarded')
+            setLoading(false)
+            findBids({projectID: projectId})
+        })
+        .catch((err) => {notificationMsg?.errorMsg('Error', err.message); setLoading(false)})
+    }
+
+    const unawardBid = async(projectId, bidId) =>
+    {
+        setLoading(true)
+        await unawardBidQuery[0]({
+            variables: { projectId, bidId } }).then((rs) => {
+            notificationMsg?.successMsg('Success', 'Bid has been unawarded')
+            setLoading(false)
+            findBids({projectID: projectId})
+        })
+        .catch((err) => {notificationMsg?.errorMsg('Error', err.message); setLoading(false)})
     }
 
     const getTotalBids = (projectId) =>
@@ -154,9 +182,9 @@ const BiddingContextProvider: React.FC<IProps> = ({children}) => {
 
     return (
         <BiddingContext.Provider
-            value={{notificationContext, loading, userBid, createBid, getTotalBids, projectTotalBids, 
+            value={{loading, userBid, createBid, getTotalBids, projectTotalBids, 
             findOneBid, findBids, projectBids, averageBid, getAverageBid, updateBid, deleteBid,
-            setUserBid }}
+            setUserBid, awardBid, unawardBid }}
         >
             {children}
         </BiddingContext.Provider>

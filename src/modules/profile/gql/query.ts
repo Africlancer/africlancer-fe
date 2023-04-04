@@ -39,10 +39,21 @@ const FIND_ONE_PROFILE = gql`
     }
 `
 
+const FIND_USER_AVATAR = gql`
+    query FindOneProfile {
+        findOneProfile {
+            avatar
+        }
+    }
+`
+
 const FIND_PROFILES = gql`
     query FindProfiles($query: QueryProfileInput!) {
         findProfiles(query: $query) {
             avatar,
+            hourlyRate,
+            professionalHeadline,
+            summary,
         }
     }
 `
@@ -81,5 +92,5 @@ const DELETE_QUALIFICATION = gql`
   }
 `
 
-export { DELETE_EXPERIENCE, DELETE_EDUCATION, ADD_PUBLICATION, ADD_QUALIFICATION, FIND_ONE_PROFILE, 
-    FIND_USERS,  UPDATE_PROFILE, ADD_EDUCATION, ADD_EXPERIENCE, DELETE_PUBLICATION, DELETE_QUALIFICATION, FIND_PROFILES }
+export { DELETE_EXPERIENCE, DELETE_EDUCATION, ADD_PUBLICATION, ADD_QUALIFICATION, FIND_ONE_PROFILE, FIND_USER_AVATAR
+    ,FIND_USERS,  UPDATE_PROFILE, ADD_EDUCATION, ADD_EXPERIENCE, DELETE_PUBLICATION, DELETE_QUALIFICATION, FIND_PROFILES }

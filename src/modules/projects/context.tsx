@@ -4,29 +4,29 @@ import {IProject} from './model'
 import useApNotification from '@/src/hooks/notification'
 
 interface IProjectState {
-    notificationContext: React.ReactElement<any, string | React.JSXElementConstructor<any>>
     hasBiddingEnded: boolean
     status: any
+    loading: boolean
     daysLeft: number
     projects: any,
     activeProject: any
     createProject: (project: IProject) => Promise<void>
-    updateProject: (project: IProject) => Promise<void>
+    updateProject: (id: string, project: IProject) => Promise<void>
     fetchAllProjects: (query, fullSearch) => void
     fetchProject: (query) => void
 }
 
 const ProjectContext = React.createContext<IProjectState>({
-    notificationContext: null,
     hasBiddingEnded: null,
     status: null,
+    loading: false,
     daysLeft: null,
     projects: [],
     activeProject: {},
     createProject(project) {
       return null;
     },
-    updateProject(project) {return null},
+    updateProject(id, project) {return null},
     fetchProject(query) {},
     fetchAllProjects(query, fullSearch) {},
 });
@@ -38,12 +38,11 @@ const useProjectContext = () => {
 };
 
 interface IProps {
+    notificationMsg: any
     children: React.ReactNode;
 }
 
-const ProjectContextProvider: React.FC<IProps> = ({ children }) => {
-   const { notificationContext, successMsg, errorMsg } = useApNotification();
-
+const ProjectContextProvider: React.FC<IProps> = ({ children, notificationMsg }) => {
     const [projects, setProjects] = useState([])
     const [activeProject, setActiveProject] = useState([])
     const [hasBiddingEnded, setHasBiddingEnded] = useState<boolean>()
@@ -54,6 +53,7 @@ const ProjectContextProvider: React.FC<IProps> = ({ children }) => {
     const fetchProjectQuery = useFindProject()
     const createProjectQuery = useCreateProject((rs) => {});
     const updateProjectQuery = useUpdateProject((rs) => {});
+    const [ loading, setLoading ] = useState(false)
 
     const fetchAllProjects = (query, fullSearch) =>
     {
@@ -119,20 +119,18 @@ const ProjectContextProvider: React.FC<IProps> = ({ children }) => {
       });
     };
 
-    const updateProject = async (project: IProject): Promise<void> => {
-      await updateProjectQuery[0]({ variables: { project } }).then((rs) => {
-        console.log(rs)
-        
-        if (rs.data?.createProject) {
-          console.log("Project created..");
-        }
-      });
+    const updateProject = async (id:string, project: IProject): Promise<void> => {
+      await updateProjectQuery[0]({ variables: { id, project } }).then((rs) => {
+          fetchProject({_id: id})
+          notificationMsg?.successMsg('Success', 'Your project has been updated.')
+          setLoading(false)
+      }).catch((err) =>  {notificationMsg?.errorMsg('Error', err.message);  setLoading(false)})
     };
   
     return (
       <ProjectContext.Provider
         value={{ projects, createProject, fetchAllProjects, activeProject, fetchProject,
-          hasBiddingEnded, daysLeft, updateProject, notificationContext, status
+          hasBiddingEnded, daysLeft, updateProject, status, loading
         }}
       >
         {children}
