@@ -6,6 +6,7 @@ import { useQuery } from '@apollo/client';
 import {  Image, MenuProps } from 'antd';
 import { useSession } from 'next-auth/react';
 import NImage from 'next/image';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import { FIND_PROJECTS } from '../gql/query';
 import { ProjectSubMenu } from './submenu';
@@ -70,10 +71,10 @@ export const MyProjectsPage = () => {
       <Navbar avatar=''/>
       <SubMenu items={items} currentPage='my-projects'/>
       <div className='pt-24'>
-        <div className='relative h-80 w-full bg-project-hero-pattern bg-center bg-cover'>
+        <div className='relative h-80 w-full bg-browse-hero-pattern bg-center bg-cover'>
             <div className='absolute h-full w-full bg-black/40 text-white flex flex-col justify-between'>
                 <div className='px-10 pt-8'>
-                    <h1 className='text-4xl font-bold mb-5'>Projects, Contests and Quotes</h1>
+                    <h1 className='text-4xl font-bold mb-8'>Projects, Contests and Quotes</h1>
                     <p className='mb-5'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum ut, vel assumenda odio pariatur officia repudiandae! Est et reprehenderit, voluptatibus fuga quo ut nobis dolore aut non sit tempora expedita facilis aperiam distinctio consequatur delectus libero a, possimus quod voluptates aspernatur cum. Magnam ab nesciunt doloremque nostrum, aperiam rem voluptatem.</p>
                     <ApSearchInput />
                 </div>
@@ -81,7 +82,7 @@ export const MyProjectsPage = () => {
         </div>               
 
 
-            <div className='px-10 my-10'>
+            <div className='px-10 -translate-y-10'>
                 <ProjectSubMenu/>
                 <div>
                     <div className="bg-white shadow-md rounded-md py-5 px-5">
@@ -124,10 +125,12 @@ export const MyProjectsPage = () => {
                                             'Closed' : 'Completed'
                                         }</td>
                                         <td className="whitespace-nowrap px-6 py-4">
-                                            <ApButton outline> 
+                                          <Link href={`/manage/projects/project/${project._id}`}>
+                                              <ApButton outline> 
                                                 Edit
                                                 <EditIcon/> 
-                                            </ApButton>
+                                              </ApButton>
+                                          </Link>
                                         </td> 
                                     </tr>
                                     )

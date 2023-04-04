@@ -49,7 +49,8 @@ const [createProject] = useMutation(CREATE_PROJECT,{})
           minBudget: parseInt(project.minBudget), 
           maxBudget: parseInt(project.maxBudget),
           startDate: presentDate,
-          endDate: sevenDaysLater
+          endDate: sevenDaysLater,
+          skills: []
         }
       }})
       .then((val) => 

@@ -39,6 +39,33 @@ const FIND_ONE_PROFILE = gql`
     }
 `
 
+const FIND_USER_AVATAR = gql`
+    query FindOneProfile {
+        findOneProfile {
+            avatar
+        }
+    }
+`
+
+const FIND_PROFILES = gql`
+    query FindProfiles($query: QueryProfileInput!) {
+        findProfiles(query: $query) {
+            avatar,
+            hourlyRate,
+            professionalHeadline,
+            summary,
+        }
+    }
+`
+
+const FIND_USERS = gql`
+    query FindUsers($query: QueryUserInput!) {
+        findUsers(query: $query) {
+            firstName, lastName, email, username
+        }
+    }
+`
+
 const UPDATE_PROFILE = gql`
     mutation UpdateProfile($profile: QueryProfileInput!){
     updateProfile(profile: $profile)
@@ -65,5 +92,5 @@ const DELETE_QUALIFICATION = gql`
   }
 `
 
-export { DELETE_EXPERIENCE, DELETE_EDUCATION, ADD_PUBLICATION, ADD_QUALIFICATION, FIND_ONE_PROFILE, 
-    UPDATE_PROFILE, ADD_EDUCATION, ADD_EXPERIENCE, DELETE_PUBLICATION, DELETE_QUALIFICATION }
+export { DELETE_EXPERIENCE, DELETE_EDUCATION, ADD_PUBLICATION, ADD_QUALIFICATION, FIND_ONE_PROFILE, FIND_USER_AVATAR
+    ,FIND_USERS,  UPDATE_PROFILE, ADD_EDUCATION, ADD_EXPERIENCE, DELETE_PUBLICATION, DELETE_QUALIFICATION, FIND_PROFILES }

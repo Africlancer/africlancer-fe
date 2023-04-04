@@ -8,6 +8,12 @@ const CREATE_PROJECT = gql`
         }
   }
 `
+const UPDATE_PROJECT = gql`
+      mutation UpdateProject($id: String!, $project: QueryProjectInput!) {
+        updateProject(id: $id, project: $project)
+  }
+`
+
 const FIND_PROJECTS = gql`
     query FindProjects($query: QueryProjectInput!) {
       findProjects(query: $query) {
@@ -25,8 +31,8 @@ const FIND_PROJECTS = gql`
     }
 `
 const FIND_ALL_PROJECTS = gql`
-    query FindProjectsFilter($query: QueryProjectInput!) {
-      findProjectsFilter(query: $query) {
+    query FindProjectsFilter($query: QueryProjectInput!, $fullSearch: Boolean!) {
+      findProjectsFilter(query: $query, fullSearch: $fullSearch) {
             title,
             minBudget,
             maxBudget,
@@ -70,6 +76,18 @@ export const useCreateProject = (callback: (rs: any) => void) => {
     });
 }
 
+export const useUpdateProject = (callback: (rs: any) => void) => {
+  return useMutation(UPDATE_PROJECT, {
+    onCompleted: (rs) => {
+      if (rs?.updateProject) {
+        callback(rs?.updateProject);
+      }
+    },
+    onError: (error: any) => {
+      console.log(error);
+    },
+  });
+}
 
 export const useFindAllProjects = () => {
   return useLazyQuery(FIND_ALL_PROJECTS, {

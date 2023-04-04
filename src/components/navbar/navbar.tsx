@@ -1,9 +1,13 @@
+import Notification from "@/src/modules/notification";
+import { FIND_USER_AVATAR } from "@/src/modules/profile/gql/query";
+import { useQuery } from "@apollo/client";
 import { Dropdown, MenuProps, Image, Skeleton } from "antd";
 import { useSession } from "next-auth/react";
 import NextImage from "next/image";
 import Link from "next/link";
 import { ApButton } from "../button";
-import { ArrowRightIcon } from "../icons";
+import { ApNotificationIcon, ArrowRightIcon } from "../icons";
+import { ApPopConfirm } from "../popconfirm";
 
 interface IProps 
 {
@@ -11,9 +15,11 @@ interface IProps
 }
 
 export const Navbar: React.FC<IProps> = ({avatar}) => {
+
   const sess = useSession()
   const user: any = sess.data?.user
 
+  const {data, loading, error} = useQuery(FIND_USER_AVATAR)
   const items: MenuProps["items"] = [
     {
       key: "1",
@@ -98,22 +104,15 @@ export const Navbar: React.FC<IProps> = ({avatar}) => {
               </Link>
             </li>
 
-            <li className="flex items-center">
-              <div className="border-l border-skin-border h-10 w-2 mx-5"></div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                className="w-6 h-6 block"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
-                />
-              </svg>
+            <li className="flex items-center ml-5">
+              <ApPopConfirm
+                    icon={<div></div>}
+                    placement='bottom'
+                    popButton={ApNotificationIcon}
+                    //title=''
+                >
+                  <Notification/>
+                </ApPopConfirm>
             </li>
 
             <li className="flex items-center ml-4">
@@ -145,10 +144,12 @@ export const Navbar: React.FC<IProps> = ({avatar}) => {
               </div>
             </li>
 
-            <li className="flex items-center ml-5">
+            <li className="flex items-center">
+             
               {
-                avatar ? (
+                data ? (
                   <div className="flex items-center text-lg">
+                     <div className="border-l h-10 w-2 mx-5"></div>
                   <p className="font-bold text-lg">{user?.username}</p>
                   <Dropdown
                     trigger={["click"]}
@@ -156,7 +157,7 @@ export const Navbar: React.FC<IProps> = ({avatar}) => {
                     placement="bottomLeft"
                     arrow
                   >
-                    <Image preview={false} alt="usrimg" className="rounded ml-5 cursor-pointer" height={40} width={40} src={avatar}/>
+                    <Image preview={false} alt="usrimg" className="rounded ml-3 cursor-pointer" height={40} width={40} src={data?.findOneProfile?.avatar}/>
                   </Dropdown>
                 </div>
                 ) : (

@@ -12,8 +12,7 @@ interface IProps {
 
 export const ProfileInfo: React.FC<IProps> = ({ profile }) => {
   const [modal, setModal] = useState<{ open: boolean }>();
-  const sess = useSession()
-  const user: any = sess.data?.user
+c
 
   return (
     <>

@@ -8,6 +8,31 @@ const CREATE_BID = gql`
         }
     }
 `
+
+const UPDATE_BID = gql`
+    mutation UpdateBid($id: String!, $bid: QueryBidInput!) {
+        updateBid(id: $id, bid: $bid)
+    }
+`
+
+const DELETE_BID = gql`
+    mutation DeleteBid($id: String!){
+      deleteBid(id: $id)
+    }
+`
+
+const AWARD_BID = gql`
+    mutation AwardBid($projectId: String!, $bidId: String!){
+      awardBid(projectId: $projectId, bidId: $bidId)
+    }
+`
+
+const UNAWARD_BID = gql`
+    mutation UnawardBid($projectId: String!, $bidId: String!){
+      unawardBid(projectId: $projectId, bidId: $bidId)
+    }
+`
+
 const TOTAL_BIDS = gql`
   query TotalBids($projectId: String!) {
       totalBids(projectId: $projectId)
@@ -23,14 +48,14 @@ const AVERAGE_BID = gql`
 const FIND_ONE_BID = gql`
   query FindOneBid($query: QueryBidInput!){
     findOneBid(query:$query){
-        userID,
+        _id, proposal, userID, projectID, isAwarded, budget, deliveredIn
       }
   }
 `
 const FIND_BIDS = gql`
   query FindBids($query: QueryBidInput!) {
     findBids(query: $query)
-    { proposal, userID, projectID, isAwarded, budget, deliveredIn }
+    { _id, proposal, userID, projectID, isAwarded, budget, deliveredIn }
   }
 `  
 
@@ -47,6 +72,58 @@ export const useCreateBid = (callback: (rs: any) => void) => {
     });
 }
 
+export const useDeleteBid = (callback: (rs: any) => void) => {
+  return useMutation(DELETE_BID, {
+    onCompleted: (rs) => {
+      if (rs?.deleteBid) {
+        callback(rs?.deleteBid);
+      }
+    },
+    onError: (error: any) => {
+      console.log(error);
+    },
+  });
+}
+
+export const useUpdateBid = (callback: (rs: any) => void) => {
+  return useMutation(UPDATE_BID, {
+    onCompleted: (rs) => {
+      if (rs?.updateBid) {
+        callback(rs?.updateBid);
+      }
+    },
+    onError: (error: any) => {
+      console.log(error);
+    },
+  });
+}
+
+export const useAwardBid = (callback: (rs: any) => void) => {
+  return useMutation(AWARD_BID, {
+    onCompleted: (rs) => {
+      if (rs?.awardBid) {
+        callback(rs?.awardBid);
+      }
+    },
+    onError: (error: any) => {
+      console.log(error);
+    },
+  });
+}
+
+export const useUnawardBid = (callback: (rs: any) => void) => {
+  return useMutation(UNAWARD_BID, {
+    onCompleted: (rs) => {
+      if (rs?.unawardBid) {
+        callback(rs?.unawardBid);
+      }
+    },
+    onError: (error: any) => {
+      console.log(error);
+    },
+  });
+}
+
 export const useTotalBids = () => {
     return useLazyQuery(TOTAL_BIDS, {
         fetchPolicy: "no-cache"
@@ -61,7 +138,11 @@ export const useAverageBid = () => {
 
 export const useFindOneBid = () => {
   return useLazyQuery(FIND_ONE_BID, {
-    fetchPolicy: "no-cache"
+    fetchPolicy: "no-cache",
+    
+    onCompleted(data) {
+      
+    },
   })
 }
 
@@ -71,4 +152,4 @@ export const useFindBids = () => {
   })
 }
 
-export {FIND_ONE_BID, TOTAL_BIDS, AVERAGE_BID}
+export {FIND_ONE_BID, TOTAL_BIDS, AVERAGE_BID, UPDATE_BID, DELETE_BID, FIND_BIDS}

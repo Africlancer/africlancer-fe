@@ -46,7 +46,7 @@ export const EditEducation: React.FC<IProps> = ({ setModal }) => {
       if(val) { successMsg(`Success`, `Education Info has been added.`)
         setTimeout(() => {
           setModal({ open: false })
-        }, 1000);
+        }, 1000)
       }
     })
     .catch(err => 

@@ -37,6 +37,7 @@ export const ProfilePage = () => {
 
   const { profile, updateProfile } = useContext(ProfileContext)
   const { loading, error, data } = useQuery(FIND_ONE_PROFILE);
+  
   console.log(data)
   useEffect(() => {
     if (loading) { console.log('Loading...') }
@@ -47,7 +48,7 @@ export const ProfilePage = () => {
   return (
     <div className="h-full relative bg-skin-alt">
       <div className="profile-page relative">
-        <Navbar avatar={profile?.avatar}/>
+        <Navbar/>
         <SubMenu items={items} currentPage='improve-profile'/>
 
         <div className="relative pt-24">

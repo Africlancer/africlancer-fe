@@ -1,11 +1,11 @@
 import { ProjectDetailsPage } from '@/src/modules/projects/details/page';
 import React from 'react'
 
-const ProjectDetails = ({id}) => {
-  return <ProjectDetailsPage id={id}/>
+const edit = ({id, edit }) => {
+  return <ProjectDetailsPage id={id} edit={edit}/>
 }
 
-export default ProjectDetails
+export default edit
 
 export const getServerSideProps = async ({
   query,
@@ -24,7 +24,9 @@ export const getServerSideProps = async ({
   //   };
   // }
 
-  const { id } = query
+ // console.log(query);
+  
+  const { id , edit } = query
 
 //   const res = await UseGetCourseDetail(_id);
 
@@ -37,6 +39,6 @@ export const getServerSideProps = async ({
   // }
 
   return {
-    props: { id }, // will be passed to the page component as props
+    props: { id, edit }, // will be passed to the page component as props
   };
 };
