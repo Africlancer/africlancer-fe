@@ -1,6 +1,7 @@
-import { Navbar } from "../components/navbar";
+import { Navbar } from "@/src/components/navbar";
 
-const chatpage = () => {
+
+export const MessagePage = () => {
     return ( 
         <div>
             <Navbar/>
@@ -35,9 +36,9 @@ const chatpage = () => {
                             </div>
                             <div className="flex flex-col leading-tight">
                                 <div className="text-1xl mt-1 flex items-center">
-                                <span className="text-gray-700 mr-3">Anderson Vanhron</span>
+                                <span className="text-lg text-gray-700 mr-3">Anderson Vanhron</span>
                                 </div>
-                                <span className="text- text-gray-600">Junior Developer</span>
+                                <span className=" text-gray-600">Junior Developer</span>
                             </div>
                         </div>
 
@@ -57,7 +58,7 @@ const chatpage = () => {
 
                 <div className="flex flex-col justify-between h-full py-5">
                     <div>
-                    <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200 mt-4">
+                    <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-400 mt-4">
                         <div className="relative flex items-center space-x-4">
                             <div className="relative">
                                 <span className="absolute text-green-500 right-0 bottom-0">
@@ -105,7 +106,7 @@ const chatpage = () => {
                 </div>
                     </div>
 
-                    <div className="border-t-2 border-gray-200 px-4 pt-4 mb-0 sm:mb-0 ">
+                    <div className="border-t-2 border-gray-400 px-4 pt-4 mb-0 sm:mb-0 ">
                         <div className="relative flex ">
                             <input type="text" placeholder="Write your message!" className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-md py-3"/>
                             <div className="absolute right-0 items-center inset-y-0 hidden sm:flex">
@@ -130,4 +131,3 @@ const chatpage = () => {
      );
 }
   
-export default chatpage;
