@@ -50,6 +50,7 @@ module.exports = {
            input: 'var(--color-input)'
         }
       },
+     
       backgroundColor: 
       {
         skin: {
