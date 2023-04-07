@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useProjectState } from '../context';
 import { bgImages } from '../model';
 import { Navbar } from '@/src/components/navbar';
 import { FormOne } from './form1';
@@ -12,12 +11,11 @@ import { CREATE_PROJECT } from '../gql/query';
 import { useMutation } from '@apollo/client';
  
 export const PostProjectPage = () => {
-  //const { createProject, loading } = useProjectState();
   const [bgImg, setBgImg] = useState<string>();
   const [showFormTwo, setShowFormTwo] = useState(false)
+
   const [project, setProject] = useState({
-    title: '', details: '', summary: '', minBudget: '', maxBudget: '', type: ''
-  })
+    title: '', details: '', summary: '', minBudget: '', maxBudget: '', type: ''})
   const [projectState, setProjectState] = useState({loading: false, loaded: false})
 
   useEffect(() => {
@@ -26,16 +24,6 @@ export const PostProjectPage = () => {
       setBgImg(item);
   }, []);
 
-//   const handleUpload = (values) => {
-//     console.log(fileList)
-    
-//     console.log(loading);
-//     createProject({
-
-//     }).then((val) => {
-//       console.log(val);
-//     })
-//   };
 const [createProject] = useMutation(CREATE_PROJECT,{})
 
     const postProject = () =>
@@ -62,7 +50,7 @@ const [createProject] = useMutation(CREATE_PROJECT,{})
 
   return (
     <div className='h-full bg-skin-alt'>
-        <Navbar avatar=''/>
+        <Navbar/>
         <div className='pt-[62px]'>
         <div className='w-full bg-center bg-cover h-[450px]'
           style={{ backgroundImage: `url(${bgImg})` }}

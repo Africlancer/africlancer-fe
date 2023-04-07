@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
-import { useFetchAllFreelancers } from './gql/query'
+import { useFetchAllFreelancers, useFetchFreelancersFilter } from './gql/query'
 
 interface IFreelancersState
 {
     fetchAllFreelancers: (query) => void
+    fetchFreelancersFilter: (query, fullSearch) => void
     freelancers: any
 }
 
 const FreelancersContext = React.createContext<IFreelancersState>({
     fetchAllFreelancers(query) {},
+    fetchFreelancersFilter(query, fullSearch) {},
     freelancers: null
 })
 
@@ -27,28 +29,38 @@ interface IProps
 const FreelancersContextProvider: React.FC<IProps> = ({children}) => {
 
     const fetchAllFreelancersQuery = useFetchAllFreelancers()
+    const fetchFreelancersFilterQuery  = useFetchFreelancersFilter()
 
     const [freelancers, setFreelancers] = useState<any>(null)
 
     const fetchAllFreelancers = (query) =>
-    {
-        console.log('kkk5');
-        
+    {        
         fetchAllFreelancersQuery[0]({
             variables : {
                 query
             }
         }).then(res => {
-            console.log('ggg');
-            
             setFreelancers(res.data?.findUsers)
+        }).catch((err) => console.log(err))
+    }
+
+    const fetchFreelancersFilter = (query, fullSearch) =>
+    {
+        fetchFreelancersFilterQuery[0]({
+            variables : {
+                query,
+                fullSearch
+            }
+        }).then(res => {            
+            setFreelancers(res.data?.findProfilesFilter)
         }).catch((err) => console.log(err))
     }
 
     return (
         <FreelancersContext.Provider value={{
             fetchAllFreelancers,
-            freelancers
+            freelancers,
+            fetchFreelancersFilter
         }}>
             {children}
         </FreelancersContext.Provider>

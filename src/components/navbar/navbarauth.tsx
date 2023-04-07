@@ -38,7 +38,7 @@ export const NavbarAuth = () => {
       <div className="hidden w-full md:flex md:items-center md:w-auto" id="menu">
          <ul className="pt-4 md:flex md:justify-between md:pt-0">
            <li>
-             <Link className="md:p-4 py-2 block" href='/auth/signin'>Sign In</Link>
+             <Link className="md:p-4 py-2 block" href='/signin'>Sign In</Link>
            </li>
            <li>
              <Link className="md:p-4 py-2 block" href="/signup">Sign Up</Link>

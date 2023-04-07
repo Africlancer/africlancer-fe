@@ -12,7 +12,7 @@ interface IProps {
 
 export const ProfileInfo: React.FC<IProps> = ({ profile }) => {
   const [modal, setModal] = useState<{ open: boolean }>();
-c
+  const sess: any = useSession()
 
   return (
     <>
@@ -25,10 +25,10 @@ c
           }
 
           {
-            profile?.professionalHeadline ?
-            <SectionTwo summary={profile.summary} professionalHeadline={profile.professionalHeadline}
-            recommendations={profile.recommendations} email={user?.email} name={user?.name} />
-            : <div className="mt-1 ml-5 w-full"><Skeleton active paragraph={{ rows: 9 }} /></div>
+            // profile?.professionalHeadline ?
+            // <SectionTwo summary={profile.summary} professionalHeadline={profile.professionalHeadline}
+            // recommendations={profile.recommendations} email={user?.email} name={user?.name} />
+            // : <div className="mt-1 ml-5 w-full"><Skeleton active paragraph={{ rows: 9 }} /></div>
           }
         </div>
 

@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import { Button, message, Upload } from 'antd';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 import { UploadOutlined } from '@ant-design/icons';
+import { ApSelect } from '@/src/components/input/selectinput';
 
 const FormikSchema = Yup.object().shape({
   title: Yup.string()
@@ -54,12 +55,13 @@ export const FormOne = ({setShowFormTwo, project, setProject}) => {
         <ApTextInput placeholder='e.g, Build me a website' name='title' label='Choose a name for your project'/>
         <ApTextInput placeholder='Describe your project here...' type='textarea' name='details' label='Tell us more about your project'/>
         <ApTextInput placeholder='Enter Summary for your project here...' type='textarea' name='summary' label='Summary for project'/>
-        <div className='border p-4'>
+        <ApSelect name="skills" label='Select skill set for your project'/>
+
+        {/* <div className='border p-4'>
         <Upload {...props}>
           <Button icon={<UploadOutlined />}>Select File</Button>
         </Upload>
-        </div>
-
+        </div> */}
         <div className='flex justify-end  pb-5'>
           <ApButton
           >

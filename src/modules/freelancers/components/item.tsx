@@ -11,13 +11,10 @@ const FreelancerItem = ({item}) => {
     })
     
     useEffect(() => {
-        if(loading === false)
-        {
-          setTimeout(() => {
+        setTimeout(() => {
             setManualLoading(false)
-          }, 2000);
-        }
-    },[loading])
+        }, 2000)
+    },[])
 
     
   return (
@@ -27,19 +24,19 @@ const FreelancerItem = ({item}) => {
                 <div>            
                 <div className='py-5 px-5 flex flex-row justify-between border-b'>
                     <div className='flex gap-4 items-start'>
-                        <Image src={data?.findProfiles[0].avatar} className='rounded-md' 
+                        <Image src={item?.avatar} className='rounded-md' 
                         height={150} width={150} alt='' preview={false}/>
             
                         <div className='flex flex-col justify-between h-full'>
                             <div className='flex items-center gap-2'>
-                                <h1 className="text-xl font-bold">{item.firstName + ' ' + ' ' + item.lastName}</h1>
-                                <p className='text-gray-400'>{item?.email}</p>
-                                <p className='text-gray-400'>( {item?.username} )</p>
+                                <h1 className="text-xl font-bold">{item?.user?.firstName + ' ' + ' ' + item?.user?.lastName}</h1>
+                                <p className='text-gray-400'>{item?.user?.email}</p>
+                                <p className='text-gray-400'>( {item?.user?.username} )</p>
                             </div>
 
                             <div>
-                                <p>{data?.findProfiles[0].professionalHeadline}</p>
-                                <p>{data?.findProfiles[0].summary}</p>
+                                <p>{item?.professionalHeadline}</p>
+                                <p>{item?.summary}</p>
 
                                 <div className='flex mt-5 items-center gap-3'>
                                     <p>PHP <span className='ml-2'>|</span></p>
@@ -52,7 +49,7 @@ const FreelancerItem = ({item}) => {
             
                     <div className='flex flex-col justify-between'>          
                         <div className='flex flex-col items-end'>
-                            <p className='font-bold text-xl'>${data?.findProfiles[0].hourlyRate} USD</p>
+                            <p className='font-bold text-xl'>${item?.hourlyRate} USD</p>
                             <p>per hour</p>
                         </div>
                         

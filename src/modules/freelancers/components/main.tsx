@@ -7,9 +7,9 @@ import { LoadingOutlined } from "@ant-design/icons";
 
 export const MainContent = () =>
 {   
-  const { fetchAllFreelancers, freelancers } = useFreelancersContext()
+  const { fetchFreelancersFilter, freelancers } = useFreelancersContext()
   useEffect(() => {    
-    fetchAllFreelancers({})
+    fetchFreelancersFilter({}, false)
   },[])
    
   return(

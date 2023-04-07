@@ -10,7 +10,7 @@ export const FilterComponent = ({browseFunc: fetchFree}) =>
 
   useEffect(() => {
     console.log('filterTouched')
-    fetchFree({...filterQuery})
+    fetchFree({...filterQuery}, false)
   },[filterQuery])
 
     return (

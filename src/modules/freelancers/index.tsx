@@ -6,9 +6,9 @@ import { useFreelancersContext } from './context';
 
 export const FreelancersPage = () => {
 
-  const { fetchAllFreelancers, freelancers } = useFreelancersContext()
+  const { fetchAllFreelancers, freelancers, fetchFreelancersFilter } = useFreelancersContext()
 
   return (
-    <BrowseLayout browseFunc={fetchAllFreelancers} FilterComponent={FilterComponent} MainContent={MainContent} page="freelancers" />
+    <BrowseLayout browseFunc={fetchFreelancersFilter} FilterComponent={FilterComponent} MainContent={MainContent} page="freelancers" />
   )
 }
