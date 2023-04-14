@@ -9,6 +9,7 @@ import { FIND_ONE_BID } from './gql/query'
 export const BidEditor = ({projectID}) => {
     const {userBid, setUserBid} = useBiddingContext()
     const session:any = useSession()
+    
     const {data, loading, error, refetch} = useQuery(FIND_ONE_BID, {
         variables: {query: {userID: session?.data?.user?._id, projectID }},
     })

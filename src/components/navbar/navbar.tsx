@@ -134,6 +134,7 @@ export const Navbar: React.FC<IProps> = ({avatar}) => {
 
             <li>
               <div className="ml-5 flex items-center justify-center text-base h-full">
+                <Link href="/post-project">
                 <ApButton
                   onClick={() => {}}
                   className="py-2 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2"
@@ -141,6 +142,7 @@ export const Navbar: React.FC<IProps> = ({avatar}) => {
                   Post a Project
                   <ArrowRightIcon />
                 </ApButton>
+                </Link>
               </div>
             </li>
 

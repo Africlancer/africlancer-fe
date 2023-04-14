@@ -24,7 +24,7 @@ export const ApTextInput: React.FC<IProps> = (props: IProps) => {
 
   return (
     <div className="w-full flex flex-col gap-2">
-      {label && <label className="flex items-center justify-between">{label}
+      {label && <label className="flex items-center justify-between mb-2">{label}
         <ErrorMessage
             className="text-red-500 text-cusf3"
             name={name}

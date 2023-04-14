@@ -9,14 +9,14 @@ import {
 import { ApButton } from '@/src/components';
 import { CREATE_PROJECT } from '../gql/query';
 import { useMutation } from '@apollo/client';
+import { useRouter } from 'next/router';
  
 export const PostProjectPage = () => {
   const [bgImg, setBgImg] = useState<string>();
   const [showFormTwo, setShowFormTwo] = useState(false)
+  const router = useRouter()
 
-  const [project, setProject] = useState({
-    title: '', details: '', summary: '', minBudget: '', maxBudget: '', type: ''})
-  const [projectState, setProjectState] = useState({loading: false, loaded: false})
+  const [project, setProject] = useState<any>({})
 
   useEffect(() => {
       let index = Math.floor(Math.random() * bgImages.length);
@@ -44,6 +44,7 @@ const [createProject] = useMutation(CREATE_PROJECT,{})
       .then((val) => 
       {
         console.log(val)
+        router.push('/browse/projects')
       })
       .catch((err) => console.log(err)) 
     }
@@ -62,55 +63,15 @@ const [createProject] = useMutation(CREATE_PROJECT,{})
             </div>
           </div>
         </div>
-
         <div className='bg-skin-alt w-[full] flex-col flex justify-center items-center'>
-            {
-              projectState.loaded ? (
-                <div className='py-10 flex justify-center items-center w-[800px] relative overflow-hidden break-words -translate-y-36 bg-skin-base px-8 min-h-[300px] shadow-md rounded-md'>
-                      <div className='flex justify-between gap-5'>
-                      <ScheduleFilled style={{fontSize: '200px'}} className='text-skin-accent'/>
-
-                        <div className='border-l pl-5'>
-                          <h1 className='font-bold text-2xl mb-2'>{project.title}</h1>
-                          <p>Payment Type - {project.type}</p>
-                          <div className='flex gap-2'>
-                            <p>Min Budget - {project.minBudget}</p>
-                            <p>Max Budget - {project.maxBudget}</p>
-                          </div>
-                          
-                          <p className='mt-5'>{project.summary}</p>
-                          <p className='mt-5'>{project.details}</p>
-                        </div>
-                      </div>
-                      <div className='flex justify-end gap-2 absolute bottom-5 right-5'>
-                        <ApButton onClick={() => {}} outline>Cancel</ApButton>
-                        <ApButton onClick={postProject}>Post Project</ApButton>
-                      </div>
-                </div>
-              ) : (
-                <div>
-                  {
-                    projectState.loading ? (
-                      <div className='w-[800px] flex justify-center items-center -translate-y-36 bg-skin-base px-8 min-h-[300px] shadow-md rounded-md'>
-                        <LoadingOutlined 
-                            className='text-skin-accent'
-                            style={{ fontSize: 100 }}
-                            spin
-                        />
-                      </div>
-                    )
-                    : (
-                      <div>
-                        {
-                          showFormTwo ? <FormTwo projectState={projectState} setProjectState={setProjectState} project={project} setProject={setProject}/>
-                          : <FormOne project={project} setProject={setProject} setShowFormTwo={setShowFormTwo}/>
-                        }
-                      </div>
-                    )
-                  }
-                </div>
-              )
-            }
+          <div>
+              <div>
+                {
+                  showFormTwo ? <FormTwo project={project} setProject={setProject} setShowFormTwo={setShowFormTwo}/>
+                  : <FormOne project={project} setProject={setProject} setShowFormTwo={setShowFormTwo}/>
+                }
+              </div>
+          </div>
         </div>
         </div>
     </div>

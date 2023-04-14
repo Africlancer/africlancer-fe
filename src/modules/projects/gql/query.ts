@@ -42,7 +42,10 @@ const FIND_ALL_PROJECTS = gql`
             endDate,
             _id,
             status,
-            type
+            type,
+            averageBid,
+            totalBids,
+            skills
         }
     }
 `
@@ -58,7 +61,10 @@ query FindOneProject($query: QueryProjectInput!) {
         endDate,
         _id,
         status,
-        type
+        type,
+        averageBid,
+        totalBids,
+        skills
     }
 }
 `

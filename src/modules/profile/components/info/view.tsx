@@ -25,13 +25,12 @@ export const ProfileInfo: React.FC<IProps> = ({ profile }) => {
           }
 
           {
-            // profile?.professionalHeadline ?
-            // <SectionTwo summary={profile.summary} professionalHeadline={profile.professionalHeadline}
-            // recommendations={profile.recommendations} email={user?.email} name={user?.name} />
-            // : <div className="mt-1 ml-5 w-full"><Skeleton active paragraph={{ rows: 9 }} /></div>
+            profile?.professionalHeadline ?
+            <SectionTwo summary={profile.summary} professionalHeadline={profile.professionalHeadline}
+            recommendations={profile.recommendations} email={sess?.data.user?.email} name={sess?.data.user?.name} />
+            : <div className="mt-1 ml-5 w-full"><Skeleton active paragraph={{ rows: 9 }} /></div>
           }
         </div>
-
           {
             profile ?
             <SectionThree hourlyRate={ profile?.hourlyRate } setModal={ setModal }/>

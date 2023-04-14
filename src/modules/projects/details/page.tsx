@@ -106,7 +106,7 @@ export const ProjectDetailsPage = ({id}) => {
                     <div className='bg-skin-base shadow-md rounded-md min-w-[60%]'>
                         {
                             current === 'proposals' ? <Proposals userProposal={data?.findOneBid.userID} projectId={id}/>
-                            : <Details details={activeProject?.details} summary={activeProject?.summary}/>
+                            : <Details skills={activeProject?.skills} details={activeProject?.details} summary={activeProject?.summary}/>
                         }
                     </div>
                 </div>

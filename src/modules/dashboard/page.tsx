@@ -43,7 +43,7 @@ export const DashboardPage = () => {
   return (
     <div className="h-full relative bg-skin-alt">
     <div className="profile-page relative">
-      <Navbar avatar=''/>
+      <Navbar/>
       <SubMenu items={items} currentPage='dashboard'/>
 
       <div className="text-skin-inverted relative pt-32 pb-10 mb-20 px-10">

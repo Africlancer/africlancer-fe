@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Formik } from 'formik'
-import { ApButton, ApTextInput } from '../../../components'
+import { ApButton, ApTextInput, ArrowRightIcon } from '../../../components'
 import * as Yup from "yup";
 import { Button, message, Upload } from 'antd';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
@@ -15,6 +15,8 @@ const FormikSchema = Yup.object().shape({
   summary: Yup.string()
   .required("* Project Summary is Required."),
 });
+
+
 
 export const FormOne = ({setShowFormTwo, project, setProject}) => {
     const [fileList, setFileList] = useState<UploadFile[]>([]);
@@ -44,18 +46,29 @@ export const FormOne = ({setShowFormTwo, project, setProject}) => {
   return (
     <Formik
     initialValues={{
-      title: "",
-      details: "",
-      summary: ''
+      title: project?.title ? project?.title : "" ,
+      details: project?.details ? project?.details : "",
+      summary: project?.summary ? project?.summary : '',
     }}
     onSubmit={handleNext}
     validationSchema={FormikSchema}
     >
-      <Form className='w-[800px] flex-col flex gap-5 -translate-y-36 bg-skin-base px-8 pt-8 shadow-md rounded-md'>
-        <ApTextInput placeholder='e.g, Build me a website' name='title' label='Choose a name for your project'/>
-        <ApTextInput placeholder='Describe your project here...' type='textarea' name='details' label='Tell us more about your project'/>
-        <ApTextInput placeholder='Enter Summary for your project here...' type='textarea' name='summary' label='Summary for project'/>
-        <ApSelect name="skills" label='Select skill set for your project'/>
+      <Form className='w-[800px] flex-col flex gap-8 -translate-y-36 bg-skin-base px-8 pt-8 shadow-md rounded-md'>
+        <div>
+          <h1 className='font-bold text-2xl'>What is your project name ?</h1>
+          <ApTextInput placeholder='e.g, Build me a website...' name='title' label='Choose a name for your project'/>
+        </div>
+
+        <div>
+          <h1 className='font-bold text-2xl'>Enter your project description ?</h1>
+          <ApTextInput placeholder='Describe your project here...' type='textarea' name='details' label='Tell us more about your project'/>
+        </div>
+
+        <div>
+          <h1 className='font-bold text-2xl'>Enter your project summary ?</h1>
+          <ApTextInput placeholder='Describe your project summary here...' type='textarea' name='summary' label='Give a short and detailed summary for your project'/>
+        </div>
+
 
         {/* <div className='border p-4'>
         <Upload {...props}>
@@ -64,8 +77,10 @@ export const FormOne = ({setShowFormTwo, project, setProject}) => {
         </div> */}
         <div className='flex justify-end  pb-5'>
           <ApButton
+            type='submit'
           >
-            Next
+            Proceed
+            <ArrowRightIcon />
           </ApButton>
         </div>
       </Form>

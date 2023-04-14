@@ -9,12 +9,10 @@ import React, { useEffect } from 'react'
 interface IProps 
 {
   bid: any
-  isEdit?: boolean
   projectId?: string
-  bidAwarded?: any
 }
 
-export const OtherBids: React.FC<IProps> = ({bid, isEdit, projectId, bidAwarded}) => {
+export const UnAwardedBid: React.FC<IProps> = ({bid,  projectId}) => {
 
     const {data} = useQuery(FIND_PROFILES, {
         variables: {query: {_id: bid.userID }}
@@ -26,16 +24,16 @@ export const OtherBids: React.FC<IProps> = ({bid, isEdit, projectId, bidAwarded}
     
     const {awardBid, loading, unawardBid, awardedBids} = useBiddingContext()
 
-    console.log(awardedBids);
+    //console.log(awardedBids);
 
   return (
-    <div>
-    <div className='flex justify-between mb-5'>
+    <div className='px-5 py-5 border-b'>
+    <div className='flex justify-between'>
       <div className='flex gap-5 items-start'>
         <Image alt='' src={data?.findProfiles[0].avatar} width='100px' height='100px' className='rounded-md' />
         
         <div className=''>
-          <p className='font-bold text-xl'>{user.data?.findUsers[0]?.firstName + '' + '' + user.data?.findUsers[0]?.lastName}</p>
+          <p className='font-bold text-xl'>{user.data?.findUsers[0]?.firstName + ' ' + ' ' + user.data?.findUsers[0]?.lastName}</p>
             <p className='text-gray-400'>{user.data?.findUsers[0]?.email}</p>
         </div>
       </div>  
@@ -50,30 +48,15 @@ export const OtherBids: React.FC<IProps> = ({bid, isEdit, projectId, bidAwarded}
       {bid.proposal}
     </h1>
 
-    {
-      isEdit ? (
-        <div className='flex justify-end items-center gap-4'>
-          {
-            awardedBids.length === 0 ? 
-             (
-              <div>
-                {
-                  bid?.isAwarded ? (
-                    <ApButton outline onClick={() => unawardBid(projectId, bid?._id)}>
-                      Unaward Bid          
-                    </ApButton>
-                  ) : (
-                      <ApButton onClick={() => awardBid(projectId, bid?._id)}>
-                        Award Bid 
-                      </ApButton>
-                  )
-                }
-              </div>
+    <div className='flex justify-end items-center gap-4'>
+        {
+            awardedBids.length === 0 ? (
+                <ApButton onClick={() => awardBid(projectId, bid?._id)}>
+                    Award Bid 
+                </ApButton>
             ) : <></>
-          }
-        </div>
-      ) : <></>
-    }
+        }
+    </div>
   </div>
   )
 }

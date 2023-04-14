@@ -10,6 +10,8 @@ interface IBiddingState
     projectBids: any,
     averageBid: number,
     userBid: any,
+    awardedBids: any
+    unawardedBids: any
     createBid: (bid, query, refetchFunc) => void
     updateBid: (id, bid, refetchFunc, refetchQuery) => void
     deleteBid: (id, refetchFunc, refetchQuery) => void
@@ -28,6 +30,8 @@ const BiddingContext = React.createContext<IBiddingState>({
     projectBids: [],
     averageBid: 0,
     userBid: {},
+    awardedBids: [ ],
+    unawardedBids: [],
     createBid(bid, query, refetchFunc) {},
     updateBid(id, bid, refetchFunc, refetchQuery) {},
     deleteBid(id, refetchFunc, refetchQuery){},
@@ -68,7 +72,8 @@ const BiddingContextProvider: React.FC<IProps> = ({notificationMsg, children}) =
     const [ averageBid, setAverageBid ] = useState<number>()
     const [ loading, setLoading ] = useState(false)
     const [ userBid, setUserBid ] = useState(null) 
-    
+    const [awardedBids, setAwardedBids] = useState<any>([])
+    const [unawardedBids, setUnawardedBids] = useState<any>([])
 
     const createBid = async(bid, query, refetchFunc) =>
     {
@@ -165,7 +170,11 @@ const BiddingContextProvider: React.FC<IProps> = ({notificationMsg, children}) =
     const findBids = (query, userId?) => {     
         findBidsQuery[0]({ variables: { query }
         }).then((rs) => {
+            console.log(rs?.data?.findBids);      
             setProjectBids(rs?.data?.findBids)
+            setAwardedBids(rs?.data?.findBids.filter((item) => item?.isAwarded === true))
+            setUnawardedBids(rs?.data?.findBids.filter((item) => item?.isAwarded === false))
+    
             // if (userId)
             // {
             //     const filter = rs?.data?.findBids?.filter(item => item.userID === userId)
@@ -184,7 +193,7 @@ const BiddingContextProvider: React.FC<IProps> = ({notificationMsg, children}) =
         <BiddingContext.Provider
             value={{loading, userBid, createBid, getTotalBids, projectTotalBids, 
             findOneBid, findBids, projectBids, averageBid, getAverageBid, updateBid, deleteBid,
-            setUserBid, awardBid, unawardBid }}
+            setUserBid, awardBid, unawardBid, awardedBids, unawardedBids }}
         >
             {children}
         </BiddingContext.Provider>

@@ -4,13 +4,16 @@ import React, { useState } from 'react'
 import {InfoCircleFilled} from '@ant-design/icons'
 import { useBiddingContext } from './context'
 import { DELETE_BID, UPDATE_BID } from './gql/query'
-import { useMutation } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import { useSession } from 'next-auth/react'
+import { FIND_ONE_PROFILE } from '../profile/gql/query'
+import { Image } from 'antd'
 
 export const EditBid = ({userBid, projectID, refetch}) => {
     const [showForm, setShowForm] = useState(false)
     const {deleteBid, updateBid, loading} = useBiddingContext()
     const session:any = useSession()
+    const userProfile = useQuery(FIND_ONE_PROFILE);
 
     const handleSubmit = (val) => 
     {
@@ -32,7 +35,14 @@ export const EditBid = ({userBid, projectID, refetch}) => {
             !showForm ? 
             <div className='p-5'>
             <div className='flex justify-between mb-5'>
-                <p>User Info</p>
+                <div className='flex gap-5 items-start'>
+                <Image alt='' src={userProfile.data?.findOneProfile.avatar} width='100px' height='100px' className='rounded-md' />
+                
+                <div className=''>
+                    <p className='font-bold text-xl'>{userBid?.user?.firstName + ' ' + ' ' + userBid?.user?.lastName}</p>
+                    <p className='text-gray-400'>{userBid?.user?.email}</p>
+                </div>
+                </div> 
 
                 <div className='flex flex-col items-end'>
                     <h1 className='font-bold text-xl'>${userBid?.budget} USD</h1>
@@ -44,7 +54,7 @@ export const EditBid = ({userBid, projectID, refetch}) => {
                 {userBid?.proposal}
             </h1>
 
-            <div className='flex justify-end items-center gap-4'>
+            <div className='flex justify-end items-center gap-4 mt-5'>
                 <ApButton onClick={() =>  handleDelete()}>
                     Retract
                 </ApButton>

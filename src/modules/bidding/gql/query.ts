@@ -48,14 +48,17 @@ const AVERAGE_BID = gql`
 const FIND_ONE_BID = gql`
   query FindOneBid($query: QueryBidInput!){
     findOneBid(query:$query){
-        _id, proposal, userID, projectID, isAwarded, budget, deliveredIn
+        _id, proposal, userID, projectID, isAwarded, budget, deliveredIn,
+        user { firstName, lastName, email, username }
       }
   }
 `
 const FIND_BIDS = gql`
   query FindBids($query: QueryBidInput!) {
     findBids(query: $query)
-    { _id, proposal, userID, projectID, isAwarded, budget, deliveredIn }
+    { _id, proposal, userID, projectID, isAwarded, budget, deliveredIn, 
+      user { firstName, lastName, email, username }
+    }
   }
 `  
 

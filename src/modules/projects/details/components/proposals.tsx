@@ -5,7 +5,9 @@ import { useQuery } from '@apollo/client'
 import { Image } from 'antd'
 import { useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
+import { AwardedBid } from './awardedBid'
 import { OtherBids } from './otherBids'
+import { UnAwardedBid } from './unawardedBid'
 
 interface IProps
 {
@@ -22,9 +24,10 @@ export const Proposals: React.FC<IProps> = ({isEdit, userProposal, projectId}) =
   const [userBid, setUserBid] = useState<any[]>()
   const [otherBids, setOtherBids] = useState<[]>()
   const userProfile = useQuery(FIND_ONE_PROFILE);
-  const {findBids, projectBids, } = useBiddingContext()
-  const [awardedBids, setAwardedBids] = useState<[]>()
-  const [unawardedBids, setUnawardedBids] = useState<[]>()
+  const {findBids, projectBids, awardedBids, unawardedBids} = useBiddingContext()
+
+  // const [awardedBids, setAwardedBids] = useState<[]>()
+  // const [unawardedBids, setUnawardedBids] = useState<[]>()
 
   useEffect(( ) => {
     findBids({projectID: projectId}, user?._id)
@@ -39,13 +42,15 @@ export const Proposals: React.FC<IProps> = ({isEdit, userProposal, projectId}) =
 
       else 
       {
-        setAwardedBids(projectBids.filter((item) => item?.isAwarded === true))
-        setUnawardedBids(projectBids.filter((item) => item?.isAwarded === false))
+        // setAwardedBids(projectBids.filter((item) => item?.isAwarded === true))
+        // setUnawardedBids(projectBids.filter((item) => item?.isAwarded === false))
         //setOtherBids(projectBids)
       }
     }
   },[])
 
+  //console.log(awardedBids, unawardedBids);
+  
   return (
     <div>
         {
@@ -93,25 +98,25 @@ export const Proposals: React.FC<IProps> = ({isEdit, userProposal, projectId}) =
           ) : <></>
         }
 
-        <div className='px-5 py-5 border-b'>
+        <div className=''>
           { !isEdit ? <h1 className='text-xl font-bold mb-5'>Other Bids</h1> 
            : <></>
           }
 
           <div>
             {
-              !isEdit ? (
+               isEdit ? (
                   <div>
                     {
-                        awardedBids?.length > 0 ? otherBids?.map((bid: any) => (
-                          <OtherBids key={bid?._id} bid={bid}/>
-                        )) : <p className='text-center'>No Bids</p>
+                         awardedBids?.map((bid: any) => (
+                          <AwardedBid key={bid?._id} bid={bid} projectId={projectId}/>
+                        )) 
                     }
                     
                     {
-                      unawardedBids?.length > 0 ? otherBids?.map((bid: any) => (
-                          <OtherBids key={bid?._id} bid={bid}/>
-                      )) : <p className='text-center'>No Bids</p>
+                         unawardedBids?.map((bid: any) => (
+                            <UnAwardedBid key={bid?._id} bid={bid} projectId={projectId}/>
+                        ))
                     }
                   </div>                
               ) : (

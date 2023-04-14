@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { useCreateProject, useFindAllProjects, useFindProject, useUpdateProject } from './gql/query';
 import {IProject} from './model'
-import useApNotification from '@/src/hooks/notification'
+import { useRouter } from 'next/router';
+import { LoadingOutlined } from "@ant-design/icons";
 
 interface IProjectState {
     hasBiddingEnded: boolean
     status: any
     loading: boolean
+    loadingText: string
     daysLeft: number
     projects: any,
     activeProject: any
@@ -21,6 +23,7 @@ const ProjectContext = React.createContext<IProjectState>({
     status: null,
     loading: false,
     daysLeft: null,
+    loadingText: "",
     projects: null,
     activeProject: {},
     createProject(project) {
@@ -43,6 +46,9 @@ interface IProps {
 }
 
 const ProjectContextProvider: React.FC<IProps> = ({ children, notificationMsg }) => {
+
+    const router = useRouter()
+
     const [projects, setProjects] = useState(null)
     const [activeProject, setActiveProject] = useState([])
     const [hasBiddingEnded, setHasBiddingEnded] = useState<boolean>()
@@ -54,6 +60,7 @@ const ProjectContextProvider: React.FC<IProps> = ({ children, notificationMsg })
     const createProjectQuery = useCreateProject((rs) => {});
     const updateProjectQuery = useUpdateProject((rs) => {});
     const [ loading, setLoading ] = useState(false)
+    const [loadingText, setLoadingText] = useState('Loading...')
 
     const fetchAllProjects = (query, fullSearch) =>
     {
@@ -109,14 +116,25 @@ const ProjectContextProvider: React.FC<IProps> = ({ children, notificationMsg })
       .catch((err) => console.log(err))
     }
 
-
-    const createProject = async (project: IProject): Promise<void> => {
+    const createProject = async (project: IProject): Promise<void> => { 
+      setLoading(true)
       await createProjectQuery[0]({ variables: { project } }).then((rs) => {
         
         if (rs.data?.createProject) {
-          console.log("Project created..");
+          setLoadingText('Redirecting...')
+          notificationMsg?.successMsg('Success',
+            <>
+              <p className='mb-1'>Your project has been created.</p>
+              <p className='flex items-center gap-3'>Redirecting, please wait. 
+              <LoadingOutlined  style={{fontSize: 14}} spin/></p>
+            </>
+          )
+          setTimeout(() => {
+            router.push('/browse/projects')
+            setLoading(false)
+          }, 8000);
         }
-      });
+      }).catch((err) => {notificationMsg?.errorMsg('Error', err.message); setLoading(false)})
     };
 
     const updateProject = async (id:string, project: IProject): Promise<void> => {
@@ -130,7 +148,7 @@ const ProjectContextProvider: React.FC<IProps> = ({ children, notificationMsg })
     return (
       <ProjectContext.Provider
         value={{ projects, createProject, fetchAllProjects, activeProject, fetchProject,
-          hasBiddingEnded, daysLeft, updateProject, status, loading
+          hasBiddingEnded, daysLeft, updateProject, status, loading, loadingText
         }}
       >
         {children}

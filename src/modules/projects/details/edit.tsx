@@ -107,7 +107,7 @@ export const EditProjectPage = ({id, edit}) => {
                                 <div className='bg-skin-base shadow-md rounded-md min-w-[60%]'>
                                     {
                                         current === 'proposals' ? <Proposals projectId={id} isEdit={true}/>
-                                        : <Details setShowEdit={setShowEdit} isEdit={true} details={activeProject?.details} summary={activeProject?.summary}/>
+                                        : <Details skills={activeProject?.skills} setShowEdit={setShowEdit} isEdit={true} details={activeProject?.details} summary={activeProject?.summary}/>
                                     }
                                 </div>
                             </div>

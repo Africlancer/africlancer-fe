@@ -21,7 +21,7 @@ export const ApSelect: React.FC<IProps> = (props) => {
   return (
     <div className="">
         {
-            label && <label className="flex items-center justify-between mb-2">{label}
+            label && <label className="flex items-center justify-between mb-4">{label}
             <ErrorMessage
                 className="text-red-500 text-cusf3"
                 name={name}
