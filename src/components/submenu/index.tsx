@@ -2,8 +2,7 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { ConfigProvider, MenuProps } from 'antd';
 import { Menu } from 'antd';
 
-const ApSubMenu = ({items, currentTab}) => {
-    const [current, setCurrent] = useState(currentTab);
+const ApSubMenu = ({items, current, setCurrent}) => {
     const [subMenuItems, setSubMenuItems] = useState<MenuProps['items']>()
 
     useEffect(() => 

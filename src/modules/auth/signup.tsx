@@ -5,11 +5,12 @@ import { useMutation } from '@apollo/client';
 import { Form, Formik } from 'formik'
 import React, { useState } from 'react'
 import * as Yup from "yup";
-import { CREATE_USER } from './gql/query';
+import { USER_SIGNUP } from './gql/query';
 import { LoadingOutlined } from '@ant-design/icons'
 import useApNotification from "@/src/hooks/notification";
 import { useRouter } from 'next/router';
 import { IUser } from "./model";
+import { useAuthContext } from './context';
 
 const FormikSchema = Yup.object().shape({
     firstName: Yup.string().required("First Name is Required"),
@@ -24,49 +25,61 @@ const FormikSchema = Yup.object().shape({
       .min(6, "password should be as list 6 char.")
       .required("password is required"),
     confirmPassword: Yup.string().required("password is required"),
-  });
+})
 
 export const SignUpPage = () => {
     const { notificationContext, successMsg, errorMsg } = useApNotification();
     const router = useRouter()
-    const [createUser, {}] = useMutation(CREATE_USER)
+    const [createUser, {}] = useMutation(USER_SIGNUP)
     const [isLoading, setIsLoading] = useState(false)
     const [loadingText, setIsLoadingText] = useState('Please Wait...')
+    const { signUp, loading } = useAuthContext()
 
-    const handleSubmit = (values: IUser) => {
-        setIsLoading(true)
-        createUser({ variables : {
-            user: { 
-                firstName: values.firstName,
-                lastName: values.lastName,
-                email: values.email,
-                username: values.username,
-                password: values.password
-            }
-        }})
-        .then((val) => { 
-        if(val) 
-        {   setIsLoadingText('Redirecting...')
-            successMsg(`Account Created`, 
-            <div>
-                <p className='mb-4'>Please Check Your Mail to Activate Your Account.</p>
-                <p className='flex items-center gap-3'>Redirecting to Login Page 
-                <LoadingOutlined  style={{fontSize: 14}} spin/></p>
-            </div>)
-            setTimeout(() => {
-                router.push('/signin')
-                setIsLoading(false)
-            }, 8000);
-        }})
-        .catch(err => 
-        {  
-          setIsLoading(false)
-          if(err) 
-          {
-            let msg = err.message === "Failed to fetch" ? "Check Your Internet Connection" :  err.message
-            errorMsg("Error", msg) 
-          }
-        })
+    const handleSubmit = async (values: IUser) => {
+        // console.log(values)
+        // signUp({
+        //    email: values.email,
+        //    firstName: values.firstName,
+        //    lastName: values.lastName,
+        //    username: values.username,
+        //    password: values.password
+        // }).then(rs => {
+        //     console.log(rs)
+        // })
+
+            setIsLoading(true)
+            createUser({ variables : {
+                user: { 
+                    firstName: values.firstName,
+                    lastName: values.lastName,
+                    email: values.email,
+                    username: values.username,
+                    password: values.password
+                }
+            }})
+            .then((val) => { 
+            if(val) 
+            {   setIsLoadingText('Redirecting...')
+                successMsg(`Account Created`, 
+                <div>
+                    <p className='mb-4'>Please Check Your Mail to Activate Your Account.</p>
+                    <p className='flex items-center gap-3'>Redirecting to Login Page 
+                    <LoadingOutlined  style={{fontSize: 14}} spin/></p>
+                </div>)
+                setTimeout(() => {
+                    router.push('/signin')
+                    setIsLoading(false)
+                }, 8000);
+            }})
+            .catch(err => 
+            {  
+              setIsLoading(false)
+              if(err) 
+              {
+                let msg = err.message === "Failed to fetch" ? "Check Your Internet Connection" :  err.message
+                errorMsg("Error", msg) 
+              }
+            })
     };
 
     return (

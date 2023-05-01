@@ -8,7 +8,7 @@ Skills, Education } from "./components";
 import  { MenuProps } from 'antd';
 import { useQuery } from "@apollo/client";
 import { FIND_ONE_PROFILE } from "./gql/query";
-import { ProfileContext } from "./context";
+import { ProfileContext, useProfileContext } from "./context";
 import { useSession } from "next-auth/react";
 
 
@@ -35,14 +35,14 @@ export const ProfilePage = () => {
   const sess = useSession()
   const user: any = sess.data?.user
 
-  const { profile, updateProfile } = useContext(ProfileContext)
+  const { profile, updateProfile, setProfile } = useProfileContext()
   const { loading, error, data } = useQuery(FIND_ONE_PROFILE);
   
   console.log(data)
   useEffect(() => {
     if (loading) { console.log('Loading...') }
     else if (error) { console.log(`Error! ${error.message}`) }
-    else { updateProfile(data.findOneProfile) }
+    else { setProfile(data.findOneProfile) }
   })
 
   return (
@@ -75,7 +75,7 @@ export const ProfilePage = () => {
               <div className="flex flex-col gap-8">
                 <Verification />
                 <Certifications/>
-                <Skills/>
+                <Skills skills={profile?.skills}/>
                 <SimilarFreelancers/>
                 <SimilarShowcases/>
               </div>

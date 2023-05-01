@@ -3,8 +3,7 @@ export interface IUser {
   lastName: string;
   email: string;
   username: string;
-  password?: string;
-  confirmPassword?: string;
+  password: string;
 }
 
 export const bgImages = [

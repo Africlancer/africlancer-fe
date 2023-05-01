@@ -25,7 +25,9 @@ const ADD_EXPERIENCE = gql`
 const FIND_ONE_PROFILE = gql`
     query FindOneProfile {
         findOneProfile {
+            location,
             avatar,
+            skills,
             banner,
             hourlyRate,
             professionalHeadline,
@@ -91,6 +93,19 @@ const DELETE_QUALIFICATION = gql`
         deleteQualification(qualificationID: $qualificationID)
   }
 `
+
+export const useUpdateProfile = (callback: (rs: any) => void) => {
+    return useMutation(UPDATE_PROFILE, {
+      onCompleted: (rs) => {
+        if (rs?.updateProfile) {
+          callback(rs?.updateProfile);
+        }
+      },
+      onError: (error: any) => {
+        console.log(error);
+      },
+    });
+}
 
 export { DELETE_EXPERIENCE, DELETE_EDUCATION, ADD_PUBLICATION, ADD_QUALIFICATION, FIND_ONE_PROFILE, FIND_USER_AVATAR
     ,FIND_USERS,  UPDATE_PROFILE, ADD_EDUCATION, ADD_EXPERIENCE, DELETE_PUBLICATION, DELETE_QUALIFICATION, FIND_PROFILES }

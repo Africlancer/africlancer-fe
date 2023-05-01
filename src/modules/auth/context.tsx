@@ -1,11 +1,16 @@
-import React from "react";
-import { useCreateUser, useSignInUser } from "./gql/query";
+import React, { useState } from "react";
+import { useSignUpUser, useSignInUser, useSetUserLocation } from "./gql/query";
 import { IUser } from "./model";
+import { signIn } from "next-auth/react";
+import { useLazyQuery } from "@apollo/client";
+import { FIND_ONE_PROFILE } from "../profile/gql/query";
+import { useRouter } from "next/router";
+import { LoadingOutlined } from '@ant-design/icons'
 
 interface IState {
   loading: boolean;
-  signUp: (user: IUser) => Promise<void>;
-  signIn: (user) => Promise<any>
+  signUp: (user: IUser) => Promise<void>
+  signInUser: (user: IUser) => Promise<any>
 }
 
 const AuthContext = React.createContext<IState>({
@@ -13,53 +18,112 @@ const AuthContext = React.createContext<IState>({
   signUp(user) {
     return null;
   },
-  signIn(user) {
+  signInUser(user) {
     return null
   }
 });
 
-const useAuthState = () => {
+const useAuthContext = () => {
   const context = React.useContext(AuthContext);
   if (context === undefined) throw new Error("contenxt doest not exist");
   return context;
 };
 
 interface IProps {
+  notificationMsg: any
   children: React.ReactNode;
 }
 
-const AuthContextProvider: React.FC<IProps> = ({ children }) => {
-  const createUserQery = useCreateUser((rs) => {});
+const AuthContextProvider: React.FC<IProps> = ({ children, notificationMsg }) => {
+  const createSignUpQuery = useSignUpUser((rs) => {})
   const createSigninQuery = useSignInUser((rs) => {})
-
-  const signUp = async (user: IUser): Promise<void> => {
-    await createUserQery[0]({ variables: { user } }).then((rs) => {
-      if (rs.data?.createUser) {
-        console.log("User created..");
+  const createSetUserLocation = useSetUserLocation((rs) => {})
+  const [findProfile, {}] = useLazyQuery(FIND_ONE_PROFILE)
+  const [loading, setLoading] = useState<boolean>()
+  const router = useRouter()
+  
+  const signUp = async (user: IUser) => {
+    setLoading(true)    
+    return createSignUpQuery[0]({variables: { user }})
+    .then((rs) => {
+      console.log(createSignUpQuery);
+      
+      if(rs.errors)
+      {
+        notificationMsg.errorMsg('Error', '')
+        setLoading(false)
       }
-    });
+      else{
+        notificationMsg.successMsg(`Account Created`, 
+        <div>
+            {/* <p className='mb-4'>Please Check Your Mail to Activate Your Account.</p>
+            <p className='flex items-center gap-3'>Redirecting to Login Page 
+            <LoadingOutlined  style={{fontSize: 14}} spin/></p> */}
+        </div>)
+        setTimeout(() => {
+            router.push('/signin')
+            setLoading(false)
+        }, 8000);
+      }
+    }).catch(err => console.log(err))
   };
 
-  const signIn = async (user): Promise<any> => {
-    return await createSigninQuery[0]({ variables: { user } }).then((rs) => {
-      if (rs.data?.userSignIn) 
+  const setUserLocation = async() => 
+  {
+    const getLocation = await fetch('https://ip-api.io/json')
+    const data = await getLocation.json()
+
+    createSetUserLocation[0]({variables: { profile: { 
+      location: [data?.country_name, data?.city].toString(),
+      flagURL: data?.flagUrl
+    }}})
+    .then(rs => {
+      console.log(rs)
+    })
+  }
+
+  const signInUser = async (user: IUser) => {
+     return signIn("credentials", {
+      ...user,
+      redirect: false,
+    }).then(rs => {
+      if(!rs.error)
       {
-        return { user: "User Signed In.."}
+        findProfile()
+        .then(rs => {
+          if(rs.data.findOneProfile.location === "Earth")
+          {
+            setUserLocation()
+          }
+          else
+          {
+            notificationMsg.successMsg(`Signed In Successfully`, 
+            <div>
+                <p className='flex items-center gap-3'>Redirecting to Your Dashboard. 
+                <LoadingOutlined  style={{fontSize: 14}} spin/></p>
+            </div>)
+            setTimeout(() => {
+              router.push("/dashboard");
+              setLoading(false)
+            }, 5000);
+          }
+        })
       }
-      else 
-      {
-        return { error: rs?.errors }
+      else{
+        notificationMsg.errorMsg("Error", rs.error)
       }
+    }).catch(err => {
+      console.log(err)
     })
   }
 
   return (
     <AuthContext.Provider
-      value={{ loading: createUserQery[1].loading, signUp, signIn }}
+      value={{ loading, signUp, signInUser }}
     >
       {children}
     </AuthContext.Provider>
   );
 };
 
-export { AuthContextProvider, useAuthState };
+export { AuthContextProvider, useAuthContext };

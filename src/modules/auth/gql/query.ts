@@ -1,10 +1,9 @@
-import { IUser } from "../model";
 import { useMutation, gql } from "@apollo/client";
 
-const CREATE_USER = gql`
+const USER_SIGNUP = gql`
       mutation UserSignUp($user: UserSignUp!) {
         userSignUp(user: $user) {
-        username
+        _id, profileID
     }
   }
 `;
@@ -17,17 +16,36 @@ const USER_SIGNIN = gql`
       }
 `
 
-export const useCreateUser = (callback: (rs: any) => void) => {
-  return useMutation(CREATE_USER, {
+const SET_USER_LOCATION = gql`
+    mutation UpdateProfile($profile: QueryProfileInput!){
+      updateProfile(profile: $profile)
+    } 
+`
+
+export const useSignUpUser = (callback: (rs: any) => void) => {
+  return useMutation(USER_SIGNUP, {
     onCompleted: (rs) => {
-      if (rs?.createUser) {
-        callback(rs?.createUser);
+      if (rs?.userSignUp) {
+        callback(rs?.userSignUp);
       }
     },
     onError: (error: any) => {
-      console.log(error);
+      return error
     },
   });
+}
+
+export const useSetUserLocation = (callback: (rs: any) => void) => {
+  return useMutation(SET_USER_LOCATION, {
+    onCompleted: (rs) => {
+      if (rs?.updateProfile) {
+        callback(rs?.updateProfile);
+      }
+    },
+    onError: (error: any) => {
+      return error
+    },
+  })
 }
 
 export const useSignInUser = (callback: (rs: any) => void) => {
@@ -43,4 +61,4 @@ export const useSignInUser = (callback: (rs: any) => void) => {
   });
 }
 
-export { CREATE_USER, USER_SIGNIN }
+export { USER_SIGNUP, USER_SIGNIN }

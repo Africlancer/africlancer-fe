@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import * as Yup from "yup";
+import { useAuthContext } from "./context";
 
 const FormikSchema = Yup.object().shape({
   username: Yup.string()
@@ -24,32 +25,34 @@ export const SigninPage = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false)
   const [loadingText, setIsLoadingText] = useState('Please Wait...')
+  const {signInUser} = useAuthContext()
 
   const handleSubmit = async (values) => {
-    setIsLoading(true)
-    const rs: any = await signIn("credentials", {
-      username: values.username,
-      password: values.password,
-      redirect: false,
-    });
+    // setIsLoading(true)
+    signInUser(values)
+    // const rs: any = await signIn("credentials", {
+    //   username: values.username,
+    //   password: values.password,
+    //   redirect: false,
+    // });
 
-    if (rs.error) {
-      let msg = rs.error === "fetch failed" ? "Check Your Internet Connection" :  rs.error
-      errorMsg("Error", msg);
-      setIsLoading(false);
-      return;
-    }
+    // if (rs.error) {
+    //   let msg = rs.error === "fetch failed" ? "Check Your Internet Connection" :  rs.error
+    //   errorMsg("Error", msg);
+    //   setIsLoading(false);
+    //   return;
+    // }
 
-    setIsLoadingText('Redirecting...')
-    successMsg(`Signed In Successfully`, 
-    <div>
-        <p className='flex items-center gap-3'>Redirecting to Your Dashboard. 
-        <LoadingOutlined  style={{fontSize: 14}} spin/></p>
-    </div>)
-    setTimeout(() => {
-      router.push("/dashboard");
-      setIsLoading(false)
-    }, 5000);
+    // setIsLoadingText('Redirecting...')
+    // successMsg(`Signed In Successfully`, 
+    // <div>
+    //     <p className='flex items-center gap-3'>Redirecting to Your Dashboard. 
+    //     <LoadingOutlined  style={{fontSize: 14}} spin/></p>
+    // </div>)
+    // setTimeout(() => {
+    //   router.push("/dashboard");
+    //   setIsLoading(false)
+    // }, 5000);
   };
 
   return (

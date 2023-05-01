@@ -31,10 +31,10 @@ const MyApp = ({ Component, pageProps }: any) => {
     {notificationContext}
       <SessionProvider session={pageProps.session}>
           <ApolloProvider client={apolloClient}>
-          <AuthContextProvider>
+          <AuthContextProvider notificationMsg={{successMsg, errorMsg}}>
             <ProjectContextProvider notificationMsg={{successMsg, errorMsg}}>
               <BiddingContextProvider notificationMsg={{successMsg, errorMsg}}>
-                <ProfileContextProvider>
+                <ProfileContextProvider notificationMsg={{successMsg, errorMsg}}>
                   <FreelancersContextProvider>
                   <div className="page">
                   <Component {...pageProps}/>

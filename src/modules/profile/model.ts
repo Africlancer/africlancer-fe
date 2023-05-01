@@ -1,5 +1,6 @@
 export interface IProfile
 {
+	skills: string,
     banner,
     avatar,
     hourlyRate,

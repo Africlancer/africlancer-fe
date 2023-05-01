@@ -1,29 +1,55 @@
 import React, { createContext, useState } from 'react'
+import { useUpdateProfile } from './gql/query';
 import { IProfile } from './model'
 
-export const ProfileContext = createContext({
+interface IProfileState {
+    //loading: boolean;
+    profile: any
+    updateProfile: (profile: IProfile) => Promise<void>
+    setProfile: any
+}
+
+const ProfileContext = createContext<IProfileState>({
+    //loading: false,
     profile: null,
-    updateProfile: (profile: IProfile) =>  {}
+    updateProfile(profile: IProfile){
+        return null
+    },
+    setProfile: null
 })
+
+const useProfileContext = () => {
+    const context = React.useContext(ProfileContext);
+    if (context === undefined) throw new Error("contenxt doest not exist");
+    return context;
+  };
 
 interface IProps 
 {
+    notificationMsg: any
     children: React.ReactNode;
 }
 
-export const ProfileContextProvider: React.FC<IProps> = ({children}) =>
+const ProfileContextProvider: React.FC<IProps> = ({children, notificationMsg}) =>
 {
+    const createUpdateProfileQuery = useUpdateProfile((rs) => {})
     const [profile, setProfile] = useState<IProfile>()
-    const updateProfile = (profile: IProfile) => 
+
+    const updateProfile = async (profile: IProfile) => 
     {
-        setProfile(profile)
+        createUpdateProfileQuery[0]({variables: { profile }})
+        .then(rs => {
+            console.log(rs)
+        })
     }
     
     return(
         <ProfileContext.Provider
-            value={{ updateProfile, profile }} 
+            value={{ setProfile, updateProfile, profile }} 
         >
             {children}
         </ProfileContext.Provider>
     )
 }
+
+export {useProfileContext, ProfileContextProvider}
