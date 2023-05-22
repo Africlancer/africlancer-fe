@@ -182,7 +182,7 @@ export const Navbar: React.FC<IProps> = ({avatar}) => {
                   </Dropdown>
                 </div>
                 ) : (
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 ml-3">
                     <Skeleton.Input active size='large'/>
                     <Skeleton.Image active style={{ height: '40px', width: '40px', padding: '10px' }}  /></div>
                 )

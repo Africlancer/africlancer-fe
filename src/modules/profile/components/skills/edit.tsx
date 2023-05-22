@@ -27,6 +27,8 @@ const EditSkills: React.FC<IProps> = ({ skillsArr }) => {
     setSelectedSkills(skillsArr)
  },[])
 
+ console.log(skillsArr);
+
  const setSkills = (val) => {
     const skills: any[] = []
     val.forEach(item => {
@@ -51,12 +53,12 @@ const EditSkills: React.FC<IProps> = ({ skillsArr }) => {
 
         <ApRegSelect onChange={setSkills} isMulti isSearchable options={skills} name="skills" placeholder='Search or select a skill'/>
 
-        <p className='mt-10 mb-5 font-bold text-lg'>{skillsArr?.length} out of 20 Skills Selected</p>
+        <p className='mt-10 mb-5 font-bold text-lg'>{skillsArr?.length} out of 20 Skills Added</p>
         <div className='border-t pt-5'>
             {
                 skillsArr?.length > 0 ?
                 skillsArr?.map(item => (
-                    <p className='bg-skin-muted inline-block py-1 px-3 rounded-lg'>Web Development</p>
+                    <p className='bg-skin-muted inline-block py-1 px-3 rounded-lg mr-5'>{item}</p>
                 )) : <p className='text-center'>You have no skills selected.</p>
             }
         </div>

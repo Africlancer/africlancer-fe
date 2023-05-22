@@ -7,6 +7,8 @@ import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 import { UploadOutlined } from '@ant-design/icons';
 import { ApSelect } from '@/src/components/input/selectinput';
 import { useProjectContext } from '../context';
+import { NEW_PROJECT_SUBSCRIPTION } from '../gql/query';
+import { useSubscription } from '@apollo/client';
 
 const FormikSchema = Yup.object().shape({
   type: Yup.object()
@@ -38,6 +40,7 @@ const type = [
 export const FormTwo = ({setShowFormTwo, project, setProject}) => {
 
   const { createProject, loading, loadingText } = useProjectContext()
+  // const rs = useSubscription( NEW_PROJECT_SUBSCRIPTION );
 
   const handleNext = (val) => 
   {
@@ -71,6 +74,7 @@ export const FormTwo = ({setShowFormTwo, project, setProject}) => {
     setShowFormTwo(false)
   }
 
+  
   return (
     <Formik
     initialValues={{

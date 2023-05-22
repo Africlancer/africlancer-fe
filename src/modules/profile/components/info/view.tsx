@@ -14,6 +14,9 @@ export const ProfileInfo: React.FC<IProps> = ({ profile }) => {
   const [modal, setModal] = useState<{ open: boolean }>();
   const sess: any = useSession()
 
+  console.log(sess);
+  
+
   return (
     <>
       <div className="col-span-2 p-5 bg-skin-base shadow-xl w-full rounded-xl relative">
@@ -33,7 +36,7 @@ export const ProfileInfo: React.FC<IProps> = ({ profile }) => {
         </div>
           {
             profile ?
-            <SectionThree hourlyRate={ profile?.hourlyRate } setModal={ setModal }/>
+            <SectionThree location={profile?.location} flagURL={profile?.flagURL} hourlyRate={ profile?.hourlyRate } setModal={ setModal }/>
             : <></>
         }
       </div>

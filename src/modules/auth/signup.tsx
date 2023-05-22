@@ -1,4 +1,4 @@
-import { ApTextInput, AuthPageLayout } from '@/src/components'
+import { ApCheckBox, ApTextInput, AuthPageLayout } from '@/src/components'
 import { ApButton } from '@/src/components/button'
 import { ArrowRightSvg } from '@/src/custom';
 import { useMutation } from '@apollo/client';
@@ -19,12 +19,17 @@ const FormikSchema = Yup.object().shape({
       .email("Valid Email is Required")
       .required("Email is Required"),
     username: Yup.string()
-      .min(6, "Username should be at list 6 char.")
-      .required("First name is required"),
+      .required("Username is required"),
     password: Yup.string()
       .min(6, "password should be as list 6 char.")
-      .required("password is required"),
-    confirmPassword: Yup.string().required("password is required"),
+      .required("Password is required"),
+    confirmPassword: Yup.string()
+    .required("Please confirm password")
+    .oneOf([Yup.ref("password")], "Password does not match"),
+    agree: Yup.boolean().oneOf(
+        [true],
+        "Please tick to agree on the statement in order to proceed with the action."
+    ), 
 })
 
 export const SignUpPage = () => {
@@ -103,6 +108,7 @@ export const SignUpPage = () => {
             username: "",
             password: "",
             confirmPassword: "",
+            agree: false
         }}
         validationSchema={FormikSchema}
         onSubmit={handleSubmit}
@@ -122,15 +128,23 @@ export const SignUpPage = () => {
                 name="password"
             />
             <ApTextInput
-            type="password"
-            placeholder="Confirm Password"
-            name="confirmPassword"
+                type="password"
+                placeholder="Confirm Password"
+                name="confirmPassword"
             />
             
-            <div className='flex w-full justify-between text-skin-inverted'>
+            <div className='flex w-full justify-between text-skin-inverted mt-3'>
                 <div className='flex gap-2'>
-                    <input type="checkbox"/>
-                    <p>I Agree to the Africlancer <span className='text-skin-accent'>User Agreement</span> and <span className='text-skin-accent'>Privacy Policy</span></p>
+                    <ApCheckBox 
+                      name="agree"
+                      label={
+                        <p>
+                            I Agree to the Africlancer 
+                            <span className='text-skin-accent'> User Agreement </span>
+                            and <span className='text-skin-accent'> Privacy Policy</span>
+                        </p>
+                      }
+                    />
                 </div>
             </div>
 
@@ -142,7 +156,8 @@ export const SignUpPage = () => {
                     loading={ isLoading }
                     loadingText={ loadingText }
                 >
-                    Create New Account  <ArrowRightSvg/>
+                    Create New Account  
+                    <ArrowRightSvg/>
                 </ApButton>
             </div>
 

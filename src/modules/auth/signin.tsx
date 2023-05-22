@@ -25,7 +25,7 @@ export const SigninPage = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false)
   const [loadingText, setIsLoadingText] = useState('Please Wait...')
-  const {signInUser} = useAuthContext()
+  const {signInUser, loading} = useAuthContext()
 
   const handleSubmit = async (values) => {
     // setIsLoading(true)
@@ -97,11 +97,12 @@ export const SigninPage = () => {
 
             <div className="mt-5 flex flex-col gap-3">
               <ApButton
-                    onClick={() => {}}
-                    className='disabled:cursor-not-allowed flex justify-center gap-2 items-center submitBtn py-3 bg-skin-accent text-white rounded w-full'
-                    type='submit'
-                    loading={ isLoading }
-                    loadingText={ loadingText }
+                  disabled={loading}
+                  onClick={() => {}}
+                  className='disabled:cursor-not-allowed flex justify-center gap-2 items-center submitBtn py-3 bg-skin-accent text-white rounded w-full'
+                  type='submit'
+                  loading={ loading }
+                  loadingText={ loadingText }
                 >
                     Proceed  <ArrowRightSvg/>
                 </ApButton>

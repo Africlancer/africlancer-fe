@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
-import { useCreateProject, useFindAllProjects, useFindProject, useUpdateProject } from './gql/query';
+import { NEW_PROJECT_SUBSCRIPTION, useCreateProject, useFindAllProjects, useFindProject, useUpdateProject } from './gql/query';
 import {IProject} from './model'
 import { useRouter } from 'next/router';
 import { LoadingOutlined } from "@ant-design/icons";
+import { useSession } from 'next-auth/react';
+import { useLazyQuery, useSubscription } from '@apollo/client';
+import { FIND_BOOKMARK } from '../bookmark/gql/query';
 
 interface IProjectState {
     hasBiddingEnded: boolean
@@ -12,10 +15,11 @@ interface IProjectState {
     daysLeft: number
     projects: any,
     activeProject: any
+    NewProject: () => any
     createProject: (project: IProject) => Promise<void>
     updateProject: (id: string, project: IProject) => Promise<void>
-    fetchAllProjects: (query, fullSearch) => void
-    fetchProject: (query) => void
+    fetchAllProjects: (query, fullSearch?) => void
+    fetchProject: (query, findBookMarkFunc) => void
 }
 
 const ProjectContext = React.createContext<IProjectState>({
@@ -29,6 +33,7 @@ const ProjectContext = React.createContext<IProjectState>({
     createProject(project) {
       return null;
     },
+    NewProject() {},
     updateProject(id, project) {return null},
     fetchProject(query) {},
     fetchAllProjects(query, fullSearch) {},
@@ -48,7 +53,7 @@ interface IProps {
 const ProjectContextProvider: React.FC<IProps> = ({ children, notificationMsg }) => {
 
     const router = useRouter()
-
+    const session:any = useSession()
     const [projects, setProjects] = useState(null)
     const [activeProject, setActiveProject] = useState([])
     const [hasBiddingEnded, setHasBiddingEnded] = useState<boolean>()
@@ -61,6 +66,8 @@ const ProjectContextProvider: React.FC<IProps> = ({ children, notificationMsg })
     const updateProjectQuery = useUpdateProject((rs) => {});
     const [ loading, setLoading ] = useState(false)
     const [loadingText, setLoadingText] = useState('Loading...')
+    const [findBookM, { }] = useLazyQuery(FIND_BOOKMARK);
+
 
     const fetchAllProjects = (query, fullSearch) =>
     {
@@ -76,7 +83,7 @@ const ProjectContextProvider: React.FC<IProps> = ({ children, notificationMsg })
       .catch((err) => console.log(err))
     }
 
-    const fetchProject = (query) =>
+    const fetchProject = (query, findBookMarkFunc?) =>
     {
       return fetchProjectQuery[0]({
         variables: {
@@ -84,6 +91,7 @@ const ProjectContextProvider: React.FC<IProps> = ({ children, notificationMsg })
         }
       }).then((res) => {
         setActiveProject(res.data.findOneProject)
+        // findBookM({ variables: {} })
 
         let date = new Date
         let newDate = new Date(date)
@@ -112,6 +120,9 @@ const ProjectContextProvider: React.FC<IProps> = ({ children, notificationMsg })
         dateInPast(endDate, newDate)
         //console.log(dateInPast(endDate, newDate))
         //console.log(newDateStr)
+        
+        findBookMarkFunc && 
+        findBookMarkFunc({ userID: session?.data?.user?._id, projectID: res.data.findOneProject?._id })
       })
       .catch((err) => console.log(err))
     }
@@ -144,10 +155,24 @@ const ProjectContextProvider: React.FC<IProps> = ({ children, notificationMsg })
           setLoading(false)
       }).catch((err) =>  {notificationMsg?.errorMsg('Error', err.message);  setLoading(false)})
     };
+
+    const NewProject = () => {
+      const {data, loading} = useSubscription(
+        NEW_PROJECT_SUBSCRIPTION, {
+          onSubscriptionData: (data) => {
+            console.log("project created")
+          }
+        }
+      )
+
+      return(
+        <p>New Project</p>
+      )
+    }
   
     return (
       <ProjectContext.Provider
-        value={{ projects, createProject, fetchAllProjects, activeProject, fetchProject,
+        value={{ NewProject, projects, createProject, fetchAllProjects, activeProject, fetchProject,
           hasBiddingEnded, daysLeft, updateProject, status, loading, loadingText
         }}
       >

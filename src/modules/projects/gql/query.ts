@@ -68,6 +68,17 @@ query FindOneProject($query: QueryProjectInput!) {
     }
 }
 `
+const NEW_PROJECT_SUBSCRIPTION = gql`
+  subscription NewProject{
+    newProject{
+      title
+    }
+  }
+`;
+
+export function NewProjects() {
+  return "This is new project"
+}
 
 export const useCreateProject = (callback: (rs: any) => void) => {
     return useMutation(CREATE_PROJECT, {
@@ -109,4 +120,4 @@ export const useFindProject = () =>
 }
 
 
-export { CREATE_PROJECT, FIND_PROJECTS, FIND_ALL_PROJECTS }
+export { CREATE_PROJECT, FIND_PROJECTS, FIND_ALL_PROJECTS, NEW_PROJECT_SUBSCRIPTION }

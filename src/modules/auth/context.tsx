@@ -78,11 +78,21 @@ const AuthContextProvider: React.FC<IProps> = ({ children, notificationMsg }) =>
       flagURL: data?.flagUrl
     }}})
     .then(rs => {
-      console.log(rs)
+      // console.log(rs)
+      notificationMsg.successMsg(`Signed In Successfully`, 
+      <div>
+          <p className='flex items-center gap-3'>Redirecting to Your Dashboard. 
+          <LoadingOutlined  style={{fontSize: 14}} spin/></p>
+      </div>)
+      setTimeout(() => {
+        router.push("/dashboard");
+        setLoading(false)
+      }, 5000);
     })
   }
 
   const signInUser = async (user: IUser) => {
+    setLoading(true) 
      return signIn("credentials", {
       ...user,
       redirect: false,
@@ -91,12 +101,15 @@ const AuthContextProvider: React.FC<IProps> = ({ children, notificationMsg }) =>
       {
         findProfile()
         .then(rs => {
-          if(rs.data.findOneProfile.location === "Earth")
+          console.log(rs);     
+          if(rs.data?.findOneProfile.location === "Earth" && rs.data?.findOneProfile.flagURL === "Earth")
           {
+            console.log('not set');
             setUserLocation()
           }
           else
           {
+            console.log('set');
             notificationMsg.successMsg(`Signed In Successfully`, 
             <div>
                 <p className='flex items-center gap-3'>Redirecting to Your Dashboard. 
@@ -111,6 +124,7 @@ const AuthContextProvider: React.FC<IProps> = ({ children, notificationMsg }) =>
       }
       else{
         notificationMsg.errorMsg("Error", rs.error)
+        setLoading(false) 
       }
     }).catch(err => {
       console.log(err)

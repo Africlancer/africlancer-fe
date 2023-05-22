@@ -9,6 +9,8 @@ export interface IProfile
     recommendations,
     education,
     experience,
+	location,
+	flagURL,
     qualification,
     publications,
 }
