@@ -12,26 +12,34 @@ import { Proposals } from './components/proposals'
 import { BidEditor } from '../../bidding/main'
 import { AboutClient } from './components/client'
 import { ProjectDetailsSubMenu } from './components/submenu'
+import { useBookMarkContext } from '../../bookmark/context'
 
 export const ProjectDetailsPage = ({id}) => {
     const {fetchProject, activeProject, hasBiddingEnded, daysLeft, status} = useProjectContext()
     const {getTotalBids, projectTotalBids, findBids, projectBids, getAverageBid, averageBid} = useBiddingContext()
+    const {createBookMark, findBookMark} = useBookMarkContext()
+
     const session:any = useSession()
 
     const {data, loading} = useQuery(FIND_ONE_BID, {
         variables: {query: {userID: session?.data?.user?._id, projectID: id }}
     })
     
-
     const [current, setCurrent] = useState('details');
 
+    console.log(activeProject);
+
     useEffect(() => {
-        console.log(activeProject);
-        fetchProject({_id: id})
+        fetchProject({_id: id}, findBookMark)
         findBids({projectID: id}, session?.data?.user?._id)
         getTotalBids(id)
         getAverageBid(id)
     }, [])
+
+    const handleCreateBookMark = () =>
+    {
+        createBookMark({ userID: session?.data?.user?._id, projectID: activeProject?._id })
+    }
 
   return (
     <div>
@@ -75,12 +83,11 @@ export const ProjectDetailsPage = ({id}) => {
                         </div>
 
                         <div className='flex items-end flex-col gap-4'>
-                            <ApButton>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
+                            <button className='bg-white/20 p-2.5 rounded-full' onClick={handleCreateBookMark}>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-7 h-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
                                 </svg>
-                                Bookmark This Project
-                            </ApButton>
+                            </button>
 
                             <div className='flex items-center gap-2'>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-gray-200">

@@ -10,6 +10,7 @@ import { ApButton } from '@/src/components';
 import { CREATE_PROJECT } from '../gql/query';
 import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
+import { useProjectContext } from '../context';
  
 export const PostProjectPage = () => {
   const [bgImg, setBgImg] = useState<string>();
@@ -17,14 +18,15 @@ export const PostProjectPage = () => {
   const router = useRouter()
 
   const [project, setProject] = useState<any>({})
+  const {NewProject} = useProjectContext()
 
-  useEffect(() => {
-      let index = Math.floor(Math.random() * bgImages.length);
-      let item = bgImages[index];
-      setBgImg(item);
-  }, []);
+    useEffect(() => {
+        let index = Math.floor(Math.random() * bgImages.length);
+        let item = bgImages[index];
+        setBgImg(item);
+    }, []);
 
-const [createProject] = useMutation(CREATE_PROJECT,{})
+    const [createProject] = useMutation(CREATE_PROJECT,{})
 
     const postProject = () =>
     {
@@ -72,6 +74,7 @@ const [createProject] = useMutation(CREATE_PROJECT,{})
                 }
               </div>
           </div>
+          <NewProject/>
         </div>
         </div>
     </div>

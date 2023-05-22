@@ -13,7 +13,7 @@ const httpLink = createHttpLink({
 
 const wsLink = typeof window !== "undefined" ? new GraphQLWsLink(
       createClient({
-          url: "ws://localhost:8080/subscriptions",
+          url: "ws://localhost:5500/graphql",
       })
 ) : null;
 

@@ -1,4 +1,4 @@
-import { gql, useMutation } from "@apollo/client";
+import { gql, useLazyQuery, useMutation } from "@apollo/client";
 
 
 const CREATE_BOOKMARK = gql`
@@ -8,6 +8,18 @@ const CREATE_BOOKMARK = gql`
         }
     }
 `
+
+export const FIND_BOOKMARK = gql`
+    query FindBookmark($query: QueryBookMarkInput!){
+        findBookmark(query: $query){
+            _id
+        }
+    }
+`
+
+export const useFindBookMark = () => {
+    return useLazyQuery(FIND_BOOKMARK)
+}
 
 export const useCreateBookMark = (callback: (rs: any) => void) =>
 {
@@ -22,3 +34,4 @@ export const useCreateBookMark = (callback: (rs: any) => void) =>
         }
     })
 }
+

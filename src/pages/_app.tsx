@@ -10,6 +10,7 @@ import { ProjectContextProvider } from "../modules/projects/context";
 import { BiddingContextProvider } from "../modules/bidding/context";
 import { FreelancersContextProvider } from "../modules/freelancers/context";
 import useApNotification from "../hooks/notification";
+import { BookMarkContextProvider } from "../modules/bookmark/context";
 
 const MyApp = ({ Component, pageProps }: any) => {
   const { notificationContext, successMsg, errorMsg } = useApNotification();
@@ -33,16 +34,18 @@ const MyApp = ({ Component, pageProps }: any) => {
           <ApolloProvider client={apolloClient}>
           <AuthContextProvider notificationMsg={{successMsg, errorMsg}}>
             <ProjectContextProvider notificationMsg={{successMsg, errorMsg}}>
-              <BiddingContextProvider notificationMsg={{successMsg, errorMsg}}>
-                <ProfileContextProvider notificationMsg={{successMsg, errorMsg}}>
-                  <FreelancersContextProvider>
-                  <div className="page">
-                  <Component {...pageProps}/>
-                  {/* <ApUtilityBtn/> */}
-                  </div>
-                  </FreelancersContextProvider>
-                </ProfileContextProvider>
-              </BiddingContextProvider>
+              <BookMarkContextProvider notificationMsg={{successMsg, errorMsg}}>
+                <BiddingContextProvider notificationMsg={{successMsg, errorMsg}}>
+                  <ProfileContextProvider notificationMsg={{successMsg, errorMsg}}>
+                    <FreelancersContextProvider>
+                    <div className="page">
+                    <Component {...pageProps}/>
+                    {/* <ApUtilityBtn/> */}
+                    </div>
+                    </FreelancersContextProvider>
+                  </ProfileContextProvider>
+                </BiddingContextProvider>
+              </BookMarkContextProvider>
             </ProjectContextProvider>
           </AuthContextProvider>
         </ApolloProvider>

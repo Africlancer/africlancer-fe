@@ -26,6 +26,7 @@ const FIND_ONE_PROFILE = gql`
     query FindOneProfile {
         findOneProfile {
             location,
+            flagURL,
             avatar,
             skills,
             banner,

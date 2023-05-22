@@ -61,6 +61,8 @@ const authOptions: NextAuthOptions = {
         })
           .then((rs) => rs.json())
           .then((rs) => {
+            // console.log(rs);
+            
             return {
               ...rs,
               id: rs?.details?._id,
@@ -71,7 +73,7 @@ const authOptions: NextAuthOptions = {
 
         if (rs?.error) throw new Error(rs.message);
 
-        console.log(rs, "RESULT..");
+        // console.log(rs, "RESULT..");
         return rs;
       },
     }),
@@ -92,5 +94,6 @@ const getUser = async (userId: string) => {
     }
   ).then((rs) => rs.json());
 
+  // console.log(rs); 
   return rs;
 };

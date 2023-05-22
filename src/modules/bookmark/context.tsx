@@ -1,4 +1,5 @@
 import React from 'react'
+import { useCreateBookMark, useFindBookMark } from './gql/query'
 import { IBookMark } from './model'
 
 interface IBookMarkState
@@ -37,13 +38,39 @@ interface IProps {
     children: React.ReactNode;
 }
 
-const BookMarkContextProvider: React.FC<IProps> = ({children}) => {
+const BookMarkContextProvider: React.FC<IProps> = ({notificationMsg, children}) => {
+    const createBookMarkQuery = useCreateBookMark((rs) => {})
+    const findBookMarkQuery = useFindBookMark()
 
+    const createBookMark = async(portfolio: IBookMark) => {
+        return createBookMarkQuery[0]({variables: { portfolio }})
+        .then(rs => {
+            if(rs?.data)
+            {
+               notificationMsg.successMsg('Success', 'Bookmark Created')
+            }
+        })
+        .catch(err => {
+            notificationMsg.errorMsg('Error', err.message)
+            console.log(err)
+        })
+    }
+
+    const findBookMark = async(query: IBookMark) => {
+        findBookMarkQuery[0]({variables: {query}})
+        .then(rs => {
+            console.log(rs)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
 
     return(
         <BookmarkContext.Provider
             value={{
-
+                findBookMark,
+                createBookMark
             }}
         >
             {children}
