@@ -67,7 +67,8 @@ module.exports = {
       borderColor:
       {
         skin: {
-          border: 'var(--color-border)'
+          border: 'var(--color-border)',
+          accent: 'var(--color-accent)',
         }
       }
     },

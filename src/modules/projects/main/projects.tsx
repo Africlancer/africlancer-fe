@@ -38,7 +38,7 @@ const FilterComponent = ({browseFunc: fetchAllProjects}) =>
 
   return (
     <div>
-       <h1 className='text-xl font-bold px-5 py-3 border-b'>Filters</h1>
+       <h1 className='text-lg font-bold px-5 py-3 border-b'>Filter Projects</h1>
        <div className='px-5 py-3 border-b'>
           <h1 className='font-bold mb-2'>Payment Type</h1>
           <div className='flex justify-between'>
@@ -186,8 +186,23 @@ export const ProjectsPage = () => {
     return(
       <div className=''>
         <div className='flex justify-between py-3 border-b px-5'>
-          <h1 className='text-lg font-bold'>Top Results</h1>
-          <p>Sort By</p>
+          <div >
+            <h1 className='text-lg font-bold'>Top Results</h1>
+            <p className='text-sm'>Showing {projects?.length} out of {projects?.length} projects</p>
+          </div>
+
+          <div className='flex items-center gap-3 text-sm'>
+            <p>Sort By</p>
+            <p>:</p>
+            <select className='border px-1 rounded py-1 text-sm'>
+              <option>Latest</option>
+              <option>Oldest</option>
+              <option>Lowest Price</option>
+              <option>Highest Price</option>
+              <option>Fewest Bids</option>
+              <option>Most Bids</option>
+            </select>
+          </div>
         </div>
         {
           projects ? (
@@ -196,13 +211,6 @@ export const ProjectsPage = () => {
                 projects?.length > 0 ? (
                     projects?.map((project) => (
                         <ProjectItem project={project} length={projects?.length}/>
-                      //   <Link href={`/browse/projects/project/${project._id}`}>
-                      //   <div className='p-5 hover:bg-black/5 cursor-pointer'>
-                      //     <h1 className='text-skin-accent text-3xl font-bold'>{project.title}</h1>
-                      //     <p className='mb-3'>Budget ${project.minBudget} - {project.maxBudget}</p>
-                      //     <p>{project.summary}</p>
-                      //   </div>
-                      // </Link>
                   ))
                 ) : (
                   <div className='flex items-center justify-center h-[200px]'>

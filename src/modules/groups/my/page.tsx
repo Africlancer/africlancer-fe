@@ -16,7 +16,7 @@ const items: MenuProps['items'] = [
     {
       label: (
         <div className='py-[2.8px]'>
-          <Link href="/browse/projects">
+          <Link href="/groups/my-groups">
             <span className='text-base'>My Groups</span>
           </Link>
         </div>
@@ -26,7 +26,7 @@ const items: MenuProps['items'] = [
     {
       label: (
           <div className='py-[2.8px]'>
-          <Link href="/browse/freelancers">
+          <Link href="/groups/discover">
             <span className='text-base'>Discover</span>
           </Link>
           </div>

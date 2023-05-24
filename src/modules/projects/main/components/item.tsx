@@ -4,7 +4,7 @@ import { Skeleton } from 'antd';
 import { ConfigProvider, Switch, Rate } from 'antd'
 
 export const ProjectItem = ({project, length}) => {
-    const [manualLoading, setManualLoading] = useState(true)
+    const [manualLoading, setManualLoading] = useState(false)
     const [value, setValue] = useState(3);
     const desc = ['1', '2', '3', '4', '5'];
     //console.log(project);
@@ -24,7 +24,7 @@ export const ProjectItem = ({project, length}) => {
                   <div className=''>
                     <div className='flex justify-between'>
                       <div>
-                        <h1 className='text-skin-accent text-3xl font-bold'>{project.title}</h1>
+                        <h1 className='text-skin-accent text-2xl font-bold'>{project.title}</h1>
                         <p className='mb-3'>Budget ${project.minBudget} - {project.maxBudget}
                           <span className='ml-2 text-gray-500'>
                             {
@@ -41,13 +41,13 @@ export const ProjectItem = ({project, length}) => {
                       </div>
                     </div>
   
-                      <p>{project.summary}</p>
+                      <p className='text-[16px]'>{project.summary}</p>
 
                       <div className='flex mt-5 items-center gap-2'>
                           {
                             project?.skills.map((skill, i) => (
                               <p>
-                                <span className='bg-skin-accent text-white py-1 px-3 rounded-md'>{skill}</span>
+                                <span className='bg-gray-200 text-gray-900 text-sm py-1 px-3 rounded-md'>{skill}</span>
                                 {
                                   project?.skills[i+1] ? <span className='ml-2'>|</span> : <></>
                                 } 
@@ -74,8 +74,8 @@ export const ProjectItem = ({project, length}) => {
 
                         <div className='flex items-center gap-3'>
                             <p>41 minutes ago</p>
-                            <button className='bg-gray-100 p-2 rounded-full'>
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-gray-600">
+                            <button className='z-50 border border-skin-accent p-1.5 rounded-full'>
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-skin-accent">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
                               </svg>
                             </button>

@@ -3,7 +3,7 @@ import { ConfigProvider, MenuProps } from 'antd';
 import { Menu } from 'antd';
 import { Footer } from '../footer';
 import { ApSearchInput } from '../input/search';
-import { Navbar } from '../navbar';
+import { Navbar, SubMenu } from '../navbar';
 import { ApButton } from '../button';
 import Link from 'next/link';
 
@@ -12,7 +12,7 @@ const items: MenuProps['items'] = [
     label: (
       <div className='py-[2.8px]'>
         <Link href="/browse/projects">
-          <span className='font-medium text-lg'>Projects</span>
+          <span className='text-base'>Projects</span>
         </Link>
       </div>
     ),
@@ -22,7 +22,7 @@ const items: MenuProps['items'] = [
     label: (
         <div className='py-[2.8px]'>
         <Link href="/browse/freelancers">
-          <span className='font-medium text-lg'>Freelancers</span>
+          <span className='text-base'>Freelancers</span>
         </Link>
         </div>
     ),
@@ -72,40 +72,38 @@ const BrowseSubMenu = ({page}) =>
 }
 
 export const BrowseLayout: React.FC<IProps> = ({FilterComponent, MainContent, page, browseFunc}) => {
+
   return (
-    <div>
     <div className="h-full relative bg-skin-alt">
       <Navbar/>
-      
-      <div className='pt-14'>
+      <SubMenu items={items} currentPage={page}/>
+      <div className='pt-[100px]'>
       <div className='relative h-80 w-full bg-browse-hero-pattern bg-center bg-cover'>
-            <div className='absolute h-full w-full bg-black/40 text-white flex flex-col justify-between'>
-                <div className='px-10 pt-8'>
-                    <h1 className='text-5xl font-bold mb-5'>Browse</h1>
-                    <p className='mb-5'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum ut, vel assumenda odio pariatur officia repudiandae! Est et reprehenderit, voluptatibus fuga quo ut nobis dolore aut non sit tempora expedita facilis aperiam distinctio consequatur delectus libero a, possimus quod voluptates aspernatur cum. Magnam ab nesciunt doloremque nostrum, aperiam rem voluptatem.</p>
-                    <div className='flex flex-row gap-2 w-full'>
-                        <div className='flex flex-col w-full'>
-                        <ApSearchInput />
-                        </div>
-                        <ApButton>
-                          Save
-                        </ApButton>
-                    </div>
-                </div>
-
+        <div className='absolute p-10 pb-16 h-full w-full bg-black/40 text-white flex flex-col justify-between'>
+            <div>
+                <h1 className='font-bold text-4xl mb-2'>
+                  {
+                    page === "projects" ? "Browse Projects" : "Browse Freelancers"
+                  }
+                </h1>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam placeat dolore aut culpa iste sint inventore est assumenda iusto voluptas praesentium quod minima perferendis quidem ut quia harum, repellat ratione quaerat. Eligendi obcaecati, dolorem repellat assumenda minima impedit expedita, voluptatem tempore eveniet unde ut minus exercitationem atque eum perferendis sint.</p>
             </div>
-        </div> 
+
+            <div>
+                <ApSearchInput/>
+            </div>
+        </div>
+      </div> 
 
             
-        <div className='-translate-y-10 px-10'>
+        <div className='-translate-y-8 px-10'>
           <div className='flex justify-between gap-10 items-start'>
             <div className="bg-skin-base w-[450px] shadow-md rounded-md">
                 <FilterComponent browseFunc={browseFunc}/>
             </div>
             <div className='w-full bg-skin-base shadow-md rounded-md'>
-                <BrowseSubMenu page={page}/>
                 <div>
-                <MainContent/>
+                  <MainContent/>
                 </div>
             </div>
           </div>
@@ -113,9 +111,8 @@ export const BrowseLayout: React.FC<IProps> = ({FilterComponent, MainContent, pa
       </div>
 
       <div className="">
-      <Footer/>
-    </div>
-    </div>
+        <Footer/>
+      </div>
     </div>
   )
 }

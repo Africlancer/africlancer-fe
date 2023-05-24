@@ -69,7 +69,7 @@ const ProjectContextProvider: React.FC<IProps> = ({ children, notificationMsg })
     const [findBookM, { }] = useLazyQuery(FIND_BOOKMARK);
 
 
-    const fetchAllProjects = (query, fullSearch) =>
+    const fetchAllProjects = async (query, fullSearch) =>
     {
       return fetchAllProjectsQuery[0]({
         variables: {

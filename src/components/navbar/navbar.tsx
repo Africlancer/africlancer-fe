@@ -70,6 +70,18 @@ export const Navbar: React.FC<IProps> = ({avatar}) => {
     },
   ];
 
+  const groupItems: MenuProps["items"] = [
+    {
+      key: "1",
+      label: <Link href="/groups/my-groups">My Groups</Link>,
+    },
+    {
+      key: "2",
+      label: <Link href="/groups/discover">Discover</Link>,
+    },
+  ];
+
+
   return (
     <header>
       <nav className="shadow-md flex flex-wrap items-center justify-between w-full  py-2 z-50 md:py-0 px-10 text-lg text-skin-inverted bg-skin-nav fixed">
@@ -115,9 +127,14 @@ export const Navbar: React.FC<IProps> = ({avatar}) => {
             </li>
 
             <li>
-              <Link className="md:p-4 py-2 block" href="">
-                Groups
-              </Link>
+                <Dropdown
+                  trigger={["hover"]}
+                  menu={{ items: groupItems }}
+                  placement="bottomLeft"
+                  arrow
+                >
+                    <p className="md:p-4 py-2 block cursor-pointer">Groups</p>
+                </Dropdown>
             </li>
 
             <li className="flex items-center ml-5">
