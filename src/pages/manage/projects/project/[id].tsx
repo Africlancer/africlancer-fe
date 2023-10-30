@@ -4,7 +4,7 @@ import React from 'react'
 const EditProject = ({id}) => {
   return <EditProjectPage id={id} edit={false}/>
 }
-
+ 
 export default EditProject
 
 export const getServerSideProps = async ({
