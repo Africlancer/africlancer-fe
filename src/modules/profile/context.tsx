@@ -13,7 +13,7 @@ const ProfileContext = createContext<IProfileState>({
     //loading: false,
     profile: null,
     updateProfile(profile: IProfile){
-        return null
+        return null as any
     },
     setProfile: null
 })

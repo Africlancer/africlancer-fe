@@ -32,7 +32,7 @@ export const ApSelectInput: React.FC<IProps> = (props: IProps) => {
             component="p"
         /></label>}
         <select
-            value={value}
+            // value={value}
             {...props}
             {...field}
             disabled={disabled}

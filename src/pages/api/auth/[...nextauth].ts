@@ -31,7 +31,7 @@ const authOptions: NextAuthOptions = {
           sub: token.sub,
           roles: user.roles,
         },
-        process.env.TOKEN_SECRET,
+        (process as any)?.env?.TOKEN_SECRET,
         {
           expiresIn: "15m",
         }

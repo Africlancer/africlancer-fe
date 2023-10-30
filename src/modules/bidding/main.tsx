@@ -17,7 +17,7 @@ export const BidEditor = ({projectID}) => {
     useEffect(() => {
         console.log(data)
         setUserBid(data?.findOneBid)
-    }, [data, loading, error])
+    }, [])
 
   return (
         <div>

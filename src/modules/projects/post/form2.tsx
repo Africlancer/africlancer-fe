@@ -49,9 +49,9 @@ export const FormTwo = ({setShowFormTwo, project, setProject}) => {
     sevenDaysLater.setDate(sevenDaysLater.getDate() + 7) 
 
     const skills = []
-    val.skills.forEach((skill) => {
-      skills.push(skill.value)
-    })
+    // val.skills.forEach((skill) => {
+    //   skills.push(skill.value)
+    // })
     
     console.log(project);
     

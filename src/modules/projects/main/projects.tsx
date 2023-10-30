@@ -42,7 +42,8 @@ const FilterComponent = ({browseFunc: fetchAllProjects}) =>
        <div className='px-5 py-3 border-b'>
           <h1 className='font-bold mb-2'>Payment Type</h1>
           <div className='flex justify-between'>
-          <form ref={typeFormRef}>
+          {/* ref={typeFormRef} */}
+          <form>
             <div className='flex items-center gap-2'>
                 <input type="radio" name="type" value='FIXED_PRICE' 
                 onClick={() => setFilterQuery({...filterQuery, type: 'FIXED_PRICE'})}/>
@@ -73,8 +74,8 @@ const FilterComponent = ({browseFunc: fetchAllProjects}) =>
               <p className='mt-0.5 text-sm'>Select payment type first.</p>
             </div>
           }
-
-          <form ref={budgetFormRef}>
+{/* ref={budgetFormRef} */}
+          <form >
             <div className='flex flex-col gap-2 mb-2'>
                 <p>Min Budget</p>
                 <input disabled={filterQuery.type ? false : true} className='focus:border-green-500 border-skin-border border text-black outline-none w-full text-sm bg-skin-input px-5 py-3 flex items-center rounded mb-2 disabled:cursor-not-allowed' 
@@ -209,8 +210,8 @@ export const ProjectsPage = () => {
             <div>
               {
                 projects?.length > 0 ? (
-                    projects?.map((project) => (
-                        <ProjectItem project={project} length={projects?.length}/>
+                    projects?.map((project, i) => (
+                        <ProjectItem key={i} project={project} length={projects?.length}/>
                   ))
                 ) : (
                   <div className='flex items-center justify-center h-[200px]'>

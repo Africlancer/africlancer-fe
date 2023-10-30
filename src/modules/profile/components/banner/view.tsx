@@ -6,7 +6,7 @@ import { Image, Skeleton } from 'antd';
 
 export const Banner = ({banner}) =>
 {
-  const [modal, setModal] = useState<{open: boolean}>()
+  const [modal, setModal] = useState<{open: boolean}>({open: false})
 
     return(
       <div className="w-full relative h-96">

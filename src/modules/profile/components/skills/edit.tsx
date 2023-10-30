@@ -25,20 +25,20 @@ const EditSkills: React.FC<IProps> = ({ skillsArr }) => {
 
  useEffect(() => {
     setSelectedSkills(skillsArr)
- },[])
+ })
 
  console.log(skillsArr);
 
  const setSkills = (val) => {
-    const skills: any[] = []
-    val.forEach(item => {
-        if(selectedSkills.includes(item?.value)){}
-        else{
-            skills.push(item?.value)
-        }
-    })
+    // const skills: any[] = []
+    // val.forEach(item => {
+    //     if(selectedSkills.includes(item?.value)){}
+    //     else{
+    //         skills.push(item?.value)
+    //     }
+    // })
 
-    setSelectedSkills([...selectedSkills, ...skills])
+    // setSelectedSkills([...selectedSkills, ...skills])
  }
 
  const saveSkills = () =>
@@ -57,8 +57,8 @@ const EditSkills: React.FC<IProps> = ({ skillsArr }) => {
         <div className='border-t pt-5'>
             {
                 skillsArr?.length > 0 ?
-                skillsArr?.map(item => (
-                    <p className='bg-skin-muted inline-block py-1 px-3 rounded-lg mr-5'>{item}</p>
+                skillsArr?.map((item, i) => (
+                    <p key={i} className='bg-skin-muted inline-block py-1 px-3 rounded-lg mr-5'>{item}</p>
                 )) : <p className='text-center'>You have no skills selected.</p>
             }
         </div>

@@ -2,7 +2,7 @@ import { ProjectDetailsPage } from '@/src/modules/projects/details/page';
 import React from 'react'
 
 const edit = ({id, edit }) => {
-  return <ProjectDetailsPage id={id} edit={edit}/>
+  return <ProjectDetailsPage id={id} />
 }
 
 export default edit

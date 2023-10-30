@@ -16,10 +16,10 @@ interface IState {
 const AuthContext = React.createContext<IState>({
   loading: false,
   signUp(user) {
-    return null;
+    return null as any;
   },
   signInUser(user) {
-    return null
+    return null as any;
   }
 });
 
@@ -39,7 +39,7 @@ const AuthContextProvider: React.FC<IProps> = ({ children, notificationMsg }) =>
   const createSigninQuery = useSignInUser((rs) => {})
   const createSetUserLocation = useSetUserLocation((rs) => {})
   const [findProfile, {}] = useLazyQuery(FIND_ONE_PROFILE)
-  const [loading, setLoading] = useState<boolean>()
+  const [loading, setLoading] = useState<boolean>(false)
   const router = useRouter()
   
   const signUp = async (user: IUser) => {
@@ -96,8 +96,8 @@ const AuthContextProvider: React.FC<IProps> = ({ children, notificationMsg }) =>
      return signIn("credentials", {
       ...user,
       redirect: false,
-    }).then(rs => {
-      if(!rs.error)
+    }).then((rs: any) => {
+      if(!rs?.error)
       {
         findProfile()
         .then(rs => {

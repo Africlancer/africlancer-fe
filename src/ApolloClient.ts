@@ -8,12 +8,12 @@ import { getMainDefinition } from '@apollo/client/utilities';
 console.log(process.env.GRAPHQL_URL, " process.env.GRAPHQL_URL");
 
 const httpLink = createHttpLink({
-  uri:  "http://localhost:5500/graphql" /* "https://africlancer.asynctechs.com/graphql"*/,  //"" http://159.223.91.232:6110/graphql
+  uri: "https://africlancer.asynctechs.com/graphql",  //"" http://159.223.91.232:6110/graphql
 });
 
 const wsLink = typeof window !== "undefined" ? new GraphQLWsLink(
       createClient({
-          url: "ws://localhost:5500/graphql",
+          url: "ws://africlancer.asynctechs.com/graphql",
       })
 ) : null;
 
@@ -26,7 +26,7 @@ const authLink = setContext(async (_, { headers }) => {
     headers: {
       ...headers,
       authorization: session?.token ? `Bearer ${session?.token}` : "",
-      refresh_token: session?.refresh_token,
+      // refresh_token: session?.refresh_token,
     },
   };
 });

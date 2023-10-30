@@ -35,19 +35,19 @@ export const EditProfileInfo: React.FC<IProps> = ({profile, setModal}) => {
 
   const FileInputHandler = async () =>
   {
-    const result: any = await useApImageDataURI(profilePic.current.files[0], 600000);
-    if(result?.data)
-    {
-      setAvatar({ avatar: result?.data})
-      setIsAvatarLoading(true)
-      setTimeout(() => { setIsAvatarLoading(false) }, 3000)
-      setIsAvatarSelected(true)
-    }
-    else
-    {
-      errorMsg("Error", result?.error)
-      profileInputForm.current.reset()
-    }
+    // const result: any = await useApImageDataURI(profilePic?.current.files[0], 600000);
+    // if(result?.data)
+    // {
+    //   setAvatar({ avatar: result?.data})
+    //   setIsAvatarLoading(true)
+    //   setTimeout(() => { setIsAvatarLoading(false) }, 3000)
+    //   setIsAvatarSelected(true)
+    // }
+    // else
+    // {
+    //   errorMsg("Error", result?.error)
+    //   profileInputForm.current.reset()
+    // }
   }
 
   const clearPicHandler = () =>
@@ -60,44 +60,44 @@ export const EditProfileInfo: React.FC<IProps> = ({profile, setModal}) => {
 
   const uploadDetails = () =>
   {
-    const fields = [ avatar, professionalHeadline, hourlyRate, summary ]
-    const filterFields = fields.filter(field => field !== null)
-    console.log(filterFields);
+    // const fields = [ avatar, professionalHeadline, hourlyRate, summary ]
+    // const filterFields = fields.filter(field => field !== null)
+    // console.log(filterFields);
     
-    if (filterFields.length === 0)
-    {
-      errorMsg("Error", "Enter at least one field to save changes.")
-    }
-    else
-    {
-      let variables
-      filterFields.forEach(item => {
-        variables = { ...variables, ...item }
-      })
-      updateProfile({ variables : {
-        profile: variables
-      }})
-      .then((val) => 
-      {
-        successMsg('Success', 'Changes Saved')
-        setTimeout(() => {
-          closeModal()
-        }, 1000);
-      })
-      .catch((err) => errorMsg('Error', err.message))
-    }
+    // if (filterFields.length === 0)
+    // {
+    //   errorMsg("Error", "Enter at least one field to save changes.")
+    // }
+    // else
+    // {
+    //   let variables
+    //   filterFields.forEach(item => {
+    //     variables = { ...variables, ...item }
+    //   })
+    //   updateProfile({ variables : {
+    //     profile: variables
+    //   }})
+    //   .then((val) => 
+    //   {
+    //     successMsg('Success', 'Changes Saved')
+    //     setTimeout(() => {
+    //       closeModal()
+    //     }, 1000);
+    //   })
+    //   .catch((err) => errorMsg('Error', err.message))
+    // }
   }
 
   const closeModal = () => 
   {
-    setModal({ open: false })
-    genForm.current.reset()
-    setProfessionalHeadline(null)
-    setHourlyRate(null)
-    setSummary(null)
-    setAvatar(null)
-    setIsAvatarSelected(false)
-    setIsAvatarLoading(false)
+    // setModal({ open: false })
+    // genForm.current.reset()
+    // setProfessionalHeadline(null)
+    // setHourlyRate(null)
+    // setSummary(null)
+    // setAvatar(null)
+    // setIsAvatarSelected(false)
+    // setIsAvatarLoading(false)
   }
 
 
@@ -118,7 +118,7 @@ export const EditProfileInfo: React.FC<IProps> = ({profile, setModal}) => {
             {
               isAvatarSelected ? 
               <div>
-                <Image alt='' width='384px' height='320px' src={avatar.avatar}/>
+                {/* <Image alt='' width='384px' height='320px' src={avatar.avatar}/> */}
                 <button onClick={clearPicHandler} className='mt-2 py-1 px-2 flex bg-skin-accent text-white rounded items-center justify-center gap-1'>
                   Clear Photo
                   <CloseOutlined className='text-md'/>
@@ -143,8 +143,10 @@ export const EditProfileInfo: React.FC<IProps> = ({profile, setModal}) => {
                   <path d="M12 9a3.75 3.75 0 100 7.5A3.75 3.75 0 0012 9z" />
                   <path fillRule="evenodd" d="M9.344 3.071a49.52 49.52 0 015.312 0c.967.052 1.83.585 2.332 1.39l.821 1.317c.24.383.645.643 1.11.71.386.054.77.113 1.152.177 1.432.239 2.429 1.493 2.429 2.909V18a3 3 0 01-3 3h-15a3 3 0 01-3-3V9.574c0-1.416.997-2.67 2.429-2.909.382-.064.766-.123 1.151-.178a1.56 1.56 0 001.11-.71l.822-1.315a2.942 2.942 0 012.332-1.39zM6.75 12.75a5.25 5.25 0 1110.5 0 5.25 5.25 0 01-10.5 0zm12-1.5a.75.75 0 100-1.5.75.75 0 000 1.5z" clipRule="evenodd"/>
                 </svg>
-                <form ref={profileInputForm}>
-                  <input type="file" className='w-full h-full absolute left-0 top-0 opacity-0' onInput={FileInputHandler} ref={profilePic}/>
+                {/* ref={profileInputForm} */}
+                <form>
+                {/* ref={profilePic} */}
+                  <input type="file" className='w-full h-full absolute left-0 top-0 opacity-0' onInput={FileInputHandler}/>
                 </form>
                 </div>
               </button>
@@ -152,22 +154,23 @@ export const EditProfileInfo: React.FC<IProps> = ({profile, setModal}) => {
           </div>
         }
 
-        <form ref={genForm}>
+{/* ref={genForm} */}
+        <form>
         <div className='ml-5 flex flex-col justify-between'>
           <div className='flex mb-3'>
             <div className='mr-3'>
               <p className='mb-1'>Professional Headline</p>
-              <input type="text" onChange={(e) => setProfessionalHeadline({professionalHeadline: e.target.value})}  className='w-64 border rounded p-3 h-10' />
+              {/* <input type="text" onChange={(e) => setProfessionalHeadline({professionalHeadline: e.target.value})}  className='w-64 border rounded p-3 h-10' /> */}
             </div>
             <div>
               <p className='mb-1'>Hourly Rate - USD Per Hour</p>
-              <input type="number" onChange={(e) => setHourlyRate({hourlyRate: parseInt(e.target.value)})} className='w-64 border p-3 h-10' />
+              {/* <input type="number" onChange={(e) => setHourlyRate({hourlyRate: parseInt(e.target.value)})} className='w-64 border p-3 h-10' /> */}
             </div>
           </div>
 
           <div className='mt-1'>
             <p className='mb-2'>Summary</p>
-            <textarea onChange={(e) => setSummary({summary: e.target.value})} className='border w-full rounded p-3 h-52 resize-none'></textarea>
+            {/* <textarea onChange={(e) => setSummary({summary: e.target.value})} className='border w-full rounded p-3 h-52 resize-none'></textarea> */}
           </div>
         </div>
         </form>

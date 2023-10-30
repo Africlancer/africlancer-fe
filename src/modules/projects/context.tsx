@@ -23,18 +23,18 @@ interface IProjectState {
 }
 
 const ProjectContext = React.createContext<IProjectState>({
-    hasBiddingEnded: null,
+    hasBiddingEnded: false,
     status: null,
     loading: false,
-    daysLeft: null,
+    daysLeft: 0,
     loadingText: "",
     projects: null,
     activeProject: {},
     createProject(project) {
-      return null;
+      return null as any;
     },
     NewProject() {},
-    updateProject(id, project) {return null},
+    updateProject(id, project) {return null as any},
     fetchProject(query) {},
     fetchAllProjects(query, fullSearch) {},
 });
@@ -56,9 +56,9 @@ const ProjectContextProvider: React.FC<IProps> = ({ children, notificationMsg })
     const session:any = useSession()
     const [projects, setProjects] = useState(null)
     const [activeProject, setActiveProject] = useState([])
-    const [hasBiddingEnded, setHasBiddingEnded] = useState<boolean>()
-    const [daysLeft, setDaysLeft] = useState<number>()
-    const [status, setStatus] = useState<string>(null)
+    const [hasBiddingEnded, setHasBiddingEnded] = useState<boolean>(false)
+    const [daysLeft, setDaysLeft] = useState<number>(0)
+    const [status, setStatus] = useState<string>("")
 
     const fetchAllProjectsQuery = useFindAllProjects()
     const fetchProjectQuery = useFindProject()

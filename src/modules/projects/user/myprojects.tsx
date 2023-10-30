@@ -105,27 +105,27 @@ export const MyProjectsPage = () => {
                         <tbody>
                             {
                                 projects?.map((project) => {
-                                    let myDate = new Date( project.endDate )
+                                    let myDate = new Date( (project as any)?.endDate )
                                     let dateStr = myDate.getFullYear() + " - " + (myDate.getMonth() + 1) + " - " + 
                                     myDate.getDate()
                                 
                                     return (
-                                        <tr className="" key={project._id}>
-                                        <td className="whitespace-nowrap px-6 py-4">{project.title}</td>
+                                        <tr className="" key={(project as any)?._id}>
+                                        <td className="whitespace-nowrap px-6 py-4">{(project as any)?.title}</td>
                                         <td className="whitespace-nowrap px-6 py-4"></td>
                                         <td className="whitespace-nowrap px-6 py-4"></td>
-                                        <td className="whitespace-nowrap px-6 py-4">${project.minBudget} - {project.maxBudget}</td>
+                                        <td className="whitespace-nowrap px-6 py-4">${(project as any)?.minBudget} - {(project as any)?.maxBudget}</td>
                                         <td className="whitespace-nowrap px-6 py-4">{
-                                            project.type === projectPaymentType.fixed ? 'Fixed' : 'Hourly'
+                                            (project as any)?.type === projectPaymentType.fixed ? 'Fixed' : 'Hourly'
                                         }</td>
                                         <td className="whitespace-nowrap px-6 py-4">{dateStr}</td>
                                         <td className="whitespace-nowrap px-6 py-4">{
-                                            project.status === projectBidStatus.open ?
-                                            'Open' : project.status === projectBidStatus.close ?
+                                            (project as any)?.status === projectBidStatus.open ?
+                                            'Open' : (project as any)?.status === projectBidStatus.close ?
                                             'Closed' : 'Completed'
                                         }</td>
                                         <td className="whitespace-nowrap px-6 py-4">
-                                          <Link href={`/manage/projects/project/${project._id}`}>
+                                          <Link href={`/manage/projects/project/${(project as any)?._id}`}>
                                               <ApButton outline> 
                                                 Edit
                                                 <EditIcon/> 

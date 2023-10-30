@@ -46,7 +46,7 @@ export const ProjectItem = ({project, length}) => {
                       <div className='flex mt-5 items-center gap-2'>
                           {
                             project?.skills.map((skill, i) => (
-                              <p>
+                              <p key={i}>
                                 <span className='bg-gray-200 text-gray-900 text-sm py-1 px-3 rounded-md'>{skill}</span>
                                 {
                                   project?.skills[i+1] ? <span className='ml-2'>|</span> : <></>

@@ -43,7 +43,7 @@ export const MyGroupsPage = () => {
     <div>
         <Navbar/>
         <SubMenu items={items} currentPage={currentTab}/>
-        <div className='pt-[100px]'>
+        {/* <div className='pt-[100px]'>
             <div className='relative h-80 w-full bg-browse-hero-pattern bg-center bg-cover'>
                 <div className='absolute p-10 h-full w-full bg-black/40 text-white flex flex-col justify-between'>
                     <div>
@@ -56,7 +56,7 @@ export const MyGroupsPage = () => {
                     </div>
                 </div>
             </div>
-{/* 
+
             <div className='pt-10 px-12 flex justify-between items-center'>
                 <div className='flex items-center gap-3'>
                     <p>Filter By</p>
@@ -73,7 +73,7 @@ export const MyGroupsPage = () => {
                         </div>
                     </div>
                 </div>
-            </div> */}
+            </div>
 
             <div className='flex items-center justify-center pt-20 pb-20 h-full w-full gap-10'>
                 <div className="bg-white w-96 shadow-lg rounded-md ">
@@ -145,7 +145,7 @@ export const MyGroupsPage = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div> */}
 
         <Footer/>
     </div>

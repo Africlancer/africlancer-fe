@@ -28,7 +28,7 @@ export const EditProjectPage = ({id, edit}) => {
     const [current, setCurrent] = useState('details');
 
     useEffect(() => {
-        fetchProject({_id: id})
+        // fetchProject({_id: id})
         findBids({projectID: id}, session?.data?.user?._id)
         getTotalBids(id)
         getAverageBid(id)

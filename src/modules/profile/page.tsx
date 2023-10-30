@@ -8,7 +8,7 @@ Skills, Education } from "./components";
 import  { MenuProps } from 'antd';
 import { useQuery } from "@apollo/client";
 import { FIND_ONE_PROFILE } from "./gql/query";
-import { ProfileContext, useProfileContext } from "./context";
+import { useProfileContext } from "./context";
 import { useSession } from "next-auth/react";
 
 

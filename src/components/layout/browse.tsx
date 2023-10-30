@@ -46,7 +46,7 @@ const BrowseSubMenu = ({page}) =>
     useEffect(() => 
     {
       setSubMenuItems(items)
-    }, [items])
+    }, [])
 
     const onClick: MenuProps['onClick'] = (e) => {
         console.log('click ', e);

@@ -27,8 +27,8 @@ interface IProps
 
 export const Experience: React.FC<IProps> = ({ experiences }) => 
 {
-    const [modal, setModal] = useState<{ open: boolean }>();
-    const [updateModal, setUpdateModal] = useState<{ open: boolean, data?: any }>();
+    const [modal, setModal] = useState<{ open: boolean }>({open: false});
+    const [updateModal, setUpdateModal] = useState<{ open: boolean, data?: any }>({open: false});
 
     return (
         <>

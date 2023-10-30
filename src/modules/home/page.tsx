@@ -50,7 +50,7 @@ export const HomePage = () => {
   ];
 
   const theme = () => {
-    document.querySelector(".page").classList.toggle("theme-dark");
+    // document.querySelector(".page").classList.toggle("theme-dark");
   };
 
   return (

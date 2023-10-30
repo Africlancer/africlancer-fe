@@ -32,7 +32,7 @@ export const Details: React.FC<IProps> = ({skills, summary, details, isEdit, set
                 <div className='flex mt-5 items-center gap-2'>
                     {
                         skills?.map((skill, i) => (
-                        <p>
+                        <p key={i}>
                         <span className='bg-skin-accent text-white py-1 px-3 rounded-md'>{skill}</span>
                         {
                             skills[i+1] ? <span className='ml-2'>|</span> : <></>

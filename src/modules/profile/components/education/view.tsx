@@ -23,8 +23,8 @@ interface IProps
 
 export const Education: React.FC<IProps> = ({educations}) =>
 {
-    const [modal, setModal] = useState<{ open: boolean, data?: any }>();
-    const [updateModal, setUpdateModal] = useState<{ open: boolean, data?: any }>();
+    const [modal, setModal] = useState<{ open: boolean, data?: any }>({open: false});
+    const [updateModal, setUpdateModal] = useState<{ open: boolean, data?: any }>({open: false});
 
     return (
         <>

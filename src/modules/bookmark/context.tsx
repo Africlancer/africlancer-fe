@@ -4,27 +4,27 @@ import { IBookMark } from './model'
 
 interface IBookMarkState
 {
-    bookMarks: IBookMark[]
+    // bookMarks: IBookMark[]
     findBookMark: (query: IBookMark) => Promise<void>
-    updateBookMark: (_id: string, Bookmark: IBookMark) => Promise<void>
+    // updateBookMark: (_id: string, Bookmark: IBookMark) => Promise<void>
     createBookMark: (portfolio: IBookMark) => Promise<void>
-    deleteBookMark: (_id: string) => Promise<void>
+    // deleteBookMark: (_id: string) => Promise<void>
 }
 
 const BookmarkContext = React.createContext<IBookMarkState>({
-    bookMarks: [],
+    // bookMarks: [],
     findBookMark(query) {
-        return null
+        return null as any
     },
     createBookMark(portfolio) {
-        return null
+        return null as any
     },
-    deleteBookMark(_id) {
-        return null
-    },
-    updateBookMark(_id, Bookmark) {
-        return null
-    },
+    // deleteBookMark(_id) {
+    //     return null as any
+    // },
+    // updateBookMark(_id, Bookmark) {
+    //     return null as any
+    // },
 })
 
 const useBookMarkContext = () => {

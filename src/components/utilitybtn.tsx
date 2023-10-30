@@ -6,13 +6,13 @@ export const ApUtilityBtn = () => {
   useEffect(() =>
   {
     const page = document.querySelector('.page')
-    if(page.classList.contains('theme-dark'))
+    if(page?.classList.contains('theme-dark'))
     {
-      setIsDarkTheme(true)
+      // setIsDarkTheme(true)
     }
     else
     {
-      setIsDarkTheme(false)
+      // setIsDarkTheme(false)
     }    
   }, [])
 
@@ -20,13 +20,13 @@ export const ApUtilityBtn = () => {
   {
     if(isDarkTheme)
     {
-      document.querySelector('.page').classList.remove('theme-dark')
-      setIsDarkTheme(false)
+      // document.querySelector('.page').classList.remove('theme-dark')
+      // setIsDarkTheme(false)
     }
     else
     {
-      document.querySelector('.page').classList.add('theme-dark')
-      setIsDarkTheme(true)
+      // document.querySelector('.page').classList.add('theme-dark')
+      // setIsDarkTheme(true)
     }
   }
 

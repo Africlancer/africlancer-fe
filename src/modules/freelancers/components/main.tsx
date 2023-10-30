@@ -10,7 +10,7 @@ export const MainContent = () =>
   const { fetchFreelancersFilter, freelancers } = useFreelancersContext()
   useEffect(() => {    
     fetchFreelancersFilter({}, false)
-  },[])
+  })
    
   return(
     <div>
@@ -19,8 +19,8 @@ export const MainContent = () =>
             <p>Sort By</p>
         </div>
         {
-            freelancers ? freelancers.map(item => (
-                <FreelancerItem item={item}/>
+            freelancers ? freelancers.map((item, i) => (
+                <FreelancerItem key={i} item={item}/>
             )) : 
             <div className='flex items-center justify-center h-[200px]'>
                 <p className='flex items-center gap-3'>

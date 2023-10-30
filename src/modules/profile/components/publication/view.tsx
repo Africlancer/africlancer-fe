@@ -21,8 +21,8 @@ interface IProps
 
 export const Publication: React.FC<IProps> = ({publications}) => 
 {
-    const [modal, setModal] = useState<{ open: boolean }>();
-    const [updateModal, setUpdateModal] = useState<{ open: boolean, data?: any }>();
+    const [modal, setModal] = useState<{ open: boolean }>({open: false});
+    const [updateModal, setUpdateModal] = useState<{ open: boolean, data?: any }>({open: false});
 
     return (
         <>

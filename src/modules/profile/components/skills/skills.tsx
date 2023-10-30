@@ -11,7 +11,7 @@ interface IProps
 
 export const Skills: React.FC<IProps> = ({skills}) => 
 {
-    const [modal, setModal] = useState<{open: boolean}>()
+    const [modal, setModal] = useState<{open: boolean}>({open: false})
     
     return (
         <>

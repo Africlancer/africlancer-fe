@@ -22,8 +22,8 @@ interface IProps
 
 export const Qualifications: React.FC<IProps> = ({qualifications}) => 
 {
-    const [modal, setModal] = useState<{ open: boolean }>();
-    const [updateModal, setUpdateModal] = useState<{ open: boolean, data?: any }>();
+    const [modal, setModal] = useState<{ open: boolean }>({open: false});
+    const [updateModal, setUpdateModal] = useState<{ open: boolean, data?: any }>({open: false});
 
     return (
         <>

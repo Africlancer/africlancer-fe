@@ -4,7 +4,6 @@ import { notification } from "antd";
 export default function useApNotification() {
   const [api, contextHolder] = notification.useNotification();
   const show = (title: string, message: React.ReactNode, isError?: boolean) => {
-
     api.info({
       icon: (
         isError ? <CloseCircleFilled className="text-red-500"/>
