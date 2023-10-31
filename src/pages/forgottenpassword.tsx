@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react'
 
-import {ForgottenPasswordPage} from "../modules/auth/forgotten";
+import { ForgottenPasswordPage } from '../modules/auth/forgotten'
 
 const forgottenpassword = () => {
-  return <ForgottenPasswordPage/>;
-};
+  return <ForgottenPasswordPage />
+}
 
-export default forgottenpassword;
+export default forgottenpassword

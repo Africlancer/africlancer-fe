@@ -1,6 +1,6 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { ConfigProvider, MenuProps } from 'antd';
-import { Menu } from 'antd';
+import React, { useEffect, useLayoutEffect, useState } from 'react'
+import { ConfigProvider, MenuProps } from 'antd'
+import { Menu } from 'antd'
 
 const items: MenuProps['items'] = [
   {
@@ -45,35 +45,38 @@ const items: MenuProps['items'] = [
       },
     ],
   },
-];
+]
 
-export const SubMenu = ({items, currentPage}) => 
-{
-    const [current, setCurrent] = useState(currentPage);
-    const [subMenuItems, setSubMenuItems] = useState<MenuProps['items']>()
+export const SubMenu = ({ items, currentPage }) => {
+  const [current, setCurrent] = useState(currentPage)
+  const [subMenuItems, setSubMenuItems] = useState<MenuProps['items']>()
 
-    useEffect(() => 
-    {
-      setSubMenuItems(items)
-    }, [items])
+  useEffect(() => {
+    setSubMenuItems(items)
+  }, [items])
 
-    const onClick: MenuProps['onClick'] = (e) => {
-        console.log('click ', e);
-        setCurrent(e.key);
-    };
+  const onClick: MenuProps['onClick'] = (e) => {
+    console.log('click ', e)
+    setCurrent(e.key)
+  }
 
-    return (
-      <ConfigProvider
-        theme={
-          {
-            token: {
-              colorPrimary: 'white',
-              fontFamily: ''
-            }
-          }
-        }
-      >
-        <Menu className='bg-skin-submenu text-white shadow' onClick={onClick} style={{ paddingLeft: 20, position: 'fixed', marginTop: 55, width: '100%', zIndex: 20}} selectedKeys={[current]} mode="horizontal" items={subMenuItems} />
-      </ConfigProvider>
-    )
+  return (
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: 'white',
+          fontFamily: '',
+        },
+      }}
+    >
+      <Menu
+        className="bg-skin-submenu text-white shadow"
+        onClick={onClick}
+        style={{ paddingLeft: 20, position: 'fixed', marginTop: 55, width: '100%', zIndex: 20 }}
+        selectedKeys={[current]}
+        mode="horizontal"
+        items={subMenuItems}
+      />
+    </ConfigProvider>
+  )
 }

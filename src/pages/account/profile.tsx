@@ -1,24 +1,24 @@
-import { getSession } from "next-auth/react";
-import { ProfilePage } from "../../modules/profile/page";
+import { getSession } from 'next-auth/react'
+import { ProfilePage } from '../../modules/profile/page'
 
 const Profile = () => {
-  return <ProfilePage />;
-};
+  return <ProfilePage />
+}
 
-export default Profile;
+export default Profile
 
 export const getServerSideProps = async (context) => {
-  const session = await getSession(context);
-  
+  const session = await getSession(context)
+
   if (!session) {
     return {
       redirect: {
-        destination: "/signin",
+        destination: '/signin',
         permanent: false,
       },
-    };
+    }
   }
   return {
     props: {},
-  };
-};
+  }
+}

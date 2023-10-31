@@ -1,99 +1,163 @@
-import jwt from "jsonwebtoken";
-import NextAuth, { NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import { environment } from '@/src/environment'
+import { ClientError, gql, GraphQLClient } from 'graphql-request'
+import jwt from 'jsonwebtoken'
+import NextAuth from 'next-auth'
+import { JWT } from 'next-auth/jwt'
+import CredentialProvider from 'next-auth/providers/credentials'
 
-const authOptions: NextAuthOptions = {
+const apolloClient = new GraphQLClient(environment.Uri.Graphql, {
+  credentials: 'include',
+})
+
+const SIGN_IN = gql`
+  mutation UserSignIn($user: UserSignIn!) {
+    userSignIn(user: $user) {
+      access_token
+      refresh_token
+      details {
+        _id
+        username
+        email
+        firstName
+        lastName
+      }
+    }
+  }
+`
+
+const FIND_USER = gql`
+  query FindOneUser {
+    findOneUser {
+      _id
+      username
+      email
+      firstName
+      lastName
+    }
+  }
+`
+
+export default NextAuth({
   secret: process.env.TOKEN_SECRET,
-
   jwt: {
     secret: process.env.TOKEN_SECRET,
+    async encode(data: any) {
+      const { secret, token, user } = data
+      const jwtClaims = {
+        user: token.name,
+        sub: token.sub,
+        roles: ['user'],
+      }
+
+      const encodedToken = jwt.sign(jwtClaims, secret, {
+        expiresIn: '60 days',
+        algorithm: 'HS512',
+      })
+      return encodedToken
+    },
+    async decode(data: any) {
+      const { secret, token, maxAge } = data
+      const verify = jwt.verify(token, secret) as JWT
+
+      return verify
+    },
   },
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
     maxAge: parseInt(process.env.TOKEN_MAX_AGE as string),
   },
   callbacks: {
     async jwt(params: any) {
-      const { token } = params;
+      const { token, user, account } = params
+      // console.log(params);
 
-      console.log(params, "JWT TOKEN");
-      return { ...token, user: params?.user?.user };
+      if (account?.accessToken) {
+        token.accessToken = account.accessToken
+      }
+      if (user?.roles) {
+        token.roles = user.roles.toString()
+      }
+      return token
     },
-    //TODO use existing token or generate new token withouth calling user api by id.
     async session(params: any) {
-      const { session, token } = params;
-      const user = await getUser(token.sub);
-      session.user = user;
-      session.refresh_token = user.refresh_token;
-      session.token = jwt.sign(
+      const { session, token } = params
+      // console.log(`Session 1, ${JSON.stringify(token)}`);
+      const encodedToken = jwt.sign(
+        JSON.stringify(token),
+        'gie1msfkgjhmch28no26o2ovqhsj9e28' as any,
         {
-          user: user.username,
-          sub: token.sub,
-          roles: user.roles,
+          algorithm: 'HS256',
         },
-        (process as any)?.env?.TOKEN_SECRET,
-        {
-          expiresIn: "15m",
-        }
-      );
-      return session;
+      )
+      // console.log(`Session 2, ${encodedToken}`);
+      const user: any = session?.user?._id
+        ? { account: session?.user }
+        : await apolloClient
+            .setHeader('authorization', `Bearer ${encodedToken}`)
+            .request(FIND_USER)
+      // console.log(user);
+
+      // console.log(`Session 3, ${JSON.stringify(user)}`);
+      session.id = token?.sub
+      session.token = encodedToken
+      // session.brandId = user?.user?.brandId;
+      session.user = { ...user?.findOneUser, name: user?.findOneUser?.username }
+      // console.log(`Session 4, ${JSON.stringify(session)}`);
+      return Promise.resolve(session)
     },
   },
   providers: [
-    CredentialsProvider({
-      type: "credentials",
+    CredentialProvider({
+      name: 'credentials',
+      type: 'credentials',
       credentials: {
-        username: { label: "Email", type: "text", placeholder: "Email" },
-        password: { label: "Password", type: "password" },
+        email: { label: 'Email', type: 'text', placeholder: 'jsmith' },
+        password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials, req) {
-        const { username, password } = credentials as {
-          username: string;
-          password: string;
-        };
-        const rs = await fetch(`${process.env.BASE_API}/auth/signin`, {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
+      async authorize(credentials: any, req: any) {
+        const variables = {
+          user: {
+            username: credentials.username,
+            password: credentials.password,
           },
-          method: "POST",
-          body: JSON.stringify({ username, password }),
-        })
-          .then((rs) => rs.json())
-          .then((rs) => {
-            // console.log(rs);
-            
+        }
+        return await apolloClient
+          .request(SIGN_IN, variables)
+          .then((res: any) => {
+            const { details } = res.userSignIn
             return {
-              ...rs,
-              id: rs?.details?._id,
-              token: rs.access_token,
-              user: { ...rs?.details },
-            };
-          });
-
-        if (rs?.error) throw new Error(rs.message);
-
-        // console.log(rs, "RESULT..");
-        return rs;
+              name: credentials.username,
+              id: details._id,
+              email: details.email,
+              user: details,
+            }
+          })
+          .catch((err) => {
+            const errorResult = typeof err === 'string' ? { error: err } : err
+            const error: any = new ClientError(
+              { ...errorResult },
+              { query: SIGN_IN as any, variables },
+            )
+            // console.log(JSON.stringify(error.response), "apolloClient.request");
+            throw error.response.response?.errors[0]
+          })
       },
     }),
   ],
-};
-
-export default NextAuth(authOptions);
+})
 
 const getUser = async (userId: string) => {
   const rs = await fetch(
-    `${process.env.BASE_API}/user/retrieve-by-app/${userId}/${process.env.AP_ACCESS_TOKEN}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/user/retrieve-by-app/${userId}/${process.env.AP_ACCESS_TOKEN}`,
     {
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
-      method: "GET",
-    }
-  ).then((rs) => rs.json());
+      method: 'GET',
+    },
+  )
 
-  // console.log(rs); 
-  return rs;
-};
+  // console.log(rs);
+  return rs
+}

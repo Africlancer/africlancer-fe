@@ -1,9 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx}",
-    "./src/modules/**/*.{js,ts,jsx,tsx}",
-    "./src/components/**/*.{js,ts,jsx,tsx}",
+    './src/pages/**/*.{js,ts,jsx,tsx}',
+    './src/modules/**/*.{js,ts,jsx,tsx}',
+    './src/components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
@@ -11,8 +11,7 @@ module.exports = {
         'project-hero-pattern': "url('../../public/abs.jpg')",
         'browse-hero-pattern': "url('../../public/b-h.jpg')",
       },
-      screens: 
-      {
+      screens: {
         cs: '1300px',
         cs_1: '880px',
         cs2: '1250px',
@@ -21,38 +20,33 @@ module.exports = {
         cs5: '850px',
         cs6: '705px',
       },
-      width:
-      {
+      width: {
         cusw: '35rem',
         cusw2: '40rem',
-        cusw3: '50rem'
+        cusw3: '50rem',
       },
-      colors: 
-      {
+      colors: {
         overlay: '#0000004d',
         overlay2: '#00000080',
-        footer: '#202020'
+        footer: '#202020',
       },
-      fontSize:
-      {
+      fontSize: {
         cusf: ['2.70rem'],
         cusf2: ['1.3rem'],
-        cusf3: ['0.9rem']
+        cusf3: ['0.9rem'],
       },
-      textColor: 
-      {
+      textColor: {
         skin: {
-           base: 'var(--color-base)',
-           alt: 'var(--color-alt)',
-           muted: 'var(--color-muted)',
-           accent: 'var(--color-accent)',
-           inverted: 'var(--color-inverted)',
-           input: 'var(--color-input)'
-        }
+          base: 'var(--color-base)',
+          alt: 'var(--color-alt)',
+          muted: 'var(--color-muted)',
+          accent: 'var(--color-accent)',
+          inverted: 'var(--color-inverted)',
+          input: 'var(--color-input)',
+        },
       },
-     
-      backgroundColor: 
-      {
+
+      backgroundColor: {
         skin: {
           base: 'var(--color-base)',
           alt: 'var(--color-alt)',
@@ -61,16 +55,15 @@ module.exports = {
           inverted: 'var(--color-inverted)',
           input: 'var(--color-input)',
           nav: 'var(--color-nav)',
-          submenu: 'var(--color-submenu)'
-       }
+          submenu: 'var(--color-submenu)',
+        },
       },
-      borderColor:
-      {
+      borderColor: {
         skin: {
           border: 'var(--color-border)',
           accent: 'var(--color-accent)',
-        }
-      }
+        },
+      },
     },
   },
   plugins: [],

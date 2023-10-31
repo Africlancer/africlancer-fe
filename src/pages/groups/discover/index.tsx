@@ -2,7 +2,7 @@ import { DiscoverGroupsPage } from '@/src/modules/groups/discover/page'
 import React from 'react'
 
 const DiscoverGroups = () => {
-  return <DiscoverGroupsPage/>
+  return <DiscoverGroupsPage />
 }
 
 export default DiscoverGroups

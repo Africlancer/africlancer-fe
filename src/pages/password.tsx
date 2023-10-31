@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react'
 
-import { ResetPassword } from "../modules/auth/password";
+import { ResetPassword } from '../modules/auth/password'
 
 const password = () => {
-  return <ResetPassword />;
-};
+  return <ResetPassword />
+}
 
-export default password;
+export default password

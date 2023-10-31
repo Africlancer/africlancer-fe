@@ -1,9 +1,9 @@
 import React from 'react'
 
-import {EmailTemplatePage} from "../modules/auth/email";
+import { EmailTemplatePage } from '../modules/auth/email'
 
 const email = () => {
-  return <EmailTemplatePage/>;
-};
+  return <EmailTemplatePage />
+}
 
-export default email;
+export default email

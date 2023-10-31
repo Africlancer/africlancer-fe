@@ -1,5 +1,4 @@
-export interface IBookMark
-{
-    userID: string,
-    projectID: string
+export interface IBookMark {
+  userID: string
+  projectID: string
 }

@@ -2,7 +2,7 @@ import { MyProjectsPage } from '@/src/modules'
 import React from 'react'
 
 const MyProjects = () => {
-  return <MyProjectsPage/>
+  return <MyProjectsPage />
 }
 
 export default MyProjects

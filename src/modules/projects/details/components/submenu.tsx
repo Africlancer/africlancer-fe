@@ -1,6 +1,6 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { ConfigProvider, MenuProps } from 'antd';
-import { Menu } from 'antd';
+import React, { useEffect, useLayoutEffect, useState } from 'react'
+import { ConfigProvider, MenuProps } from 'antd'
+import { Menu } from 'antd'
 
 const items: MenuProps['items'] = [
   {
@@ -11,36 +11,38 @@ const items: MenuProps['items'] = [
     label: 'Proposals',
     key: 'proposals',
   },
-];
+]
 
-export const ProjectDetailsSubMenu = ({setCurrent, current}) => 
-{
-   // const [current, setCurrent] = useState('details');
-    const [subMenuItems, setSubMenuItems] = useState<MenuProps['items']>()
+export const ProjectDetailsSubMenu = ({ setCurrent, current }) => {
+  // const [current, setCurrent] = useState('details');
+  const [subMenuItems, setSubMenuItems] = useState<MenuProps['items']>()
 
-    useEffect(() => 
-    {
-      setSubMenuItems(items)
-    }, [items])
+  useEffect(() => {
+    setSubMenuItems(items)
+  }, [items])
 
-    const onClick: MenuProps['onClick'] = (e) => {
-        console.log('click ', e);
-        setCurrent(e.key);
-    };
+  const onClick: MenuProps['onClick'] = (e) => {
+    console.log('click ', e)
+    setCurrent(e.key)
+  }
 
-    return (
-      <ConfigProvider
-        theme={
-          {
-            token: {
-              colorPrimary: '#22c55e',
-              fontFamily: ''
-            }
-          }
-        }
-      >
-        <Menu className='bg-white text-inverted shadow rounded-t-md' onClick={onClick} 
-        style={{ paddingLeft:10, paddingRight:10, width: '100%'}} selectedKeys={[current]} mode="horizontal" items={items} />
-      </ConfigProvider>
-    )
+  return (
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: '#22c55e',
+          fontFamily: '',
+        },
+      }}
+    >
+      <Menu
+        className="bg-white text-inverted shadow rounded-t-md"
+        onClick={onClick}
+        style={{ paddingLeft: 10, paddingRight: 10, width: '100%' }}
+        selectedKeys={[current]}
+        mode="horizontal"
+        items={items}
+      />
+    </ConfigProvider>
+  )
 }

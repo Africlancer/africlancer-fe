@@ -1,9 +1,9 @@
 import React from 'react'
 
-import {VerifyEmail} from "../modules/auth/verification";
+import { VerifyEmail } from '../modules/auth/verification'
 
-const  verification = () => {
-  return <VerifyEmail/>;
-};
+const verification = () => {
+  return <VerifyEmail />
+}
 
-export default verification;
+export default verification

@@ -1,49 +1,48 @@
 import { Navbar, SubMenu } from '@/src/components'
-import { ApSearchInput } from '@/src/components/input/search';
+import { ApSearchInput } from '@/src/components/input/search'
 import ApSubMenu from '@/src/components/submenu'
-import { MenuProps } from 'antd';
-import Image from 'next/image';
-import Link from 'next/link';
+import { MenuProps } from 'antd'
+import Image from 'next/image'
+import Link from 'next/link'
 import React, { useState } from 'react'
 import Onboarding from '../../../assets/images/onboarding.jpg'
 import Announce from '../../../assets/images/announce.png'
 import NG from '../../../assets/images/ng.png'
 import Logo from '../../../../public/logo.png'
-import { Footer } from '@/src/components/footer';
+import { Footer } from '@/src/components/footer'
 import { GlobalOutlined } from '@ant-design/icons'
 
 const items: MenuProps['items'] = [
-    {
-      label: (
-        <div className='py-[2.8px]'>
-          <Link href="/groups/my-groups">
-            <span className='text-base'>My Groups</span>
-          </Link>
-        </div>
-      ),
-      key: 'my',
-    },
-    {
-      label: (
-          <div className='py-[2.8px]'>
-          <Link href="/groups/discover">
-            <span className='text-base'>Discover</span>
-          </Link>
-          </div>
-      ),
-      key: 'discover',
-    },
-  ];
+  {
+    label: (
+      <div className="py-[2.8px]">
+        <Link href="/groups/my-groups">
+          <span className="text-base">My Groups</span>
+        </Link>
+      </div>
+    ),
+    key: 'my',
+  },
+  {
+    label: (
+      <div className="py-[2.8px]">
+        <Link href="/groups/discover">
+          <span className="text-base">Discover</span>
+        </Link>
+      </div>
+    ),
+    key: 'discover',
+  },
+]
 
 export const DiscoverGroupsPage = () => {
-
-  const [currentTab, setCurrentTab] = useState<string>("discover") 
+  const [currentTab, setCurrentTab] = useState<string>('discover')
 
   return (
     <div>
-        <Navbar/>
-        <SubMenu items={items} currentPage={currentTab}/>
-        {/* <div className='pt-[100px]'>
+      <Navbar />
+      <SubMenu items={items} currentPage={currentTab} />
+      {/* <div className='pt-[100px]'>
             <div className='relative h-80 w-full bg-browse-hero-pattern bg-center bg-cover'>
                 <div className='absolute p-10 h-full w-full bg-black/40 text-white flex flex-col justify-between'>
                     <div>
@@ -159,7 +158,7 @@ export const DiscoverGroupsPage = () => {
             </div>
         </div> */}
 
-        <Footer/>
+      <Footer />
     </div>
   )
 }

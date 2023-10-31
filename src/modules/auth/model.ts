@@ -1,9 +1,9 @@
 export interface IUser {
-  firstName: string;
-  lastName: string;
-  email: string;
-  username: string;
-  password: string;
+  firstName: string
+  lastName: string
+  email: string
+  username: string
+  password: string
 }
 
 export const bgImages = [
@@ -24,5 +24,5 @@ export const bgImages = [
   'https://img.freepik.com/free-vector/gradient-geometric-wallpaper_52683-55729.jpg?w=740&t=st=1675123176~exp=1675123776~hmac=90c353ca2cd062f82e66084e9c9c25532e9d3db319e5d3ce013efc8b550ec0db',
   'https://img.freepik.com/free-vector/realistic-polygonal-background_52683-60158.jpg?w=740&t=st=1675123194~exp=1675123794~hmac=53cdec64095276351b0f01ca74bd3283a0eec75553811fe28dd297c6a160a78d',
   'https://img.freepik.com/free-vector/3d-triangle-background-with-vivid-colors_23-2148392916.jpg?w=740&t=st=1675123209~exp=1675123809~hmac=f5887c778e42296bb5e4022fa1ede9ee0b5baf9caaf84ed843881586a89ca106',
-  'https://img.freepik.com/free-vector/3d-wave-design-blue-background-blue-yellow-abstract-wave-background_331749-345.jpg?w=826&t=st=1675123255~exp=1675123855~hmac=d6acfb53fd29a75542686294626785cbf1f13da8c66a1a9459701ed3b4aa414b'
+  'https://img.freepik.com/free-vector/3d-wave-design-blue-background-blue-yellow-abstract-wave-background_331749-345.jpg?w=826&t=st=1675123255~exp=1675123855~hmac=d6acfb53fd29a75542686294626785cbf1f13da8c66a1a9459701ed3b4aa414b',
 ]

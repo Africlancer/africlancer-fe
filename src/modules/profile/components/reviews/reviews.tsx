@@ -1,21 +1,29 @@
 import React from 'react'
 import Image from 'next/image'
 
-export const Reviews = () =>
-{
-    return(
-        <div className='bg-skin-base col-span-2 shadow-xl w-full rounded-xl'>
-        <div className='border-skin-border border-b px-6 py-3 flex items-center'>
-            <h1 className='font-bold text-xl mr-3  text-skin-inverted'>Reviews</h1>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-skin-muted">
-                <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clipRule="evenodd" />
-            </svg>
-        </div> 
+export const Reviews = () => {
+  return (
+    <div className="bg-skin-base col-span-2 shadow-xl w-full rounded-xl">
+      <div className="border-skin-border border-b px-6 py-3 flex items-center">
+        <h1 className="font-bold text-xl mr-3  text-skin-inverted">Reviews</h1>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="w-6 h-6 text-skin-muted"
+        >
+          <path
+            fillRule="evenodd"
+            d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+            clipRule="evenodd"
+          />
+        </svg>
+      </div>
 
-        <div className='h-80 flex items-center justify-center pb-8 cs4:p-4 pt-2 flex-col'>
-            <Image width={250} height={250} src="/no-reviews.png" alt='no-reviews'/>
-            <p className='text-skin-inverted'>No reviews to see here!</p>
-        </div>                 
+      <div className="h-80 flex items-center justify-center pb-8 cs4:p-4 pt-2 flex-col">
+        <Image width={250} height={250} src="/no-reviews.png" alt="no-reviews" />
+        <p className="text-skin-inverted">No reviews to see here!</p>
+      </div>
     </div>
-    )
+  )
 }

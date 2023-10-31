@@ -1,57 +1,55 @@
-import React from "react";
-import { NavbarAuth, SubMenu } from "@/src/components/modal";
-import { Header, SecondSection, ThirdSection } from "./components";
-import { Footer } from "@/src/components/footer";
-import type { MenuProps } from "antd";
-import Image from "next/image";
-import { ProjectsPreview } from "./components/projectspreview";
-import { getSession, useSession } from "next-auth/react";
+import React from 'react'
+import { NavbarAuth, SubMenu } from '@/src/components/modal'
+import { Header, SecondSection, ThirdSection } from './components'
+import { Footer } from '@/src/components/footer'
+import type { MenuProps } from 'antd'
+import Image from 'next/image'
+import { ProjectsPreview } from './components/projectspreview'
+import { getSession, useSession } from 'next-auth/react'
 
 export const HomePage = () => {
+  const session = useSession()
 
-  const session = useSession();
+  console.log(session)
 
-  console.log(session);
-
-
-  const items: MenuProps["items"] = [
+  const items: MenuProps['items'] = [
     {
-      label: "Home",
-      key: "home",
+      label: 'Home',
+      key: 'home',
     },
     {
       label: <p className="text-skin-inverted">Find Jobs</p>,
-      key: "find-jobs",
+      key: 'find-jobs',
     },
     {
-      label: "Hire Freelancers",
-      key: "hire-freelancers",
+      label: 'Hire Freelancers',
+      key: 'hire-freelancers',
     },
     {
-      label: "Get Ideas",
-      key: "get-ideas",
+      label: 'Get Ideas',
+      key: 'get-ideas',
     },
     {
-      label: "About",
-      key: "about",
+      label: 'About',
+      key: 'about',
     },
     {
-      label: "Resources",
-      key: "resources",
+      label: 'Resources',
+      key: 'resources',
     },
     {
-      label: "How It Works",
-      key: "how-it-works",
+      label: 'How It Works',
+      key: 'how-it-works',
     },
     {
-      label: "Browse Jobs",
-      key: "browse-jobs",
+      label: 'Browse Jobs',
+      key: 'browse-jobs',
     },
-  ];
+  ]
 
   const theme = () => {
     // document.querySelector(".page").classList.toggle("theme-dark");
-  };
+  }
 
   return (
     <div className="">
@@ -70,8 +68,8 @@ export const HomePage = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 {
   /* <button onClick={theme} title="Contact Sale" className="fixed z-50 bottom-10 right-0 bg-skin-primary w-16

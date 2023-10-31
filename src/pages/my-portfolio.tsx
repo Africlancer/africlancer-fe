@@ -1,12 +1,7 @@
 import React from 'react'
 
-const MyPortfolio = () => 
-{
-    return (
-        <div>
-            
-        </div>
-    );
+const MyPortfolio = () => {
+  return <div></div>
 }
- 
-export default MyPortfolio;
+
+export default MyPortfolio
