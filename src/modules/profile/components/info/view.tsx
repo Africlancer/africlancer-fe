@@ -3,18 +3,17 @@ import React, { useState } from 'react'
 import { IProfile } from '../../model'
 import { EditProfileInfo } from './edit'
 import { Image, Skeleton } from 'antd'
-import { SectionThree, SectionTwo } from './components'
+import { InfoSectionOne, InfoSectionTwo } from './components'
 import { useSession } from 'next-auth/react'
+import { useProfileContext } from '../../context'
 
 interface IProps {
-  profile: IProfile
+  onEdit: () => void
 }
 
-export const ProfileInfo: React.FC<IProps> = ({ profile }) => {
-  const [modal, setModal] = useState<{ open: boolean }>({ open: false })
+export const ProfileInfo: React.FC<IProps> = ({ onEdit }) => {
   const sess: any = useSession()
-
-  console.log(sess)
+  const { profile } = useProfileContext()
 
   return (
     <>
@@ -27,10 +26,10 @@ export const ProfileInfo: React.FC<IProps> = ({ profile }) => {
           )}
 
           {profile?.professionalHeadline ? (
-            <SectionTwo
-              summary={profile.summary}
+            <InfoSectionOne
+              summary={profile.summary as any}
               professionalHeadline={profile.professionalHeadline}
-              recommendations={profile.recommendations}
+              recommendations={profile.recommendations as any}
               email={sess?.data?.user?.email}
               name={sess?.data?.user?.name}
             />
@@ -41,26 +40,16 @@ export const ProfileInfo: React.FC<IProps> = ({ profile }) => {
           )}
         </div>
         {profile ? (
-          <SectionThree
-            location={profile?.location}
-            flagURL={profile?.flagURL}
-            hourlyRate={profile?.hourlyRate}
-            setModal={setModal}
+          <InfoSectionTwo
+            location={profile?.location as any}
+            flagURL={profile?.flagURL as any}
+            hourlyRate={profile?.hourlyRate as any}
+            onEdit={onEdit}
           />
         ) : (
           <></>
         )}
       </div>
-
-      <ApModal
-        open={modal?.open}
-        onDismiss={() => {
-          setModal({ open: false })
-        }}
-        width={970}
-      >
-        <EditProfileInfo profile={profile} setModal={setModal} />
-      </ApModal>
     </>
   )
 }

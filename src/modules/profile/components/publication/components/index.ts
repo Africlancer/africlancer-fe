@@ -1,1 +1,1 @@
-export * from './publicationView'
+export * from './item'

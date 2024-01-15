@@ -61,17 +61,15 @@ const useBiddingContext = () => {
 }
 
 interface IProps {
-  notificationMsg: any
   children: React.ReactNode
 }
 
-const BiddingContextProvider: React.FC<IProps> = ({ notificationMsg, children }) => {
+const BiddingContextProvider: React.FC<IProps> = ({ children }) => {
   const createBidQuery = useCreateBid((rs) => {})
   const deleteBidQuery = useDeleteBid((rs) => {})
   const updateBidQuery = useUpdateBid((rs) => {})
   const awardBidQuery = useAwardBid((rs) => {})
   const unawardBidQuery = useUnawardBid((rs) => {})
-
   const projectTotalBidsQuery = useTotalBids()
   const averageBidQuery = useAverageBid()
   const findOneBidQuery = useFindOneBid()
@@ -83,20 +81,21 @@ const BiddingContextProvider: React.FC<IProps> = ({ notificationMsg, children })
   const [userBid, setUserBid] = useState(null)
   const [awardedBids, setAwardedBids] = useState<any>([])
   const [unawardedBids, setUnawardedBids] = useState<any>([])
+  const { errorMsg, notificationContext, successMsg } = useApNotification()
 
   const createBid = async (bid, query, refetchFunc) => {
     setLoading(true)
     await createBidQuery[0]({ variables: { bid } })
       .then((rs) => {
         //console.log(rs)
-        notificationMsg?.successMsg('Successs', 'Your bid has been placed.')
+         successMsg('Successs', 'Your bid has been placed.')
         setLoading(false)
         refetchFunc({ query })
         getTotalBids(query.projectID)
         getAverageBid(query.projectID)
       })
       .catch((err) => {
-        notificationMsg?.errorMsg('Error', err.message)
+         errorMsg('Error', err.message)
         setLoading(false)
       })
   }
@@ -108,14 +107,14 @@ const BiddingContextProvider: React.FC<IProps> = ({ notificationMsg, children })
     })
       .then((rs) => {
         //console.log(rs)
-        notificationMsg?.successMsg('Successs', 'Your bid has been deleted.')
+         successMsg('Successs', 'Your bid has been deleted.')
         setLoading(false)
         setUserBid(null)
         getTotalBids(id)
         getAverageBid(id)
       })
       .catch((err) => {
-        notificationMsg?.errorMsg('Error', err.message)
+         errorMsg('Error', err.message)
         setLoading(false)
       })
   }
@@ -127,14 +126,14 @@ const BiddingContextProvider: React.FC<IProps> = ({ notificationMsg, children })
     })
       .then((rs) => {
         //console.log(rs)
-        notificationMsg?.successMsg('Success', 'Your bid has been updated.')
+         successMsg('Success', 'Your bid has been updated.')
         setLoading(false)
         refetchFunc({ query: refetchQuery })
         getTotalBids(refetchQuery.projectID)
         getAverageBid(refetchQuery.projectID)
       })
       .catch((err) => {
-        notificationMsg?.errorMsg('Error', err.message)
+         errorMsg('Error', err.message)
         setLoading(false)
       })
   }
@@ -145,12 +144,12 @@ const BiddingContextProvider: React.FC<IProps> = ({ notificationMsg, children })
       variables: { projectId, bidId },
     })
       .then((rs) => {
-        notificationMsg?.successMsg('Success', 'Bid has been awarded')
+         successMsg('Success', 'Bid has been awarded')
         setLoading(false)
         findBids({ projectID: projectId })
       })
       .catch((err) => {
-        notificationMsg?.errorMsg('Error', err.message)
+         errorMsg('Error', err.message)
         setLoading(false)
       })
   }
@@ -161,12 +160,12 @@ const BiddingContextProvider: React.FC<IProps> = ({ notificationMsg, children })
       variables: { projectId, bidId },
     })
       .then((rs) => {
-        notificationMsg?.successMsg('Success', 'Bid has been unawarded')
+         successMsg('Success', 'Bid has been unawarded')
         setLoading(false)
         findBids({ projectID: projectId })
       })
       .catch((err) => {
-        notificationMsg?.errorMsg('Error', err.message)
+         errorMsg('Error', err.message)
         setLoading(false)
       })
   }
@@ -237,7 +236,10 @@ const BiddingContextProvider: React.FC<IProps> = ({ notificationMsg, children })
         unawardedBids,
       }}
     >
-      {children}
+      <>
+        {notificationContext}
+        {children}
+      </>
     </BiddingContext.Provider>
   )
 }

@@ -3,24 +3,17 @@ import { ApGlobeIcon, ArrowRightIcon } from '@/src/components/icons'
 import { ApModal } from '@/src/components/modal'
 import React, { useState } from 'react'
 import { EditPublication } from './edit'
-import { PublicationView } from './components'
+import { PublicationItem } from './components'
 import { Skeleton } from 'antd'
-import { UpdatePublication } from './update'
-
-type publication = {
-  title: string
-  publisher: string
-  summary: string
-  _id: string
-}
+import { useProfileContext } from '../../context'
+import { IPublication } from '../../model'
 
 interface IProps {
-  publications: publication[]
+  onEdit: (publication?: IPublication) => void
 }
 
-export const Publication: React.FC<IProps> = ({ publications }) => {
-  const [modal, setModal] = useState<{ open: boolean }>({ open: false })
-  const [updateModal, setUpdateModal] = useState<{ open: boolean; data?: any }>({ open: false })
+export const Publication: React.FC<IProps> = ({ onEdit }) => {
+  const { profile } = useProfileContext()
 
   return (
     <>
@@ -31,21 +24,21 @@ export const Publication: React.FC<IProps> = ({ publications }) => {
             <ApGlobeIcon className="w-6 h-6 text-skin-muted" />
           </div>
 
-          <ApButton onClick={() => setModal({ open: true })}>
+          <ApButton onClick={() => onEdit()}>
             Add Publication
             <ArrowRightIcon />
           </ApButton>
         </div>
 
-        {publications ? (
+        {profile?.publication ? (
           <div className="px-5 pt-5 flex flex-col gap-5">
-            {publications.length > 0 ? (
-              publications.map((publication) => (
+            {profile?.publication?.length > 0 ? (
+              profile?.publication?.map((publication) => (
                 <div key={publication._id}>
-                  <PublicationView
+                  <PublicationItem
                     publication={publication}
-                    length={publications.length}
-                    setModal={setUpdateModal}
+                    length={profile?.publication?.length as any}
+                    onEdit={onEdit}
                   />
                 </div>
               ))
@@ -59,7 +52,8 @@ export const Publication: React.FC<IProps> = ({ publications }) => {
           </div>
         )}
       </div>
-      <ApModal
+
+      {/* <ApModal
         open={modal?.open}
         onDismiss={() => {
           setModal({ open: false })
@@ -77,7 +71,7 @@ export const Publication: React.FC<IProps> = ({ publications }) => {
         width={970}
       >
         <UpdatePublication setModal={setUpdateModal} modal={updateModal} />
-      </ApModal>
+      </ApModal> */}
     </>
   )
 }

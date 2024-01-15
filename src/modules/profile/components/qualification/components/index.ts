@@ -1,1 +1,1 @@
-export * from './qualificationView'
+export * from './item'

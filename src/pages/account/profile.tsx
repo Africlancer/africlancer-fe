@@ -1,8 +1,14 @@
 import { getSession } from 'next-auth/react'
 import { ProfilePage } from '../../modules/profile/page'
+import { MainLayout } from '@/src/modules'
+import { ProfileSubMenu } from '@/src/modules/profile/components'
 
 const Profile = () => {
-  return <ProfilePage />
+  return (
+    <MainLayout pageTitle='Africlancer | My Profile' subMenu={ProfileSubMenu()}>
+      <ProfilePage />
+    </MainLayout>
+  )
 }
 
 export default Profile

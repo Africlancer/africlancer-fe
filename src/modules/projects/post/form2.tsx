@@ -5,7 +5,6 @@ import * as Yup from 'yup'
 import { Button, message, Upload } from 'antd'
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface'
 import { UploadOutlined } from '@ant-design/icons'
-import { ApSelect } from '@/src/components/input/selectinput'
 import { useProjectContext } from '../context'
 import { NEW_PROJECT_SUBSCRIPTION } from '../gql/query'
 import { useSubscription } from '@apollo/client'
@@ -85,22 +84,22 @@ export const FormTwo = ({ setShowFormTwo, project, setProject }) => {
             <h1 className="font-bold text-2xl mb-1">
               What skills are required for this project ?
             </h1>
-            <ApSelect
+            {/* <ApSelect
               isMulti
               isSearchable
               options={skills}
               name="skills"
               label="Enter up to 5 skills that best describe your project."
-            />
+            /> */}
           </div>
 
           <div>
             <h1 className="font-bold text-2xl mb-1">How do you want to pay ?</h1>
-            <ApSelect
+            {/* <ApSelect
               options={type}
               name="type"
               label="Hire based on an hourly rate or a fixed price"
-            />
+            /> */}
           </div>
 
           <div>

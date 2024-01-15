@@ -1,61 +1,46 @@
 import { ApButton } from '@/src/components/button'
 import { useMutation } from '@apollo/client'
 import React from 'react'
-import { ADD_PUBLICATION, FIND_ONE_PROFILE } from '../../gql/query'
 import { PlusOutlined, CloseOutlined } from '@ant-design/icons'
 import useApNotification from '@/src/hooks/notification'
 import { Formik, Form } from 'formik'
 import { FormikSchema } from './constants'
 import { ApTextInput } from '@/src/components'
+import { IPublication } from '../../model'
+import { useProfileContext } from '../../context'
 
 interface IProps {
-  setModal: any
+  onDismiss: () => void 
+  publication?: IPublication
 }
 
-export const EditPublication: React.FC<IProps> = ({ setModal }) => {
-  const { notificationContext, successMsg, errorMsg } = useApNotification()
-  const [addPublication, { loading }] = useMutation(ADD_PUBLICATION, {
-    refetchQueries: [{ query: FIND_ONE_PROFILE }],
-  })
+export const EditPublication: React.FC<IProps> = ({ onDismiss, publication }) => {
+  const { addOrUpdatePublication } = useProfileContext()
 
-  const handleSubmit = async (val) => {
-    addPublication({
-      variables: {
-        publication: { ...val },
-      },
-    })
-      .then((val) => {
-        if (val) {
-          successMsg(`Success`, `Publication has been added.`)
-          setTimeout(() => {
-            setModal({ open: false })
-          }, 1000)
-        }
-      })
-      .catch((err) => {
-        if (err) {
-          let msg =
-            err.message === 'Failed to fetch' ? 'Check Your Internet Connection' : err.message
-          errorMsg('Error', msg)
-        }
-      })
-  }
+  const handleSubmit = async (val: any) => {
+    let payload: IPublication = {
+      _id: publication?._id,
+      ...val
+    }
+
+    addOrUpdatePublication(publication ? payload : val)
+  } 
 
   return (
     <>
-      {notificationContext}
       <div>
         <h1 className="font-bold text-xl">Add Publication</h1>
         <p className="mb-3">Fill To Add New Publication</p>
 
         <Formik
           initialValues={{
-            title: '',
-            publisher: '',
-            summary: '',
+            title: publication?.title || '',
+            publisher: publication?.publisher || '',
+            summary: publication?.summary || '',
           }}
           validationSchema={FormikSchema}
           onSubmit={handleSubmit}
+          enableReinitialize
         >
           <Form>
             <div className="flex w-full gap-8 mb-5">
@@ -87,18 +72,16 @@ export const EditPublication: React.FC<IProps> = ({ setModal }) => {
 
             <div className="gap-4 flex justify-end items-center mt-4">
               <ApButton
-                onClick={() => {}}
                 className="py-2.5 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2"
                 type="submit"
-                loading={loading}
+                // loading={loading}
               >
                 Add Publication
                 <PlusOutlined className="text-lg" />
               </ApButton>
 
               <ApButton
-                type="button"
-                onClick={() => setModal({ open: false })}
+                // onClick={() => setModal({ open: false })}
                 className="py-2 border border-green-500 flex text-skin-accent rounded items-center p-3 justify-center gap-2"
               >
                 Cancel

@@ -1,32 +1,30 @@
-import { useMutation, gql } from '@apollo/client'
+import { useMutation, gql, useLazyQuery } from '@apollo/client'
 
-const ADD_PUBLICATION = gql`
+const ADD_OR_UPDATE_PUBLICATION = gql`
   mutation AddOrUpdatePublication($publication: PublicationInput!) {
     addOrUpdatePublication(publication: $publication)
   }
 `
-
-const ADD_QUALIFICATION = gql`
-  mutation AddOrUpdateQualifications($qualification: QualificationInput!) {
+const ADD_OR_UPDATE_QUALIFICATION = gql`
+  mutation AddOrUpdateQualification($qualification: QualificationInput!) {
     addOrUpdateQualification(qualification: $qualification)
   }
 `
-const ADD_EDUCATION = gql`
+const ADD_OR_UPDATE_EDUCATION = gql`
   mutation AddOrUpdateEducation($education: EducationInput!) {
     addOrUpdateEducation(education: $education)
   }
 `
-const ADD_EXPERIENCE = gql`
+const ADD_OR_UPDATE_EXPERIENCE = gql`
   mutation AddOrUpdateExperience($experience: ExperienceInput!) {
     addOrUpdateExperience(experience: $experience)
   }
 `
-
 const FIND_ONE_PROFILE = gql`
   query FindOneProfile {
     findOneProfile {
       location
-      flagURL
+      # flagURL
       avatar
       skills
       banner
@@ -69,7 +67,6 @@ const FIND_ONE_PROFILE = gql`
     }
   }
 `
-
 const FIND_USER_AVATAR = gql`
   query FindOneProfile {
     findOneProfile {
@@ -77,7 +74,6 @@ const FIND_USER_AVATAR = gql`
     }
   }
 `
-
 const FIND_PROFILES = gql`
   query FindProfiles($query: QueryProfileInput!) {
     findProfiles(query: $query) {
@@ -88,7 +84,6 @@ const FIND_PROFILES = gql`
     }
   }
 `
-
 const FIND_USERS = gql`
   query FindUsers($query: QueryUserInput!) {
     findUsers(query: $query) {
@@ -99,7 +94,6 @@ const FIND_USERS = gql`
     }
   }
 `
-
 const UPDATE_PROFILE = gql`
   mutation UpdateProfile($profile: QueryProfileInput!) {
     updateProfile(profile: $profile)
@@ -126,6 +120,45 @@ const DELETE_QUALIFICATION = gql`
   }
 `
 
+export default function useProfileQuery () {
+  const findOneProfileQ = useLazyQuery(FIND_ONE_PROFILE, {fetchPolicy: "no-cache"});
+  const findOneProfileQ2 = useLazyQuery(FIND_ONE_PROFILE, {fetchPolicy: "no-cache"});
+  const updateProfileQ = useMutation(UPDATE_PROFILE)
+  const addOrUpdateQualificationQ = useMutation(ADD_OR_UPDATE_QUALIFICATION)
+  const addOrUpdatePublicationQ = useMutation(ADD_OR_UPDATE_PUBLICATION)
+  const addOrUpdateEducationQ = useMutation(ADD_OR_UPDATE_EDUCATION)
+  const addOrUpdateExperienceQ = useMutation(ADD_OR_UPDATE_EXPERIENCE)
+  const deleteEducationQ = useMutation(DELETE_EDUCATION)
+  const deleteExperienceQ = useMutation(DELETE_EXPERIENCE)
+  const deletePublicationQ = useMutation(DELETE_PUBLICATION)
+  const deleteQualificationQ = useMutation(DELETE_QUALIFICATION)
+
+  return {
+    findOneProfileQ,
+    updateProfileQ,
+    addOrUpdateQualificationQ,
+    addOrUpdatePublicationQ,
+    addOrUpdateEducationQ,
+    addOrUpdateExperienceQ,
+    deleteEducationQ,
+    deleteExperienceQ,
+    deletePublicationQ,
+    deleteQualificationQ,
+
+    loading: findOneProfileQ[1].loading,
+    actionLoading: 
+      updateProfileQ[1].loading || 
+      addOrUpdateQualificationQ[1].loading ||
+      addOrUpdatePublicationQ[1].loading ||
+      addOrUpdateEducationQ[1].loading ||
+      addOrUpdateExperienceQ[1].loading ||
+      deleteEducationQ[1].loading ||
+      deleteExperienceQ[1].loading ||
+      deletePublicationQ[1].loading ||
+      deleteQualificationQ[1].loading
+  }
+}
+
 export const useUpdateProfile = (callback: (rs: any) => void) => {
   return useMutation(UPDATE_PROFILE, {
     onCompleted: (rs) => {
@@ -142,14 +175,10 @@ export const useUpdateProfile = (callback: (rs: any) => void) => {
 export {
   DELETE_EXPERIENCE,
   DELETE_EDUCATION,
-  ADD_PUBLICATION,
-  ADD_QUALIFICATION,
   FIND_ONE_PROFILE,
   FIND_USER_AVATAR,
   FIND_USERS,
   UPDATE_PROFILE,
-  ADD_EDUCATION,
-  ADD_EXPERIENCE,
   DELETE_PUBLICATION,
   DELETE_QUALIFICATION,
   FIND_PROFILES,

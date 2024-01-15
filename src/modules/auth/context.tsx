@@ -6,6 +6,7 @@ import { useLazyQuery } from '@apollo/client'
 import { FIND_ONE_PROFILE } from '../profile/gql/query'
 import { useRouter } from 'next/router'
 import { LoadingOutlined } from '@ant-design/icons'
+import useApNotification from '@/src/hooks/notification'
 
 interface IState {
   loading: boolean
@@ -34,13 +35,14 @@ interface IProps {
   children: React.ReactNode
 }
 
-const AuthContextProvider: React.FC<IProps> = ({ children, notificationMsg }) => {
+const AuthContextProvider: React.FC<IProps> = ({ children }) => {
   const createSignUpQuery = useSignUpUser((rs) => {})
   const createSigninQuery = useSignInUser((rs) => {})
   const createSetUserLocation = useSetUserLocation((rs) => {})
   const [findProfile, {}] = useLazyQuery(FIND_ONE_PROFILE)
   const [loading, setLoading] = useState<boolean>(false)
   const router = useRouter()
+  const { errorMsg, notificationContext, successMsg } = useApNotification()
 
   const signUp = async (user: IUser) => {
     setLoading(true)
@@ -49,10 +51,10 @@ const AuthContextProvider: React.FC<IProps> = ({ children, notificationMsg }) =>
         // console.log(createSignUpQuery);
 
         if (rs.errors) {
-          notificationMsg.errorMsg('Error', '')
+          errorMsg('Error', '')
           setLoading(false)
         } else {
-          notificationMsg.successMsg(
+          successMsg(
             `Account Created`,
             <div>
               {/* <p className='mb-4'>Please Check Your Mail to Activate Your Account.</p>
@@ -82,7 +84,7 @@ const AuthContextProvider: React.FC<IProps> = ({ children, notificationMsg }) =>
       },
     }).then((rs) => {
       // console.log(rs)
-      notificationMsg.successMsg(
+       successMsg(
         `Signed In Successfully`,
         <div>
           <p className="flex items-center gap-3">
@@ -116,7 +118,7 @@ const AuthContextProvider: React.FC<IProps> = ({ children, notificationMsg }) =>
               setUserLocation()
             } else {
               // console.log('set');
-              notificationMsg.successMsg(
+               successMsg(
                 `Signed In Successfully`,
                 <div>
                   <p className="flex items-center gap-3">
@@ -132,7 +134,7 @@ const AuthContextProvider: React.FC<IProps> = ({ children, notificationMsg }) =>
             }
           })
         } else {
-          notificationMsg.errorMsg('Error', rs.error)
+           errorMsg('Error', rs.error)
           setLoading(false)
         }
       })
@@ -142,7 +144,12 @@ const AuthContextProvider: React.FC<IProps> = ({ children, notificationMsg }) =>
   }
 
   return (
-    <AuthContext.Provider value={{ loading, signUp, signInUser }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ loading, signUp, signInUser }}>
+      <>
+        {notificationContext}
+        {children}
+      </>
+    </AuthContext.Provider>
   )
 }
 

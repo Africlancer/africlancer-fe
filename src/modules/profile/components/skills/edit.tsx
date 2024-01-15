@@ -1,5 +1,4 @@
 import { ApButton, ApRegSelect } from '@/src/components'
-import { ApSelect } from '@/src/components/input/selectinput'
 import { Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import { useProfileContext } from '../../context'

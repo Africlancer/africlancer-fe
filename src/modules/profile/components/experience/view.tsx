@@ -3,29 +3,18 @@ import { ApSuitCaseIcon, ArrowRightIcon } from '@/src/components/icons'
 import { ApModal } from '@/src/components/modal'
 import React, { useState } from 'react'
 import { EditExperience } from './edit'
-import ExperienceItem from './components/experience_view'
+import ExperienceItem from './components/item'
 import { Skeleton } from 'antd'
-import { UpdateExperience } from './update'
+import { useProfileContext } from '../../context'
+import { IExperience } from '../../model'
 
-type experience = {
-  title: string
-  company: string
-  startMonth: string
-  startYear: number
-  endMonth: string
-  endYear: number
-  working: boolean
-  summary: string
-  _id: string
-}
 
 interface IProps {
-  experiences: experience[]
+  onEdit: (experience?: IExperience) => void
 }
 
-export const Experience: React.FC<IProps> = ({ experiences }) => {
-  const [modal, setModal] = useState<{ open: boolean }>({ open: false })
-  const [updateModal, setUpdateModal] = useState<{ open: boolean; data?: any }>({ open: false })
+export const Experience: React.FC<IProps> = ({ onEdit }) => {
+  const { profile } = useProfileContext()
 
   return (
     <>
@@ -36,20 +25,20 @@ export const Experience: React.FC<IProps> = ({ experiences }) => {
             <ApSuitCaseIcon className="w-6 h-6 text-skin-muted" />
           </div>
 
-          <ApButton onClick={() => setModal({ open: true })}>
+          <ApButton onClick={() => onEdit()}>
             Add Experience
             <ArrowRightIcon />
           </ApButton>
         </div>
 
-        {experiences ? (
-          <div className="px-5 pt-5 flex flex-col gap-5">
-            {experiences.length > 0 ? (
-              experiences.map((experience) => (
+        {profile?.experience ? (
+          <div className="flex flex-col gap-5">
+            {profile?.experience?.length > 0 ? (
+              profile?.experience?.map((experience) => (
                 <div key={experience._id}>
                   <ExperienceItem
-                    length={experiences.length}
-                    setModal={setUpdateModal}
+                    length={profile?.experience?.length as any}
+                    onEdit={onEdit}
                     experience={experience}
                   />
                 </div>
@@ -65,7 +54,7 @@ export const Experience: React.FC<IProps> = ({ experiences }) => {
         )}
       </div>
 
-      <ApModal
+      {/* <ApModal
         open={modal?.open}
         onDismiss={() => {
           setModal({ open: false })
@@ -83,7 +72,7 @@ export const Experience: React.FC<IProps> = ({ experiences }) => {
         width={970}
       >
         <UpdateExperience setModal={setUpdateModal} modal={updateModal} />
-      </ApModal>
+      </ApModal> */}
     </>
   )
 }

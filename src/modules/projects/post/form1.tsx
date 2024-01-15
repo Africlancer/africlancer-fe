@@ -5,8 +5,6 @@ import * as Yup from 'yup'
 import { Button, message, Upload } from 'antd'
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface'
 import { UploadOutlined } from '@ant-design/icons'
-import { ApSelect } from '@/src/components/input/selectinput'
-
 const FormikSchema = Yup.object().shape({
   title: Yup.string().required('* Project Title is Required'),
   details: Yup.string().required('* Project Description is Required.'),

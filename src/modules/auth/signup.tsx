@@ -1,4 +1,4 @@
-import { ApCheckBox, ApTextInput, AuthPageLayout } from '@/src/components'
+import { ApCheckBoxInput, ApTextInput, AuthPageLayout } from '@/src/components'
 import { ApButton } from '@/src/components/button'
 import { ArrowRightSvg } from '@/src/custom'
 import { useMutation } from '@apollo/client'
@@ -134,7 +134,7 @@ export const SignUpPage = () => {
 
                 <div className="flex w-full justify-between text-skin-inverted mt-3">
                   <div className="flex gap-2">
-                    <ApCheckBox
+                    <ApCheckBoxInput
                       name="agree"
                       label={
                         <p>

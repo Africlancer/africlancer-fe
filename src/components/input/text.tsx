@@ -2,6 +2,7 @@ import { ErrorMessage, useField } from 'formik'
 import React from 'react'
 
 interface IProps {
+  textarea?: boolean
   label?: string
   type?: string
   inputType?: string
@@ -12,6 +13,7 @@ interface IProps {
   props?: {
     [x: string]: any
   }
+  containerClassName?: string
 }
 
 const defaultInputBox =
@@ -20,19 +22,19 @@ const defaultTextArea =
   'focus:border-green-500 border w-full rounded p-3 h-40 resize-none outline-none'
 
 export const ApTextInput: React.FC<IProps> = (props: IProps) => {
-  const { name, type, label, className, inputType } = props
+  const { name, type, label, className, inputType, textarea, containerClassName } = props
 
   const [field] = useField(name)
 
   return (
-    <div className="w-full flex flex-col gap-2">
+    <div className={`w-full flex flex-col ${containerClassName}`}>
       {label && (
-        <label className="flex items-center justify-between mb-2">
+        <label className="flex items-center justify-between mb-2 font-semibold">
           {label}
           <ErrorMessage className="text-red-500 text-cusf3" name={name} component="p" />
         </label>
       )}
-      {type == 'textarea' ? (
+      {type == 'textarea' || textarea == true ? (
         <textarea {...props} {...field} className={`${defaultTextArea} ${className}`}></textarea>
       ) : (
         <input

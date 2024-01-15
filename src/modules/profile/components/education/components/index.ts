@@ -1,1 +1,1 @@
-export * from './education_view'
+export * from './item'

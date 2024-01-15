@@ -1,50 +1,57 @@
-import { ErrorMessage, useField } from 'formik'
-import React from 'react'
+import { ErrorMessage, Field, useField } from "formik";
+import React, { useEffect } from "react";
+import { Checkbox, ConfigProvider, CheckboxProps } from 'antd';
 
 interface IProps {
-  label?: React.ReactNode
-  type?: string
-  name: string
-  className?: string
-  placeholder?: string
-  ref?: any
-  props?: {
-    [x: string]: any
-  }
-  disabled?: boolean
-  onChange?: any
+  name: string;
+  label?: React.ReactNode;
+  className?: string;
+  onChange?: (val: any) => void;
+  // props?: {
+  //   [x: string]: any;
+  // };
 }
 
-const defaultClassName = ''
+type ApCheckBoxProps = IProps & CheckboxProps;
 
-export const ApCheckBox: React.FC<IProps> = (props: IProps) => {
-  const { name, type, label, className, ref, disabled, onChange } = props
-
-  const [field] = useField(name)
+export const ApCheckBoxInput: React.FC<ApCheckBoxProps> = (props) => {
+  const { label, name, onChange, className } = props;
+  const [field, meta, { setValue }] = useField(name);
 
   return (
-    <>
-      <div className="flex flex-col">
-        <div className="flex gap-2">
-          <input
-            type="checkbox"
-            onInput={onChange}
+    <div className="w-full">
+      <div className="flex gap-2 items-center">
+        <ConfigProvider
+          theme={{
+            token: {
+              fontFamily: "",
+              colorPrimary: "#44D156"
+            }
+          }}
+        >
+          <Checkbox 
             {...props}
-            {...field}
-            className={`${defaultClassName} ${className}`}
+            onChange={(val: any) => {
+              setValue(!field.value);
+              if (onChange) onChange({ name, status: !field.value });
+            }}
+            name={name}
           />
-
-          {label && label}
-          {/* {label && <label className="flex items-center justify-between">{label}
-              <ErrorMessage
-                  className="text-red-500 text-cusf3"
-                  name={name}
-                  component="p"
-              /></label>}  */}
-        </div>
-
-        {<ErrorMessage className="text-red-500 text-xs mt-1" name={name} component="div" />}
+        </ConfigProvider>
+      
+        {/* <Field
+          className={className}
+          type="checkbox"
+          onChange={(val: any) => {
+            setValue(!field.value);
+            if (onChange) onChange({ name, status: !field.value });
+          }}
+          name={name}
+        /> */}
+        <div className="text-sm bold">{label}</div>
       </div>
-    </>
-  )
-}
+
+      <ErrorMessage className="text-red-500 mt-1" name={name} component="div" />
+    </div>
+  );
+};

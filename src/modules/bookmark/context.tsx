@@ -1,6 +1,7 @@
 import React from 'react'
 import { useCreateBookMark, useFindBookMark } from './gql/query'
 import { IBookMark } from './model'
+import useApNotification from '@/src/hooks/notification'
 
 interface IBookMarkState {
   // bookMarks: IBookMark[]
@@ -33,23 +34,23 @@ const useBookMarkContext = () => {
 }
 
 interface IProps {
-  notificationMsg: any
   children: React.ReactNode
 }
 
-const BookMarkContextProvider: React.FC<IProps> = ({ notificationMsg, children }) => {
+const BookMarkContextProvider: React.FC<IProps> = ({ children }) => {
   const createBookMarkQuery = useCreateBookMark((rs) => {})
   const findBookMarkQuery = useFindBookMark()
-
+  const { errorMsg, notificationContext, successMsg } = useApNotification()
+  
   const createBookMark = async (portfolio: IBookMark) => {
     return createBookMarkQuery[0]({ variables: { portfolio } })
       .then((rs) => {
         if (rs?.data) {
-          notificationMsg.successMsg('Success', 'Bookmark Created')
+           successMsg('Success', 'Bookmark Created')
         }
       })
       .catch((err) => {
-        notificationMsg.errorMsg('Error', err.message)
+         errorMsg('Error', err.message)
         console.log(err)
       })
   }
@@ -71,7 +72,10 @@ const BookMarkContextProvider: React.FC<IProps> = ({ notificationMsg, children }
         createBookMark,
       }}
     >
-      {children}
+      <>
+        {notificationContext}
+        {children}
+      </>
     </BookmarkContext.Provider>
   )
 }

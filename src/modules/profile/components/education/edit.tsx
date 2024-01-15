@@ -1,71 +1,66 @@
 import React from 'react'
 import useApNotification from '@/src/hooks/notification'
-import { ADD_EDUCATION, FIND_ONE_PROFILE } from '../../gql/query'
 import { useMutation } from '@apollo/client'
 import { ApButton } from '@/src/components/button'
 import { PlusOutlined, CloseOutlined } from '@ant-design/icons'
 import * as Yup from 'yup'
-import { countries, years } from '../../model'
+import { IEducation, countries, years } from '../../model'
 import { Formik, Form } from 'formik'
 import { ApSelectInput, ApTextInput } from '@/src/components'
+import { useProfileContext } from '../../context'
+import { COUNTRIES, YEARS } from '@/src/constants'
 
 const FormikSchema = Yup.object().shape({
-  country: Yup.string().required('* required').nullable(true),
+  // country: Yup.string().required('* required').nullable(true),
   insitution: Yup.string()
     .min(6, 'Password Should be at Least 6 Characters.')
     .required('* required'),
   degree: Yup.string().min(6, 'Password Should be at Least 6 Characters.').required('* required.'),
-  startYear: Yup.string().required('* required').nullable(true),
-  endYear: Yup.string().required('* required').nullable(true),
+  // startYear: Yup.string().required('* required').nullable(true),
+  // endYear: Yup.string().required('* required').nullable(true),
 })
 
 interface IProps {
-  setModal: any
+  onDismiss: () => void 
+  education?: IEducation
 }
 
-export const EditEducation: React.FC<IProps> = ({ setModal }) => {
-  const { notificationContext, successMsg, errorMsg } = useApNotification()
-  const [addEducation, { loading }] = useMutation(ADD_EDUCATION, {
-    refetchQueries: [{ query: FIND_ONE_PROFILE }],
-  })
+export const EditEducation: React.FC<IProps> = ({ onDismiss, education }) => {
+  const { addOrUpdateEducation } = useProfileContext()
 
-  const handleSubmit = async (val) => {
-    addEducation({
-      variables: {
-        education: { ...val, endYear: parseInt(val.endYear), startYear: parseInt(val.startYear) },
-      },
+  const handleSubmit = async (val: any) => {
+    let payload: IEducation = {
+      ...val,
+      _id: education?._id,
+      startYear: val?.startYear?.value,
+      endYear: val?.endYear?.value,
+      country: val?.country?.value,
+    }
+
+    addOrUpdateEducation(education ? payload : {
+      ...val,
+      startYear: val?.startYear?.value,
+      endYear: val?.endYear?.value,
+      country: val?.country?.value,
     })
-      .then((val) => {
-        if (val) {
-          successMsg(`Success`, `Education Info has been added.`)
-          setTimeout(() => {
-            setModal({ open: false })
-          }, 1000)
-        }
-      })
-      .catch((err) => {
-        if (err) {
-          let msg =
-            err.message === 'Failed to fetch' ? 'Check Your Internet Connection' : err.message
-          errorMsg('Error', msg)
-        }
-      })
   }
 
   return (
     <>
-      {notificationContext}
       <div>
-        <h1 className="font-bold text-xl">Add Education</h1>
+        <h1 className="font-black text-xl">Add Education</h1>
         <p className="mb-3">Fill To Add New Education</p>
 
         <Formik
           initialValues={{
-            country: null,
-            insitution: '',
-            degree: '',
-            startYear: null,
-            endYear: null,
+            country: education?.country ? 
+            {label: education?.country, value: education?.country} : '',
+            insitution: education?.insitution || '',
+            degree: education?.degree || '',
+            startYear: education?.startYear ? 
+            {label: education?.startYear, value: education?.startYear} : '',
+            endYear: education?.endYear ? 
+            {label: education?.endYear, value: education?.endYear} : '',
           }}
           validationSchema={FormikSchema}
           onSubmit={handleSubmit}
@@ -73,16 +68,7 @@ export const EditEducation: React.FC<IProps> = ({ setModal }) => {
           <Form>
             <div className="flex w-full  gap-5">
               <div className="w-full">
-                <ApSelectInput name="country" label="Country" value="">
-                  <option selected disabled>
-                    Select Country
-                  </option>
-                  {countries.map((country) => (
-                    <option key={country} value={country}>
-                      {country}
-                    </option>
-                  ))}
-                </ApSelectInput>
+                <ApSelectInput options={COUNTRIES} name="country" label="Country"/>
               </div>
 
               <div className="w-full">
@@ -102,37 +88,18 @@ export const EditEducation: React.FC<IProps> = ({ setModal }) => {
 
             <div className="flex w-full items-center gap-5 mt-5">
               <div className="w-full">
-                <ApSelectInput name="startYear" label="Start Year" value="">
-                  <option selected disabled>
-                    Select Year
-                  </option>
-                  {years.map((year) => (
-                    <option key={year} value={year}>
-                      {year}
-                    </option>
-                  ))}
-                </ApSelectInput>
+                <ApSelectInput options={YEARS} name="startYear" label="Start Year"/>
               </div>
 
               <div className="w-full">
-                <ApSelectInput name="endYear" label="End Year" value="">
-                  <option selected disabled>
-                    Select Year
-                  </option>
-                  {years.map((year) => (
-                    <option key={year} value={year}>
-                      {year}
-                    </option>
-                  ))}
-                </ApSelectInput>
+                <ApSelectInput options={YEARS} name="endYear" label="End Year"/>
               </div>
             </div>
 
             <div className="gap-4 flex justify-end items-center mt-4">
               <ApButton
-                onClick={() => {}}
                 type="submit"
-                loading={loading}
+                // loading={loading}
                 className="py-2.5 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2"
               >
                 Add Education
@@ -140,8 +107,7 @@ export const EditEducation: React.FC<IProps> = ({ setModal }) => {
               </ApButton>
 
               <ApButton
-                type="button"
-                onClick={() => setModal({ open: false })}
+                // onClick={() => setModal({ open: false })}
                 className="py-2 border border-green-500 flex text-skin-accent rounded items-center p-3 justify-center gap-2"
               >
                 Cancel

@@ -3,26 +3,17 @@ import { ApGradHatIcon, ArrowRightIcon } from '@/src/components/icons'
 import { ApModal } from '@/src/components/modal'
 import React, { useState } from 'react'
 import { EditEducation } from './edit'
-import { EducationView } from './components'
+import { EducationItem } from './components'
 import { Skeleton } from 'antd'
-import { UpdateEducation } from './update'
-
-type education = {
-  country: string
-  insitution: string
-  degree: string
-  startYear: number
-  endYear: number
-  _id: string
-}
+import { useProfileContext } from '../../context'
+import { IEducation } from '../../model'
 
 interface IProps {
-  educations: education[]
+  onEdit: (education?: IEducation) => void
 }
 
-export const Education: React.FC<IProps> = ({ educations }) => {
-  const [modal, setModal] = useState<{ open: boolean; data?: any }>({ open: false })
-  const [updateModal, setUpdateModal] = useState<{ open: boolean; data?: any }>({ open: false })
+export const Education: React.FC<IProps> = ({ onEdit }) => {
+  const { profile } = useProfileContext()
 
   return (
     <>
@@ -34,7 +25,7 @@ export const Education: React.FC<IProps> = ({ educations }) => {
           </div>
 
           <ApButton
-            onClick={() => setModal({ open: true })}
+            onClick={() => onEdit()}
             className="py-2 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2"
           >
             Add Education
@@ -42,15 +33,15 @@ export const Education: React.FC<IProps> = ({ educations }) => {
           </ApButton>
         </div>
 
-        {educations ? (
+        {profile?.education ? (
           <div className="px-5 pt-5 flex flex-col gap-5">
-            {educations.length > 0 ? (
-              educations.map((education) => (
+            {profile?.education?.length > 0 ? (
+              profile?.education?.map((education) => (
                 <div key={education._id}>
-                  <EducationView
-                    length={educations.length}
+                  <EducationItem
+                    length={profile?.education?.length as any}
                     education={education}
-                    setModal={setUpdateModal}
+                    onEdit={onEdit}
                   />
                 </div>
               ))
@@ -64,7 +55,8 @@ export const Education: React.FC<IProps> = ({ educations }) => {
           </div>
         )}
       </div>
-      <ApModal
+
+      {/* <ApModal
         open={modal?.open}
         onDismiss={() => {
           setModal({ open: false })
@@ -82,7 +74,7 @@ export const Education: React.FC<IProps> = ({ educations }) => {
         width={970}
       >
         <UpdateEducation setModal={setUpdateModal} modal={updateModal} />
-      </ApModal>
+      </ApModal> */}
     </>
   )
 }

@@ -12,6 +12,7 @@ import { LoadingOutlined } from '@ant-design/icons'
 import { useSession } from 'next-auth/react'
 import { useLazyQuery, useSubscription } from '@apollo/client'
 import { FIND_BOOKMARK } from '../bookmark/gql/query'
+import useApNotification from '@/src/hooks/notification'
 
 interface IProjectState {
   hasBiddingEnded: boolean
@@ -54,11 +55,10 @@ const useProjectContext = () => {
 }
 
 interface IProps {
-  notificationMsg: any
   children: React.ReactNode
 }
 
-const ProjectContextProvider: React.FC<IProps> = ({ children, notificationMsg }) => {
+const ProjectContextProvider: React.FC<IProps> = ({ children }) => {
   const router = useRouter()
   const session: any = useSession()
   const [projects, setProjects] = useState(null)
@@ -74,6 +74,7 @@ const ProjectContextProvider: React.FC<IProps> = ({ children, notificationMsg })
   const [loading, setLoading] = useState(false)
   const [loadingText, setLoadingText] = useState('Loading...')
   const [findBookM, {}] = useLazyQuery(FIND_BOOKMARK)
+  const { errorMsg, notificationContext, successMsg } = useApNotification()
 
   const fetchAllProjects = async (query, fullSearch) => {
     return fetchAllProjectsQuery[0]({
@@ -139,7 +140,7 @@ const ProjectContextProvider: React.FC<IProps> = ({ children, notificationMsg })
       .then((rs) => {
         if (rs.data?.createProject) {
           setLoadingText('Redirecting...')
-          notificationMsg?.successMsg(
+           successMsg(
             'Success',
             <>
               <p className="mb-1">Your project has been created.</p>
@@ -156,7 +157,7 @@ const ProjectContextProvider: React.FC<IProps> = ({ children, notificationMsg })
         }
       })
       .catch((err) => {
-        notificationMsg?.errorMsg('Error', err.message)
+         errorMsg('Error', err.message)
         setLoading(false)
       })
   }
@@ -165,11 +166,11 @@ const ProjectContextProvider: React.FC<IProps> = ({ children, notificationMsg })
     await updateProjectQuery[0]({ variables: { id, project } })
       .then((rs) => {
         fetchProject({ _id: id })
-        notificationMsg?.successMsg('Success', 'Your project has been updated.')
+         successMsg('Success', 'Your project has been updated.')
         setLoading(false)
       })
       .catch((err) => {
-        notificationMsg?.errorMsg('Error', err.message)
+         errorMsg('Error', err.message)
         setLoading(false)
       })
   }
@@ -201,7 +202,10 @@ const ProjectContextProvider: React.FC<IProps> = ({ children, notificationMsg })
         loadingText,
       }}
     >
-      {children}
+      <>
+        {notificationContext}
+        {children}
+      </>
     </ProjectContext.Provider>
   )
 }

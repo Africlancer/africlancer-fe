@@ -1,3 +1,2 @@
-export * from './sectionOne'
-export * from './sectionTwo'
-export * from './sectionThree'
+export * from './infoSectionOne'
+export * from './infoSectionTwo'

@@ -5,14 +5,16 @@ import { ApButton, ApPopConfirm } from '@/src/components'
 import { DELETE_EDUCATION, FIND_ONE_PROFILE } from '../../../gql/query'
 import { useMutation } from '@apollo/client'
 import useApNotification from '@/src/hooks/notification'
+import { IEducation } from '../../../model'
+import { ProfileItemPopover } from '../../edit'
 
 interface IProps {
-  education: any
-  setModal: any
-  length: any
+  education: IEducation
+  onEdit: (education?: IEducation) => void
+  length: number
 }
 
-export const EducationView: React.FC<IProps> = ({ education, setModal, length }) => {
+export const EducationItem: React.FC<IProps> = ({ education, onEdit, length }) => {
   const [deleteEducation, { loading }] = useMutation(DELETE_EDUCATION, {
     refetchQueries: [{ query: FIND_ONE_PROFILE }],
   })
@@ -32,42 +34,6 @@ export const EducationView: React.FC<IProps> = ({ education, setModal, length })
       })
   }
 
-  const items: MenuProps['items'] = [
-    {
-      key: '1',
-      label: (
-        <button
-          onClick={() => {
-            setModal({ open: true, data: education })
-          }}
-        >
-          Edit
-        </button>
-      ),
-    },
-
-    {
-      key: '2',
-      label: (
-        <ApPopConfirm
-          placement="topLeft"
-          popButton="Delete"
-          title="Are you sure you want to delete this education info ?"
-        >
-          <div className="mt-3">
-            <p className="mb-3">Delete this education info.</p>
-            <ApButton
-              className="py-1 px-2 bg-skin-accent text-white rounded"
-              onClick={deleteEducationHandler}
-            >
-              Confirm
-            </ApButton>
-          </div>
-        </ApPopConfirm>
-      ),
-    },
-  ]
-
   return (
     <>
       {notificationContext}
@@ -80,14 +46,11 @@ export const EducationView: React.FC<IProps> = ({ education, setModal, length })
             {education.startYear} - {education.endYear}
           </p>
         </div>
-        <Dropdown
-          trigger={['click']}
-          menu={{ items }}
-          placement="bottom"
-          arrow={{ pointAtCenter: true }}
-        >
-          <MoreOutlined className="text-2xl" />
-        </Dropdown>
+
+        <ProfileItemPopover
+          onDelete={() => {}}
+          onEdit={() => onEdit(education)}
+        />
       </div>
     </>
   )

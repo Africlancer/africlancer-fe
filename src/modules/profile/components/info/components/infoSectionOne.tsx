@@ -9,7 +9,7 @@ interface IProps {
   name: string
 }
 
-export const SectionTwo: React.FC<IProps> = ({
+export const InfoSectionOne: React.FC<IProps> = ({
   professionalHeadline,
   recommendations,
   summary,

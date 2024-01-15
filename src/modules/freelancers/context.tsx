@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useFetchAllFreelancers, useFetchFreelancersFilter } from './gql/query'
+import useApNotification from '@/src/hooks/notification'
 
 interface IFreelancersState {
   fetchAllFreelancers: (query) => void
@@ -26,7 +27,7 @@ interface IProps {
 const FreelancersContextProvider: React.FC<IProps> = ({ children }) => {
   const fetchAllFreelancersQuery = useFetchAllFreelancers()
   const fetchFreelancersFilterQuery = useFetchFreelancersFilter()
-
+  const { errorMsg, notificationContext, successMsg } = useApNotification()
   const [freelancers, setFreelancers] = useState<any>(null)
 
   const fetchAllFreelancers = (query) => {
@@ -62,7 +63,10 @@ const FreelancersContextProvider: React.FC<IProps> = ({ children }) => {
         fetchFreelancersFilter,
       }}
     >
-      {children}
+      <>
+        {notificationContext}
+        {children}
+      </>
     </FreelancersContext.Provider>
   )
 }

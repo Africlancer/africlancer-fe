@@ -14,7 +14,7 @@ interface Iprops {
 }
 
 const filledClassName =
-  'py-2 px-3 flex bg-skin-accent text-white rounded items-center justify-center gap-2 disabled:cursor-not-allowed'
+  'py-3 px-5 flex bg-skin-accent text-white rounded-md items-center justify-center gap-2 disabled:cursor-not-allowed'
 const outlineClassName =
   'py-2 px-3 border border-green-500 flex text-skin-accent rounded items-center justify-center gap-2'
 
@@ -23,7 +23,7 @@ export const ApButton: React.FC<Iprops> = ({
   className,
   children,
   onClick,
-  type,
+  type = 'button',
   disabled,
   title,
   loading,
@@ -37,7 +37,7 @@ export const ApButton: React.FC<Iprops> = ({
 
   return (
     <button
-      type={type ? type : 'submit'}
+      type={type}
       className={className ? className : defaultClassName}
       onClick={onClick}
       disabled={loading}
@@ -48,7 +48,7 @@ export const ApButton: React.FC<Iprops> = ({
           {loadingText ? loadingText : 'Loading...'}
         </div>
       ) : (
-        children
+        title ? title : children
       )}
     </button>
   )

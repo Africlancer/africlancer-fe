@@ -2,26 +2,17 @@ import { ApButton } from '@/src/components/button'
 import { ArrowRightIcon } from '@/src/components/icons'
 import { ApModal } from '@/src/components/modal'
 import React, { useState } from 'react'
-import { EditQualifications } from './edit'
-import { QualificationView } from './components'
+import { QualificationItem } from './components'
 import { Skeleton } from 'antd'
-import { UpdateQualification } from './update'
-
-type qualification = {
-  title: string
-  conferringOrganization: string
-  startYear: string
-  summary: string
-  _id: string
-}
+import { useProfileContext } from '../../context'
+import { IQualification } from '../../model'
 
 interface IProps {
-  qualifications: qualification[]
+  onEdit: (qualification?: IQualification) => void
 }
 
-export const Qualifications: React.FC<IProps> = ({ qualifications }) => {
-  const [modal, setModal] = useState<{ open: boolean }>({ open: false })
-  const [updateModal, setUpdateModal] = useState<{ open: boolean; data?: any }>({ open: false })
+export const Qualification: React.FC<IProps> = ({ onEdit }) => {
+  const { profile } = useProfileContext()
 
   return (
     <>
@@ -48,25 +39,25 @@ export const Qualifications: React.FC<IProps> = ({ qualifications }) => {
             </svg>
           </div>
 
-          <ApButton onClick={() => setModal({ open: true })}>
+          <ApButton onClick={() => onEdit()}>
             Add Qualification
             <ArrowRightIcon />
           </ApButton>
         </div>
 
-        {qualifications ? (
+        {profile?.qualification ? (
           <div className="px-5 pt-5 flex flex-col gap-5">
-            {qualifications.length > 0 ? (
-              qualifications.map((qualification) => (
+            {profile?.qualification?.length > 0 ? (
+              profile?.qualification?.map((qualification) => (
                 <div key={qualification._id}>
-                  <QualificationView
+                  <QualificationItem
                     qualification={qualification}
-                    length={qualifications.length}
-                    setModal={setUpdateModal}
+                    length={profile?.qualification?.length as any}
+                    onEdit={onEdit}
                   />
                 </div>
               ))
-            ) : (
+            ) : ( 
               <p className="text-skin-inverted mb-5">No qualification has been added.</p>
             )}
           </div>
@@ -76,7 +67,8 @@ export const Qualifications: React.FC<IProps> = ({ qualifications }) => {
           </div>
         )}
       </div>
-      <ApModal
+
+      {/* <ApModal
         open={modal?.open}
         onDismiss={() => {
           setModal({ open: false })
@@ -94,7 +86,7 @@ export const Qualifications: React.FC<IProps> = ({ qualifications }) => {
         width={970}
       >
         <UpdateQualification setModal={setUpdateModal} modal={updateModal} />
-      </ApModal>
+      </ApModal> */}
     </>
   )
 }

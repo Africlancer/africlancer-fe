@@ -1,24 +1,107 @@
+export interface IProfileModal {
+  open: boolean
+  type?: "info" | "experience" | "education" | "qualification" | "publication"
+  width?: number
+  publication?: IPublication
+  qualification?: IQualification
+  education?: IEducation
+  experience?: IExperience
+}
+
+export interface IUpdateProfileInput {
+  userID?: string
+  avatar?: string
+  banner?: string
+  location?: string
+  hourlyRate?: number
+  professionalHeadline?: string
+  summary?: string
+  recommendations?: number
+  skills?: string []
+  fullName?: string
+  clientRating?: number
+  freelancerRating?: number
+  flagURL?: string
+  minRate?: number
+  maxRate?: number
+}
+
+export interface IExperience {
+  _id?: string
+  title?: string
+  company?: string
+  startMonth?: string
+  startYear?: number
+  endMonth?: string
+  endYear?: number
+  working?: boolean
+  summary?: string
+  profileId?: string
+}
+
+export interface IEducation {
+  _id?: string
+  country?: string
+  insitution?: string
+  degree?: string
+  startYear?: number
+  endYear?: number
+  profileId?: string
+}
+
+export interface IQualification {
+  _id?: string
+  title?: string
+  conferringOrganization?: string
+  summary?: string
+  startYear?: number
+  profileId?: string
+}
+
+export interface IPublication {
+  _id?: string
+  title?: string
+  publisher?: string
+  summary?: string
+  profileId?: string
+}
+
 export interface IProfile {
-  skills: string
-  banner
-  avatar
-  hourlyRate
-  professionalHeadline
-  summary
-  recommendations
-  education
-  experience
-  location
-  flagURL
-  qualification
-  publications
+  _id?: string
+  userID?: string
+  avatar?: string
+  banner?: string
+  location?: string
+  hourlyRate?: number
+  professionalHeadline?: string
+  summary?: string
+  recommendations?: number
+  createdAt?: number
+  updatedAt?: number
+  education?: IEducation[]
+  experience?: IExperience[]
+  qualification?: IQualification[]
+  publication?: IPublication[]
+  review?: any[]
+  skills?: any[]
+  clientRating?: number
+  freelancerRating?: number
+  flagURL?: string
+  fullName?: string
+  minRate?: number
+  maxRate?: number
+  user?: IUser
 }
 
 export interface IUser {
-  firstName
-  lastName
-  email
-  username
+  _id?: string
+  profileID?: string
+  firstName?: string
+  lastName?: string
+  email?: string
+  username?: string
+  refreshToken?: string[]
+  roles?: string[]
 }
 
 export const months = [

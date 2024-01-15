@@ -16,7 +16,6 @@ const useSubscriptionContext = () => {
 }
 
 interface IProps {
-  notificationMsg?: any
   children: React.ReactNode
 }
 

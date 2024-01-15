@@ -11,3 +11,5 @@ export * from './portfolio'
 export * from './certifications'
 export * from './verificatiions'
 export * from './skills'
+export * from "./submenu"
+export * from "./edit"
