@@ -27,7 +27,7 @@ interface IProps {
 }
 
 export const EditQualification: React.FC<IProps> = ({ onDismiss, qualification }) => {
-  const { addOrUpdateQualification } = useProfileContext()
+  const { addOrUpdateQualification, actionLoading } = useProfileContext()
 
   const handleSubmit = async (val: any) => {
     let payload: IQualification = {
@@ -39,14 +39,18 @@ export const EditQualification: React.FC<IProps> = ({ onDismiss, qualification }
     addOrUpdateQualification(qualification ? payload : {
       ...val,
       startYear: val?.startYear?.value
-    })
+    }).finally(() => onDismiss())
   }
 
   return (
     <>
       <div>
-        <h1 className="font-black text-xl">Add Qualification</h1>
-        <p className="mb-3">Fill To Add New Qualification</p>
+        <h1 className="font-black text-xl">
+          {qualification ? "Edit Qualification" : "Add Qualification"}
+        </h1>
+        <p className="mb-3">
+          {qualification ? "Edit To Update Qualification" : "Fill To Add New Qualification"}
+        </p>
 
         <Formik
           initialValues={{
@@ -95,16 +99,16 @@ export const EditQualification: React.FC<IProps> = ({ onDismiss, qualification }
             <div className="gap-4 flex justify-end items-center mt-4">
               <ApButton
                 type="submit"
-                // loading={loading}
-                className="py-2.5 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2"
+                loading={actionLoading}
               >
-                Add Qualification
+                {qualification ? "Edit Qualification" : "Add Qualification"}
                 <PlusOutlined className="text-lg" />
               </ApButton>
 
               <ApButton
-                // onClick={() => setModal({ open: false })}
-                className="py-2 border border-green-500 flex text-skin-accent rounded items-center p-3 justify-center gap-2"
+                onClick={onDismiss}
+                outline
+                disabled={actionLoading}
               >
                 Cancel
                 <CloseOutlined className="text-lg" />

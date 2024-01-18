@@ -18,7 +18,7 @@ export const ApModal: React.FC<IPros> = ({ open, titile, children, onDismiss, wi
         },
       }}
     >
-      <Modal destroyOnClose open={open} centered width={width} title={titile} onCancel={onDismiss} footer={null}>
+      <Modal wrapClassName='!py-5' destroyOnClose open={open} centered width={width} title={titile} onCancel={onDismiss} footer={null}>
         {children}
       </Modal>
     </ConfigProvider>

@@ -13,13 +13,21 @@ interface IProps {
   experience: IExperience
   onEdit: (experience?: IExperience) => void
   length: number
+  setExperienceToBeDeleted: React.Dispatch<React.SetStateAction<string>>
+  experienceToBeDeleted: string
 }
 
-const ExperienceItem: React.FC<IProps> = ({ experience, onEdit, length }) => {
+const ExperienceItem: React.FC<IProps> = ({ 
+  experience, 
+  onEdit, 
+  length, 
+  setExperienceToBeDeleted,
+  experienceToBeDeleted
+}) => {
   const {deleteExperience, deleteExperienceLoading} = useProfileContext()
 
   return (
-    <div className='relative w-full h-full'>
+    <div className='relative w-ful h-full'>
       <div className={`flex justify-between items-start pt-5 px-5 ${length > 0 ? 'border-b pb-5' : ''}`}>
         <div>
           <h1 className="font-bold mb-2">Title - {experience.title}</h1>
@@ -32,13 +40,15 @@ const ExperienceItem: React.FC<IProps> = ({ experience, onEdit, length }) => {
         </div>
 
         <ProfileItemPopover
-          onDelete={() => deleteExperience(experience._id as any)}
+          onDelete={() => {
+            setExperienceToBeDeleted(experience._id as any)
+            deleteExperience(experience._id as any)
+          }}
           onEdit={() => onEdit(experience)}
         />
-
       </div>
 
-      {deleteExperienceLoading && (
+      {experienceToBeDeleted == experience._id && deleteExperienceLoading && (
         <ApViewLoader/>
       )}
     </div>

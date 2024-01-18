@@ -121,6 +121,7 @@ const DELETE_QUALIFICATION = gql`
 `
 
 export default function useProfileQuery () {
+  const findUserAvatarQ = useLazyQuery(FIND_USER_AVATAR, {fetchPolicy: "no-cache"});
   const findOneProfileQ = useLazyQuery(FIND_ONE_PROFILE, {fetchPolicy: "no-cache"});
   const findOneProfileQ2 = useLazyQuery(FIND_ONE_PROFILE, {fetchPolicy: "no-cache"});
   const updateProfileQ = useMutation(UPDATE_PROFILE)
@@ -134,7 +135,9 @@ export default function useProfileQuery () {
   const deleteQualificationQ = useMutation(DELETE_QUALIFICATION)
 
   return {
+    findUserAvatarQ,
     findOneProfileQ,
+    findOneProfileQ2,
     updateProfileQ,
     addOrUpdateQualificationQ,
     addOrUpdatePublicationQ,
@@ -146,6 +149,7 @@ export default function useProfileQuery () {
     deleteQualificationQ,
 
     loading: findOneProfileQ[1].loading,
+    avatarLoading: findUserAvatarQ[1].loading,
     actionLoading: 
       updateProfileQ[1].loading || 
       addOrUpdateQualificationQ[1].loading ||

@@ -26,7 +26,7 @@ interface IProps {
 }
 
 export const EditEducation: React.FC<IProps> = ({ onDismiss, education }) => {
-  const { addOrUpdateEducation } = useProfileContext()
+  const { addOrUpdateEducation, actionLoading } = useProfileContext()
 
   const handleSubmit = async (val: any) => {
     let payload: IEducation = {
@@ -42,14 +42,18 @@ export const EditEducation: React.FC<IProps> = ({ onDismiss, education }) => {
       startYear: val?.startYear?.value,
       endYear: val?.endYear?.value,
       country: val?.country?.value,
-    })
+    }).finally(() => onDismiss())
   }
 
   return (
     <>
       <div>
-        <h1 className="font-black text-xl">Add Education</h1>
-        <p className="mb-3">Fill To Add New Education</p>
+        <h1 className="font-black text-xl">
+          {education ? "Edit Education" : "Add Education"}
+        </h1>
+        <p className="mb-3">
+          {education ? "Edit To Update Education" : "Fill To Add New Education"}
+        </p>
 
         <Formik
           initialValues={{
@@ -99,16 +103,16 @@ export const EditEducation: React.FC<IProps> = ({ onDismiss, education }) => {
             <div className="gap-4 flex justify-end items-center mt-4">
               <ApButton
                 type="submit"
-                // loading={loading}
-                className="py-2.5 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2"
+                loading={actionLoading}
               >
-                Add Education
+                {education ? "Edit Education" : "Add Education"}
                 <PlusOutlined className="text-lg" />
               </ApButton>
 
               <ApButton
-                // onClick={() => setModal({ open: false })}
-                className="py-2 border border-green-500 flex text-skin-accent rounded items-center p-3 justify-center gap-2"
+                onClick={onDismiss}
+                outline
+                disabled={actionLoading}
               >
                 Cancel
                 <CloseOutlined className="text-lg" />

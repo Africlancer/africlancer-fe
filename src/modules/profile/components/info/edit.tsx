@@ -1,7 +1,7 @@
 import { CloseOutlined, DoubleRightOutlined } from '@ant-design/icons'
-import React from 'react'
+import React, { useState } from 'react'
 import useApNotification from '@/src/hooks/notification'
-import { ApButton, ApSaveIcon, ApTextInput } from '@/src/components'
+import { ApButton, ApFileInput, ApSaveIcon, ApTextInput } from '@/src/components'
 import Link from 'next/link'
 import { Form, Formik, FormikProps } from 'formik'
 import { useProfileContext } from '../../context'
@@ -11,21 +11,39 @@ interface IProps {
 }
 
 export const EditProfileInfo: React.FC<IProps> = ({ onDismiss }) => {
-  const { notificationContext, successMsg, errorMsg } = useApNotification()
+  const [image, setImage] = useState<any>(null)
   const { profile, updateProfile, actionLoading } = useProfileContext()
 
+  const handleSelectImage = async (res: any) => {
+    setImage({
+      filename: res[0].file.name,
+      filetype: res[0].file.type,
+      base64Str: res[0].uri,
+    });
+  };
+
   const handleSubmit = (val: any) => {
-    updateProfile(val)
+    updateProfile(image ? {
+      ...val,
+      avatar: image.base64Str
+    } : val)
     .then(() => onDismiss())
   }
 
   return (
     <>
-      {notificationContext}
       <div>
         <h1 className="font-black text-xl">Edit Profile Settings</h1>
         <p className="mb-3">Enter new value and proceed</p>
-        <div className="flex items-start">
+        <div className="flex gap-5 relative pb-16">  
+          <ApFileInput
+            accept="image/*"
+            onSelected={handleSelectImage}
+            onRemove={() => setImage(null)}
+            // defaultFileList={}
+            className='!w-[300px] !h-[250px] !block'
+            label='Profile Photo'
+          />
 
           <Formik
             initialValues={{
@@ -36,23 +54,15 @@ export const EditProfileInfo: React.FC<IProps> = ({ onDismiss }) => {
             onSubmit={handleSubmit}
           >
             {(props: FormikProps<any>) => (
-              <Form className='w-full h-full'>
-                <div className='w-full h-full grid grid-cols-2'>
-                  <div className="flex flex-col justify-between gap-2">
-                    <div className="flex gap-2">
-                      <ApTextInput label='Professional Headline' name='professionalHeadline'/>
-                      <ApTextInput inputType='number' label='Hourly Rate - USD Per Hour' name='hourlyRate'/>
-                    </div>
-
-                    <ApTextInput label='Summary' textarea name="summary"/>
+              <Form className='w-full flex flex-col gap-2'>
+                  <div className="flex gap-2">
+                    <ApTextInput label='Professional Headline' name='professionalHeadline'/>
+                    <ApTextInput inputType='number' label='Hourly Rate - USD Per Hour' name='hourlyRate'/>
                   </div>
-                </div>
 
-                <div className="flex justify-between items-center mt-4">
-                  <Link href="" className="text-skin-inverted flex justify-center items-center gap-1">
-                    View More Settings
-                    <DoubleRightOutlined className="text-xs" />
-                  </Link>
+                  <ApTextInput containerClassName='!h-full' className='!h-full' label='Summary' textarea name="summary"/>
+
+                <div className="flex items-center absolute bottom-0 right-0">
                   <div>
                     <div className="flex gap-3">
                       <ApButton type='submit' loading={actionLoading}>

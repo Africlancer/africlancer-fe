@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { LoadingOutlined } from '@ant-design/icons'
+import { ApLoader } from './loader'
 
 interface Iprops {
   children?: React.ReactNode
@@ -13,11 +14,6 @@ interface Iprops {
   loading?: boolean
 }
 
-const filledClassName =
-  'py-3 px-5 flex bg-skin-accent text-white rounded-md items-center justify-center gap-2 disabled:cursor-not-allowed'
-const outlineClassName =
-  'py-2 px-3 border border-green-500 flex text-skin-accent rounded items-center justify-center gap-2'
-
 export const ApButton: React.FC<Iprops> = ({
   outline,
   className,
@@ -29,26 +25,24 @@ export const ApButton: React.FC<Iprops> = ({
   loading,
   loadingText,
 }) => {
-  const defaultClassName = outline ? outlineClassName : filledClassName
-  const [isLoading, setLoading] = useState(loading)
-  useEffect(() => {
-    setLoading(loading)
-  }, [loading])
 
   return (
     <button
       type={type}
-      className={className ? className : defaultClassName}
+      className={`${loading ? 'py-0' : 'py-3'} px-5 min-w-[120px] flex rounded-md items-center justify-center gap-2 disabled:cursor-not-allowed
+        ${outline ? 'border border-green-500 text-skin-accent' 
+        :'bg-skin-accent text-white'}
+        ${className}
+      `}
       onClick={onClick}
-      disabled={loading}
+      disabled={loading || disabled}
     >
-      {isLoading ? (
-        <div className="flex gap-4 items-center">
-          <LoadingOutlined style={{ fontSize: 25, color: '#fff' }} spin />
-          {loadingText ? loadingText : 'Loading...'}
+      {loading ? (
+        <div className="flex justify-center items-center">
+          <ApLoader color='#fff' size={48}/>
         </div>
       ) : (
-        title ? title : children
+        title || children
       )}
     </button>
   )

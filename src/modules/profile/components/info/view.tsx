@@ -20,7 +20,7 @@ export const ProfileInfo: React.FC<IProps> = ({ onEdit }) => {
       <div className="col-span-2 p-5 bg-skin-base shadow-xl w-full rounded-xl relative">
         <div className="flex w-full">
           {profile?.avatar ? (
-            <Image alt="" width="320px" height="320px" src={profile.avatar} />
+            <Image alt="" width="320px" height="320px" className='rounded-md' src={profile.avatar} />
           ) : (
             <Skeleton.Image style={{ height: '320px', width: '320px' }} active />
           )}

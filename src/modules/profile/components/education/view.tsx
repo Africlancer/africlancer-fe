@@ -14,6 +14,7 @@ interface IProps {
 
 export const Education: React.FC<IProps> = ({ onEdit }) => {
   const { profile } = useProfileContext()
+  const [educationToBeDeleted, setEducationToBeDeleted] = useState<string>('')
 
   return (
     <>
@@ -34,7 +35,7 @@ export const Education: React.FC<IProps> = ({ onEdit }) => {
         </div>
 
         {profile?.education ? (
-          <div className="px-5 pt-5 flex flex-col gap-5">
+          <div className="flex flex-col">
             {profile?.education?.length > 0 ? (
               profile?.education?.map((education) => (
                 <div key={education._id}>
@@ -42,6 +43,8 @@ export const Education: React.FC<IProps> = ({ onEdit }) => {
                     length={profile?.education?.length as any}
                     education={education}
                     onEdit={onEdit}
+                    educationToBeDeleted={educationToBeDeleted}
+                    setEducationToBeDeleted={setEducationToBeDeleted}
                   />
                 </div>
               ))

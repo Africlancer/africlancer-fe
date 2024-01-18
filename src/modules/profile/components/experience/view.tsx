@@ -15,6 +15,7 @@ interface IProps {
 
 export const Experience: React.FC<IProps> = ({ onEdit }) => {
   const { profile } = useProfileContext()
+  const [experienceToBeDeleted, setExperienceToBeDeleted] = useState<string>('')
 
   return (
     <>
@@ -32,7 +33,7 @@ export const Experience: React.FC<IProps> = ({ onEdit }) => {
         </div>
 
         {profile?.experience ? (
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col">
             {profile?.experience?.length > 0 ? (
               profile?.experience?.map((experience) => (
                 <div key={experience._id}>
@@ -40,6 +41,8 @@ export const Experience: React.FC<IProps> = ({ onEdit }) => {
                     length={profile?.experience?.length as any}
                     onEdit={onEdit}
                     experience={experience}
+                    setExperienceToBeDeleted={setExperienceToBeDeleted}
+                    experienceToBeDeleted={experienceToBeDeleted}
                   />
                 </div>
               ))

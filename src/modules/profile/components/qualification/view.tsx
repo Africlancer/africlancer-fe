@@ -13,6 +13,7 @@ interface IProps {
 
 export const Qualification: React.FC<IProps> = ({ onEdit }) => {
   const { profile } = useProfileContext()
+  const [qualificationToBeDeleted, setQualificationToBeDeleted] = useState<string>('')
 
   return (
     <>
@@ -46,7 +47,7 @@ export const Qualification: React.FC<IProps> = ({ onEdit }) => {
         </div>
 
         {profile?.qualification ? (
-          <div className="px-5 pt-5 flex flex-col gap-5">
+          <div className="flex flex-col">
             {profile?.qualification?.length > 0 ? (
               profile?.qualification?.map((qualification) => (
                 <div key={qualification._id}>
@@ -54,6 +55,8 @@ export const Qualification: React.FC<IProps> = ({ onEdit }) => {
                     qualification={qualification}
                     length={profile?.qualification?.length as any}
                     onEdit={onEdit}
+                    qualificationToBeDeleted={qualificationToBeDeleted}
+                    setQualificationToBeDeleted={setQualificationToBeDeleted}
                   />
                 </div>
               ))

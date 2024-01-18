@@ -1,6 +1,6 @@
 export interface IProfileModal {
   open: boolean
-  type?: "info" | "experience" | "education" | "qualification" | "publication"
+  type?: "info" | "experience" | "education" | "qualification" | "publication" | "banner"
   width?: number
   publication?: IPublication
   qualification?: IQualification

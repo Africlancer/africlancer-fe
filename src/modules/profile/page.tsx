@@ -21,6 +21,7 @@ import {
   EditEducation,
   EditQualification,
   EditPublication,
+  EditBannerPhoto,
 } from './components'
 import { MenuProps } from 'antd'
 import { useQuery } from '@apollo/client'
@@ -30,7 +31,7 @@ import { useSession } from 'next-auth/react'
 import { IProfileModal } from './model'
 
 export const ProfilePage = () => {
-  const { profile, findProfile, loading } = useProfileContext()
+  const { profile, findProfile, loading, actionLoading } = useProfileContext()
   const [modal, setModal] = useState<IProfileModal>({ 
     open: false,
     type: "info",
@@ -48,7 +49,7 @@ export const ProfilePage = () => {
   return (
     <>    
       <div className="relative">
-        <Banner banner={profile?.banner} />
+        <Banner onEdit={() => setModal({open: true, type: "banner", width: 'auto' as any})} />
         <div className="-translate-y-44 mt-20 w-full">
           <div className="px-6 pb-8">
             <ApButton
@@ -68,13 +69,13 @@ export const ProfilePage = () => {
                 <Reviews />
               </div>
 
-              {/* <div className="flex flex-col gap-8">
+              <div className="flex flex-col gap-8">
                 <Verification />
                 <Certifications />
-                <Skills skills={profile?.skills} />
+                {/* <Skills skills={profile?.skills} /> */}
                 <SimilarFreelancers />
                 <SimilarShowcases />
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
@@ -83,10 +84,13 @@ export const ProfilePage = () => {
       <ApModal
         open={modal?.open}
         onDismiss={() => {
-          setModal({ open: false, width: modal?.width })
+          if(actionLoading == false){
+            setModal({ open: false, width: modal?.width })
+          }
         }}
         width={modal?.width}
       >
+        {modal?.type == "banner" && <EditBannerPhoto onDismiss={onDismiss}/>}
         {modal?.type == "info" && <EditProfileInfo onDismiss={onDismiss}/>}
         {modal?.type == "experience" && <EditExperience experience={modal?.experience} onDismiss={onDismiss}/>}
         {modal?.type == "education" && <EditEducation education={modal?.education} onDismiss={onDismiss}/>}

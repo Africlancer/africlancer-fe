@@ -37,7 +37,7 @@ interface IProps {
 }
 
 export const EditExperience: React.FC<IProps> = ({ onDismiss, experience }) => {
-  const { addOrUpdateExperience } = useProfileContext()
+  const { addOrUpdateExperience, actionLoading } = useProfileContext()
 
 
   const handleSubmit = (val: any) => {
@@ -74,13 +74,18 @@ export const EditExperience: React.FC<IProps> = ({ onDismiss, experience }) => {
     }
 
     addOrUpdateExperience(experience ? payload : payload2)
+    .finally(() => onDismiss())
   }
 
   return (
     <>
       <div>
-        <h1 className="font-black text-xl">Add Experience</h1>
-        <p className="mb-3">Fill To Add New Experience</p>
+        <h1 className="font-black text-xl">
+          {experience ? "Edit Experience" : "Add Experience"}
+        </h1>
+        <p className="mb-3">
+          {experience ? "Edit To Update Experience" : "Fill To Add New Experience"}
+        </p>
 
         <Formik
           initialValues={{
@@ -157,16 +162,16 @@ export const EditExperience: React.FC<IProps> = ({ onDismiss, experience }) => {
               <div className="gap-4 flex justify-end items-center mt-4">
                 <ApButton
                   type="submit"
-                  // loading={loading}
-                  className="py-2.5 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2"
+                  loading={actionLoading}
                 >
-                  Add Experience
+                  {experience ? "Edit Experience" : "Add Experience"}
                   <PlusOutlined className="text-lg" />
                 </ApButton>
 
                 <ApButton
-                  // onClick={() => setModal({ open: false })}
-                  className="py-2 border border-green-500 flex text-skin-accent rounded items-center p-3 justify-center gap-2"
+                  onClick={onDismiss}
+                  outline
+                  disabled={actionLoading}
                 >
                   Cancel
                   <CloseOutlined className="text-lg" />

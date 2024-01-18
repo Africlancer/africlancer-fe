@@ -14,6 +14,7 @@ interface IProps {
 
 export const Publication: React.FC<IProps> = ({ onEdit }) => {
   const { profile } = useProfileContext()
+  const [publicationToBeDeleted, setPublicationToBeDeleted] = useState<string>('')
 
   return (
     <>
@@ -31,7 +32,7 @@ export const Publication: React.FC<IProps> = ({ onEdit }) => {
         </div>
 
         {profile?.publication ? (
-          <div className="px-5 pt-5 flex flex-col gap-5">
+          <div className="flex flex-col">
             {profile?.publication?.length > 0 ? (
               profile?.publication?.map((publication) => (
                 <div key={publication._id}>
@@ -39,6 +40,8 @@ export const Publication: React.FC<IProps> = ({ onEdit }) => {
                     publication={publication}
                     length={profile?.publication?.length as any}
                     onEdit={onEdit}
+                    publicationToBeDeleted={publicationToBeDeleted}
+                    setPublicationToBeDeleted={setPublicationToBeDeleted}
                   />
                 </div>
               ))

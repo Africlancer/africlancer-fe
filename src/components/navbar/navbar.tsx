@@ -8,16 +8,18 @@ import Link from 'next/link'
 import { ApButton } from '../button'
 import { ApNotificationIcon, ArrowRightIcon } from '../icons'
 import { ApPopConfirm } from '../popconfirm'
+import { useProfileContext } from '@/src/modules/profile/context'
+import { useEffect } from 'react'
 
 interface IProps {
   avatar?: any
 }
 
-export const Navbar: React.FC<IProps> = ({ avatar }) => {
+export const Navbar: React.FC<IProps> = () => {
+  const {avatar, avatarLoading, findUserAvatar} = useProfileContext()
   const sess = useSession()
   const user: any = sess.data?.user
 
-  const { data, loading, error } = useQuery(FIND_USER_AVATAR)
   const items: MenuProps['items'] = [
     {
       key: '1',
@@ -79,7 +81,11 @@ export const Navbar: React.FC<IProps> = ({ avatar }) => {
     },
   ]
 
-  // console.log(data)
+  useEffect(() => {
+    if(!avatar) {
+      findUserAvatar()
+    }
+  }, [])
 
   return (
     <header>
@@ -180,17 +186,21 @@ export const Navbar: React.FC<IProps> = ({ avatar }) => {
             <li className="flex items-center">
               {/* {
                 data ? ( */}
-              <div className="flex items-center text-lg">
                 <div className="border-l h-10 w-2 mx-5"></div>
-                <p className="font-bold text-lg mr-3">{user?.username}</p>
-                <Dropdown trigger={['hover']} menu={{ items }} placement="bottomLeft" arrow>
+                {!avatar ? (
                   <Skeleton.Image
                     active
                     style={{ height: '40px', width: '40px', padding: '10px' }}
                   />
-                  {/* <Image preview={false} alt="usrimg" className="rounded cursor-pointer" height={40} width={40} src={data?.findOneProfile?.avatar}/> */}
-                </Dropdown>
-              </div>
+                ) : (
+                  <Dropdown className='cursor-pointer' trigger={['hover']} menu={{ items }} placement="bottomLeft" arrow>
+                    <div className="flex items-center text-lg">
+                      <p className="font-semibold text-lg mr-5 cursor-pointer">{user?.username}</p>
+                      <Image src={avatar} preview={false} alt="usrimg" className="rounded cursor-pointer" height={40} width={40}/>
+                    </div>
+                  </Dropdown>
+                )}
+
               {/* ) : (
                   <div className="flex gap-2 ml-3">
                     <Skeleton.Input active size='large'/>

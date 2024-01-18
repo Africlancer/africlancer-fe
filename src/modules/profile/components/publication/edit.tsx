@@ -15,7 +15,7 @@ interface IProps {
 }
 
 export const EditPublication: React.FC<IProps> = ({ onDismiss, publication }) => {
-  const { addOrUpdatePublication } = useProfileContext()
+  const { addOrUpdatePublication, actionLoading } = useProfileContext()
 
   const handleSubmit = async (val: any) => {
     let payload: IPublication = {
@@ -24,13 +24,18 @@ export const EditPublication: React.FC<IProps> = ({ onDismiss, publication }) =>
     }
 
     addOrUpdatePublication(publication ? payload : val)
+    .finally(() => onDismiss())
   } 
 
   return (
     <>
       <div>
-        <h1 className="font-bold text-xl">Add Publication</h1>
-        <p className="mb-3">Fill To Add New Publication</p>
+        <h1 className="font-black text-xl">
+          {publication ? "Edit Publication" : "Add Publication"}
+        </h1>
+        <p className="mb-3">
+          {publication ? "Edit To Update Publication" : "Fill To Add New Publication"}
+        </p>
 
         <Formik
           initialValues={{
@@ -72,17 +77,17 @@ export const EditPublication: React.FC<IProps> = ({ onDismiss, publication }) =>
 
             <div className="gap-4 flex justify-end items-center mt-4">
               <ApButton
-                className="py-2.5 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2"
                 type="submit"
-                // loading={loading}
+                loading={actionLoading}
               >
-                Add Publication
+                {publication ? "Edit Publication" : "Add Publication"}
                 <PlusOutlined className="text-lg" />
               </ApButton>
 
               <ApButton
-                // onClick={() => setModal({ open: false })}
-                className="py-2 border border-green-500 flex text-skin-accent rounded items-center p-3 justify-center gap-2"
+                onClick={onDismiss}
+                outline
+                disabled={actionLoading}
               >
                 Cancel
                 <CloseOutlined className="text-lg" />
