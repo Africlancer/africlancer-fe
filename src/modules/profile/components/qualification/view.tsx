@@ -9,9 +9,10 @@ import { IQualification } from '../../model'
 
 interface IProps {
   onEdit: (qualification?: IQualification) => void
+  freelancerId?: string
 }
 
-export const Qualification: React.FC<IProps> = ({ onEdit }) => {
+export const Qualification: React.FC<IProps> = ({ onEdit, freelancerId }) => {
   const { profile } = useProfileContext()
   const [qualificationToBeDeleted, setQualificationToBeDeleted] = useState<string>('')
 
@@ -40,10 +41,12 @@ export const Qualification: React.FC<IProps> = ({ onEdit }) => {
             </svg>
           </div>
 
-          <ApButton onClick={() => onEdit()}>
-            Add Qualification
-            <ArrowRightIcon />
-          </ApButton>
+          {!freelancerId && (
+            <ApButton onClick={() => onEdit()}>
+              Add Qualification
+              <ArrowRightIcon />
+            </ApButton>
+          )}
         </div>
 
         {profile?.qualification ? (
@@ -61,7 +64,7 @@ export const Qualification: React.FC<IProps> = ({ onEdit }) => {
                 </div>
               ))
             ) : ( 
-              <p className="text-skin-inverted mb-5">No qualification has been added.</p>
+              <p className="text-skin-inverted p-5">No qualification has been added.</p>
             )}
           </div>
         ) : (

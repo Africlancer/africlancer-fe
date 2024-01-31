@@ -1,8 +1,13 @@
 import React from 'react'
-import { PostProjectPage } from '../modules/projects/post/page'
+import { CreateLayout } from '../components'
+import PostProjectPage from '../modules/project/post/page'
 
 const PostProject = () => {
-  return <PostProjectPage />
+  return (
+    <CreateLayout pageTitle='Africlancer | Post Project'>
+      <PostProjectPage/>
+    </CreateLayout>
+  )
 }
 
 export default PostProject

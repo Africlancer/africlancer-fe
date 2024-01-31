@@ -50,11 +50,11 @@ export const InfoSectionOne: React.FC<IProps> = ({
       </div>
 
       <div className="text-base">
-        <p className="mb-2 text-skin-inverted">{summary}</p>
-        <p className="mb-1 text-skin-inverted">
+        {/* <p className="mb-2 text-skin-inverted">{summary}</p> */}
+        {/* <p className="mb-1 text-skin-inverted">
           <ApClockIcon />
           It&apos;s currently 3:12 PM here
-        </p>
+        </p> */}
 
         <p className="mb-1 text-skin-inverted">
           <ApBadgeWithMarkIcon />

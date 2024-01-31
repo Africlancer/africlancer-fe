@@ -29,9 +29,9 @@ export const ApButton: React.FC<Iprops> = ({
   return (
     <button
       type={type}
-      className={`${loading ? 'py-0' : 'py-3'} px-5 min-w-[120px] flex rounded-md items-center justify-center gap-2 disabled:cursor-not-allowed
-        ${outline ? 'border border-green-500 text-skin-accent' 
-        :'bg-skin-accent text-white'}
+      className={`px-5 min-w-[120px] flex rounded-md items-center justify-center gap-2 disabled:cursor-not-allowed
+        ${outline ? `border border-green-500 text-skin-accent ${loading ? 'py-0' : 'py-[11px]'}` 
+        :`bg-skin-accent text-white ${loading ? 'py-0' : 'py-3'}`}
         ${className}
       `}
       onClick={onClick}

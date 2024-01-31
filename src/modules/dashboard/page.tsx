@@ -9,44 +9,12 @@ import { ArrowRightIcon } from '@/src/components/icons'
 import Image from 'next/image'
 
 export const DashboardPage = () => {
-  const items: MenuProps['items'] = [
-    {
-      label: 'Dashboard',
-      key: 'dashboard',
-    },
-    {
-      label: 'Lists',
-      key: 'lists',
-    },
-    {
-      label: 'Tasklists',
-      key: 'tasklists',
-    },
-    {
-      label: 'My Projects',
-      key: 'my-projects',
-    },
-    {
-      label: 'Inbox',
-      key: 'inbox',
-    },
-    {
-      label: 'Feedback',
-      key: 'feedback',
-    },
-    {
-      label: 'Free Credit',
-      key: 'free-credit',
-    },
-  ]
 
   return (
     <div className="h-full relative bg-skin-alt">
       <div className="profile-page relative">
-        <Navbar />
-        <SubMenu items={items} currentPage="dashboard" />
 
-        <div className="text-skin-inverted relative pt-32 pb-10 mb-20 px-10">
+        <div className="text-skin-inverted relative py-10 px-10">
           <div className="flex gap-5 items-start">
             <div className="flex flex-col gap-5">
               <div className="bg-skin-base rounded-lg shadow-lg p-7">
@@ -441,10 +409,6 @@ export const DashboardPage = () => {
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="-mt-20">
-        <Footer />
       </div>
     </div>
   )

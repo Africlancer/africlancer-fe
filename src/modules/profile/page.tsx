@@ -30,8 +30,12 @@ import { useProfileContext } from './context'
 import { useSession } from 'next-auth/react'
 import { IProfileModal } from './model'
 
-export const ProfilePage = () => {
-  const { profile, findProfile, loading, actionLoading } = useProfileContext()
+interface IProps {
+  freelancerId?: string
+}
+
+export const ProfilePage: React.FC<IProps> = ({ freelancerId }) => {
+  const { profile, findProfile, findOneProfile, loading, actionLoading } = useProfileContext()
   const [modal, setModal] = useState<IProfileModal>({ 
     open: false,
     type: "info",
@@ -39,7 +43,11 @@ export const ProfilePage = () => {
   })
 
   useEffect(() => {
-    findProfile()
+    if(freelancerId){
+      findOneProfile(freelancerId)
+    } else {
+      findProfile()      
+    }
   },[])
   
   const onDismiss = () => {
@@ -48,30 +56,32 @@ export const ProfilePage = () => {
 
   return (
     <>    
-      <div className="relative">
-        <Banner onEdit={() => setModal({open: true, type: "banner", width: 'auto' as any})} />
-        <div className="-translate-y-44 mt-20 w-full">
+      <div className={`relative`}>
+        <Banner freelancerId={freelancerId} onEdit={() => setModal({open: true, type: "banner", width: 'auto' as any})} />
+        <div className={`mt-20 w-full ${freelancerId ? '-translate-y-32' : '-translate-y-44'}`}>
           <div className="px-6 pb-8">
-            <ApButton
-              onClick={() => {}}
-              className="py-2 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2"
-            >
-              View Client Profile
-            </ApButton>
+            {!freelancerId && (
+              <ApButton
+                onClick={() => {}}
+                className="py-2 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2"
+              >
+                View Client Profile
+              </ApButton>
+            )}
             <div className="cs:gap-8 cs:grid cs:grid-cols-3 w-full grid mt-4">
               <div className="col-span-2 grid gap-8">
-                <ProfileInfo onEdit={() => setModal({open: true, type: "info", width: 970})}/>
-                <Experience onEdit={(experience) => setModal({open: true, type: "experience", width: 970, experience})} />
-                <Education onEdit={(education) => setModal({open: true, type: "education", width: 970, education})} />
-                <Qualification onEdit={(qualification) => setModal({open: true, type: "qualification", width: 970, qualification})} />
-                <Publication onEdit={(publication) => setModal({open: true, type: "publication", width: 970, publication})} />
-                <Portfolioitems />
+                <ProfileInfo freelancerId={freelancerId} onEdit={() => setModal({open: true, type: "info", width: 970})}/>
+                <Experience freelancerId={freelancerId} onEdit={(experience) => setModal({open: true, type: "experience", width: 970, experience})} />
+                <Education freelancerId={freelancerId} onEdit={(education) => setModal({open: true, type: "education", width: 970, education})} />
+                <Qualification freelancerId={freelancerId} onEdit={(qualification) => setModal({open: true, type: "qualification", width: 970, qualification})} />
+                <Publication freelancerId={freelancerId} onEdit={(publication) => setModal({open: true, type: "publication", width: 970, publication})} />
+                <Portfolioitems freelancerId={freelancerId}/>
                 <Reviews />
               </div>
 
               <div className="flex flex-col gap-8">
-                <Verification />
-                <Certifications />
+                <Verification freelancerId={freelancerId}/>
+                <Certifications freelancerId={freelancerId}/>
                 {/* <Skills skills={profile?.skills} /> */}
                 <SimilarFreelancers />
                 <SimilarShowcases />

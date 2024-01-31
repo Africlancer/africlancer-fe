@@ -9,15 +9,16 @@ import { useProfileContext } from '../../context'
 
 interface IProps {
   onEdit: () => void
+  freelancerId?: string
 }
 
-export const ProfileInfo: React.FC<IProps> = ({ onEdit }) => {
+export const ProfileInfo: React.FC<IProps> = ({ onEdit, freelancerId }) => {
   const sess: any = useSession()
   const { profile } = useProfileContext()
 
   return (
-    <>
-      <div className="col-span-2 p-5 bg-skin-base shadow-xl w-full rounded-xl relative">
+    <div className='col-span-2 p-5 bg-skin-base shadow-xl w-full rounded-xl'>
+      <div className="relative">
         <div className="flex w-full">
           {profile?.avatar ? (
             <Image alt="" width="320px" height="320px" className='rounded-md' src={profile.avatar} />
@@ -30,8 +31,8 @@ export const ProfileInfo: React.FC<IProps> = ({ onEdit }) => {
               summary={profile.summary as any}
               professionalHeadline={profile.professionalHeadline}
               recommendations={profile.recommendations as any}
-              email={sess?.data?.user?.email}
-              name={sess?.data?.user?.name}
+              email={profile?.user?.email as any}
+              name={profile?.fullName as any}
             />
           ) : (
             <div className="mt-1 ml-5 w-full">
@@ -45,11 +46,21 @@ export const ProfileInfo: React.FC<IProps> = ({ onEdit }) => {
             flagURL={profile?.flagURL as any}
             hourlyRate={profile?.hourlyRate as any}
             onEdit={onEdit}
+            freelancerId={freelancerId}
           />
         ) : (
           <></>
         )}
       </div>
-    </>
+
+      {profile && (
+        <div className='pt-3'>
+          <h1 className='border-skin-border border-b font-bold text-xl pb-3 mb-3'>Summary</h1>
+          <p>
+            {profile?.summary}
+          </p>
+        </div>
+      )}
+    </div>
   )
 }

@@ -32,6 +32,20 @@
   }
 }
 
+td.ant-table-cell.ant-table-cell-row-hover {
+  background: white !important;
+}
+
+.align-antd-menu .ant-menu-horizontal .ant-menu-item{
+  padding-inline: 0px !important;
+  padding-right: 20px !important;
+}
+
+.align-antd-menu .ant-menu-light.ant-menu-horizontal >.ant-menu-item::after, .ant-menu-light.ant-menu-horizontal >.ant-menu-submenu::after {
+  inset-inline: 0px !important;
+  inset-inline-end: 20px !important;
+}
+
 body {
   font-family: 'Red Hat Display', sans-serif;
   min-height: 100vh;
@@ -301,7 +315,25 @@ body {
   width: 100% !important;
   height: 100% !important;
 }
+  
+.ant-table-wrapper .ant-table-tbody .ant-table-row >tr >td.ant-table-cell-row-hover {
+  background: #fff !important;
+}
+
+.ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-submenu-title, .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-submenu-title {
+  padding-block: 8px !important;
+}
 
 /* .ant-upload-wrapper.ant-upload-picture-card-wrapper .ant-upload-list.ant-upload-list-picture-card .ant-upload-list-item-thumbnail, :where(.css-dev-only-do-not-override-1f91jta).ant-upload-wrapper.ant-upload-picture-card-wrapper .ant-upload-list.ant-upload-list-picture-card .ant-upload-list-item-thumbnail img {
   object-fit: cover !important;
+} */
+
+/* .ant-steps-item-container .ant-steps-item-icon {
+  padding-top: -15px !important;
+}
+.ant-steps-item-container .ant-steps-item-icon .ant-steps-icon .ant-steps-finish-icon {
+  margin-top: -15px;
+}
+.ant-steps-item .ant-steps-item-container .ant-steps-item-content .ant-steps-item-description {
+  max-width: 100%;
 } */

@@ -12,7 +12,6 @@ const FETCH_ALL_FREELANCERS = gql`
     }
   }
 `
-
 const FETCH_FREELANCERS_FILTER = gql`
   query FindProfilesFilter($query: QueryProfileInput!, $fullSearch: Boolean!) {
     findProfilesFilter(query: $query, fullSearch: $fullSearch) {
@@ -31,6 +30,35 @@ const FETCH_FREELANCERS_FILTER = gql`
     }
   }
 `
+const FIND_FREELANCERS_FILTER = gql`
+  query FindProfilesFilter($query: QueryProfileInput!, $fullSearch: Boolean!) {
+    findProfilesFilter(query: $query, fullSearch: $fullSearch) {
+      _id
+      userID
+      avatar
+      hourlyRate
+      professionalHeadline
+      summary
+      user {
+        _id
+        profileID
+        firstName
+        lastName
+        email
+        username
+      }
+    }
+  }
+`
+
+export default function useFreelancerQuery () {
+  const findFreelancersFilterQ = useLazyQuery(FIND_FREELANCERS_FILTER, {fetchPolicy: "no-cache"});
+
+  return {
+    findFreelancersFilterQ,
+    loading: findFreelancersFilterQ[1].loading,
+  }
+}
 
 export const useFetchAllFreelancers = () => {
   return useLazyQuery(FETCH_ALL_FREELANCERS, {

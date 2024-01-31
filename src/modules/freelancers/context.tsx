@@ -1,18 +1,24 @@
 import React, { useState } from 'react'
-import { useFetchAllFreelancers, useFetchFreelancersFilter } from './gql/query'
+import useFreelancerQuery, { useFetchAllFreelancers, useFetchFreelancersFilter } from './gql/query'
 import useApNotification from '@/src/hooks/notification'
+import { IQueryFreelancerInput } from './model'
+import { IProfile } from '../profile/model'
 
 interface IFreelancersState {
   fetchAllFreelancers: (query) => void
   fetchFreelancersFilter: (query, fullSearch) => void
-  freelancers: any
+  findFreelancers: (query: IQueryFreelancerInput, fullSearch?: boolean, userId?: string) => Promise<any>
+  freelancers: IProfile[]
+  loading: boolean
 }
 
 const FreelancersContext = React.createContext<IFreelancersState>({
   fetchAllFreelancers(query) {},
   fetchFreelancersFilter(query, fullSearch) {},
-  freelancers: null,
-})
+  findFreelancers(query, fullSearch, userId) {},
+  freelancers: [],
+  loading: true
+} as any)
 
 const useFreelancersContext = () => {
   const context = React.useContext(FreelancersContext)
@@ -25,10 +31,12 @@ interface IProps {
 }
 
 const FreelancersContextProvider: React.FC<IProps> = ({ children }) => {
+  const freelancerQuery = useFreelancerQuery();
+  const [freelancers, setFreelancers] = useState<IProfile[]>([])
+
   const fetchAllFreelancersQuery = useFetchAllFreelancers()
   const fetchFreelancersFilterQuery = useFetchFreelancersFilter()
   const { errorMsg, notificationContext, successMsg } = useApNotification()
-  const [freelancers, setFreelancers] = useState<any>(null)
 
   const fetchAllFreelancers = (query) => {
     fetchAllFreelancersQuery[0]({
@@ -55,12 +63,28 @@ const FreelancersContextProvider: React.FC<IProps> = ({ children }) => {
       .catch((err) => console.log(err))
   }
 
+  const findFreelancers = async (query: IQueryFreelancerInput, fullSearch?: boolean, userId?: string): Promise<any> => {
+    return new Promise<void>((resolve, reject) => {
+      freelancerQuery.findFreelancersFilterQ[0]({ variables: { query, fullSearch } })
+      .then((res) => {
+        // setFreelancers(res?.data?.findProfilesFilter.filter((item) => item.userID != userId))
+        setFreelancers(res?.data?.findProfilesFilter)
+        resolve(res?.data?.findProfilesFilter)
+      }).catch((err) => {
+        errorMsg('Error', err)
+        reject(err)
+      })
+    })
+  }
+
   return (
     <FreelancersContext.Provider
       value={{
+        findFreelancers,
         fetchAllFreelancers,
         freelancers,
         fetchFreelancersFilter,
+        loading: freelancerQuery.loading
       }}
     >
       <>

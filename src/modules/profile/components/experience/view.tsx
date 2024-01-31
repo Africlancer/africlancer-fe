@@ -11,9 +11,10 @@ import { IExperience } from '../../model'
 
 interface IProps {
   onEdit: (experience?: IExperience) => void
+  freelancerId?: string
 }
 
-export const Experience: React.FC<IProps> = ({ onEdit }) => {
+export const Experience: React.FC<IProps> = ({ onEdit, freelancerId }) => {
   const { profile } = useProfileContext()
   const [experienceToBeDeleted, setExperienceToBeDeleted] = useState<string>('')
 
@@ -26,10 +27,12 @@ export const Experience: React.FC<IProps> = ({ onEdit }) => {
             <ApSuitCaseIcon className="w-6 h-6 text-skin-muted" />
           </div>
 
-          <ApButton onClick={() => onEdit()}>
-            Add Experience
-            <ArrowRightIcon />
-          </ApButton>
+          {!freelancerId && (
+            <ApButton onClick={() => onEdit()}>
+              Add Experience
+              <ArrowRightIcon />
+            </ApButton>
+          )}
         </div>
 
         {profile?.experience ? (
@@ -47,7 +50,7 @@ export const Experience: React.FC<IProps> = ({ onEdit }) => {
                 </div>
               ))
             ) : (
-              <p className="text-skin-inverted mb-5">No experience has been added.</p>
+              <p className="text-skin-inverted p-5">No experience has been added.</p>
             )}
           </div>
         ) : (

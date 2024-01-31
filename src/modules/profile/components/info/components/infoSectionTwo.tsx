@@ -8,15 +8,18 @@ interface IProps {
   hourlyRate: number
   location: string
   flagURL: string
+  freelancerId?: string
 }
 
-export const InfoSectionTwo: React.FC<IProps> = ({ onEdit, hourlyRate, location, flagURL }) => {
+export const InfoSectionTwo: React.FC<IProps> = ({ freelancerId, onEdit, hourlyRate, location, flagURL }) => {
   return (
-    <div className="absolute p-5 bottom-0 top-0 right-0 flex gap-3 flex-col justify-between items-end mt-0">
-      <ApButton onClick={onEdit}>
-        Edit Profile
-        <EditIcon />
-      </ApButton>
+    <div className="absolute p- bottom-0 top-0 right-0 flex gap-3 flex-col justify-between items-end mt-0">
+      {!freelancerId && (
+        <ApButton onClick={onEdit}>
+          Edit Profile
+          <EditIcon />
+        </ApButton>
+      )}
 
       <div className="text-right text-base">
         {/* <div className="flex justify-end gap-2 items-center mb-2">

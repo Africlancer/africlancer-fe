@@ -83,6 +83,21 @@ const FIND_BIDS = gql`
   }
 `
 
+export default function useBiddingQuery () {
+  // const findProjectsQ = useLazyQuery(FIND_PROJECTS, {fetchPolicy: "no-cache"});
+  // const findProjectsFilterQ = useLazyQuery(FIND_PROJECTS_FILTER, {fetchPolicy: "no-cache"});
+  // const findProjectQ = useLazyQuery(FIND_PROJECT, {fetchPolicy: "no-cache"});
+  const createBidQ = useMutation(CREATE_BID)
+
+  return {
+    createBidQ,
+    // loading: findProjectsQ[1].loading || findProjectsFilterQ[1].loading,
+    actionLoading: 
+      createBidQ[1].loading
+  }
+}
+
+
 export const useCreateBid = (callback: (rs: any) => void) => {
   return useMutation(CREATE_BID, {
     onCompleted: (rs) => {

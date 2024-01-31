@@ -1,6 +1,10 @@
 import React from 'react'
 
-export const Verification = () => {
+interface IProps {
+  freelancerId?: string
+}
+
+export const Verification: React.FC<IProps> = ({ freelancerId }) => {
   return (
     <div className="col-span-2 bg-skin-base shadow-xl w-full rounded-xl">
       <div className="border-skin-border border-b px-6 py-2 flex items-center">

@@ -1,8 +1,8 @@
-import { ProjectDetailsPage } from '@/src/modules/projects/details/page'
+// import { ProjectDetailsPage } from '@/src/modules/projects/details/page'
 import React from 'react'
 
 const ProjectDetails = ({ id }) => {
-  return <ProjectDetailsPage id={id} />
+  return<></>
 }
 
 export default ProjectDetails

@@ -7,9 +7,10 @@ import { useProfileContext } from '../../context'
 
 interface IProps {
   onEdit: () => void
+  freelancerId?: string
 }
 
-export const Banner: React.FC<IProps> = ({ onEdit }) => {
+export const Banner: React.FC<IProps> = ({ onEdit, freelancerId }) => {
   const { profile } = useProfileContext()
 
   return (
@@ -26,12 +27,15 @@ export const Banner: React.FC<IProps> = ({ onEdit }) => {
         </div>
       )}
       {/* <div className="cover-bg w-full relative md:bg-center md:bg-cover bg-center bg-cover h-96"> */}
-      <button
-        className="bg-green-500 absolute ml-5 top-5 p-2 rounded flex items-center"
-        onClick={onEdit}
-      >
-        <CameraIcon style={{ color: 'white', fontSize: '25px' }} />
-      </button>
+      
+      {!freelancerId && (
+        <button
+          className="bg-green-500 absolute ml-5 top-5 p-2 rounded flex items-center"
+          onClick={onEdit}
+        >
+          <CameraIcon style={{ color: 'white', fontSize: '25px' }} />
+        </button>
+      )}
     </div>
   )
 }

@@ -10,9 +10,10 @@ import { IPublication } from '../../model'
 
 interface IProps {
   onEdit: (publication?: IPublication) => void
+  freelancerId?: string
 }
 
-export const Publication: React.FC<IProps> = ({ onEdit }) => {
+export const Publication: React.FC<IProps> = ({ onEdit, freelancerId }) => {
   const { profile } = useProfileContext()
   const [publicationToBeDeleted, setPublicationToBeDeleted] = useState<string>('')
 
@@ -25,10 +26,12 @@ export const Publication: React.FC<IProps> = ({ onEdit }) => {
             <ApGlobeIcon className="w-6 h-6 text-skin-muted" />
           </div>
 
-          <ApButton onClick={() => onEdit()}>
-            Add Publication
-            <ArrowRightIcon />
-          </ApButton>
+          {!freelancerId && (
+            <ApButton onClick={() => onEdit()}>
+              Add Publication
+              <ArrowRightIcon />
+            </ApButton>
+          )}
         </div>
 
         {profile?.publication ? (
@@ -46,7 +49,7 @@ export const Publication: React.FC<IProps> = ({ onEdit }) => {
                 </div>
               ))
             ) : (
-              <p className="text-skin-inverted mb-5">No publication has been added.</p>
+              <p className="text-skin-inverted p-5">No publication has been added.</p>
             )}
           </div>
         ) : (

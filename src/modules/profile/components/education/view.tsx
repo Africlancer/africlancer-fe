@@ -10,9 +10,10 @@ import { IEducation } from '../../model'
 
 interface IProps {
   onEdit: (education?: IEducation) => void
+  freelancerId?: string
 }
 
-export const Education: React.FC<IProps> = ({ onEdit }) => {
+export const Education: React.FC<IProps> = ({ onEdit,freelancerId }) => {
   const { profile } = useProfileContext()
   const [educationToBeDeleted, setEducationToBeDeleted] = useState<string>('')
 
@@ -25,13 +26,15 @@ export const Education: React.FC<IProps> = ({ onEdit }) => {
             <ApGradHatIcon className="w-6 h-6 text-skin-muted" />
           </div>
 
-          <ApButton
-            onClick={() => onEdit()}
-            className="py-2 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2"
-          >
-            Add Education
-            <ArrowRightIcon />
-          </ApButton>
+          {!freelancerId && (
+            <ApButton
+              onClick={() => onEdit()}
+              className="py-2 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2"
+            >
+              Add Education
+              <ArrowRightIcon />
+            </ApButton>
+          )}
         </div>
 
         {profile?.education ? (
@@ -49,7 +52,7 @@ export const Education: React.FC<IProps> = ({ onEdit }) => {
                 </div>
               ))
             ) : (
-              <p className="text-skin-inverted mb-5">No education info has been added.</p>
+              <p className="text-skin-inverted p-5">No education info has been added.</p>
             )}
           </div>
         ) : (

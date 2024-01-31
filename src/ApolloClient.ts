@@ -4,18 +4,20 @@ import { getSession } from 'next-auth/react'
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions'
 import { createClient } from 'graphql-ws'
 import { getMainDefinition } from '@apollo/client/utilities'
+import { environment } from './environment'
+import { GraphQLClient } from 'graphql-request'
 
 // console.log(process.env.GRAPHQL_URL, " process.env.GRAPHQL_URL");
 
 const httpLink = createHttpLink({
-  uri: 'https://africlancer.asynctechs.com/graphql', //"" http://159.223.91.232:6110/graphql
+  uri: environment.Uri.Graphql
 })
 
 const wsLink =
   typeof window !== 'undefined'
     ? new GraphQLWsLink(
         createClient({
-          url: 'ws://africlancer.asynctechs.com/graphql',
+          url: 'ws://localhost:6110/graphql',
         }),
       )
     : null
@@ -51,6 +53,11 @@ export const apolloClient = new ApolloClient({
   link: splitLink,
   cache: new InMemoryCache(),
 })
+
+export const gqlClient = new GraphQLClient(environment.Uri.Graphql, {
+  credentials: "include",
+});
+
 
 // const wsLink = new GraphQLWsLink(createClient({
 //   url: 'ws://localhost:4000/subscriptions',

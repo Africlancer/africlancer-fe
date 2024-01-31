@@ -1,7 +1,7 @@
 import useApNotification from '@/src/hooks/notification'
 import { useLazyQuery } from '@apollo/client'
 import React, { useState } from 'react'
-import {
+import useBiddingQuery, {
   FIND_ONE_BID,
   useAverageBid,
   useAwardBid,
@@ -13,16 +13,19 @@ import {
   useUnawardBid,
   useUpdateBid,
 } from './gql/query'
+import { IBid } from './model'
+import { useProjectContext } from '../project/context'
 
 interface IBiddingState {
   loading: boolean
+  actionLoading: boolean
   projectTotalBids: number
   projectBids: any
   averageBid: number
   userBid: any
   awardedBids: any
   unawardedBids: any
-  createBid: (bid, query, refetchFunc) => void
+  createBid: (bid: IBid) => Promise<any>
   updateBid: (id, bid, refetchFunc, refetchQuery) => void
   deleteBid: (id, refetchFunc, refetchQuery) => void
   getTotalBids: (projectId) => void
@@ -36,13 +39,14 @@ interface IBiddingState {
 
 const BiddingContext = React.createContext<IBiddingState>({
   loading: false,
+  actionLoading: false,
   projectTotalBids: 0,
   projectBids: [],
   averageBid: 0,
   userBid: {},
   awardedBids: [],
   unawardedBids: [],
-  createBid(bid, query, refetchFunc) {},
+  createBid(bid) {},
   updateBid(id, bid, refetchFunc, refetchQuery) {},
   deleteBid(id, refetchFunc, refetchQuery) {},
   getTotalBids(projectId) {},
@@ -52,7 +56,7 @@ const BiddingContext = React.createContext<IBiddingState>({
   setUserBid() {},
   awardBid(projectId, bidId) {},
   unawardBid(projectId, bidId) {},
-})
+} as any)
 
 const useBiddingContext = () => {
   const context = React.useContext(BiddingContext)
@@ -65,6 +69,10 @@ interface IProps {
 }
 
 const BiddingContextProvider: React.FC<IProps> = ({ children }) => {
+  const biddingQuery = useBiddingQuery()
+  const {findProject} = useProjectContext()
+  const [actionLoading, setActionLoading] = useState(false)
+
   const createBidQuery = useCreateBid((rs) => {})
   const deleteBidQuery = useDeleteBid((rs) => {})
   const updateBidQuery = useUpdateBid((rs) => {})
@@ -83,21 +91,22 @@ const BiddingContextProvider: React.FC<IProps> = ({ children }) => {
   const [unawardedBids, setUnawardedBids] = useState<any>([])
   const { errorMsg, notificationContext, successMsg } = useApNotification()
 
-  const createBid = async (bid, query, refetchFunc) => {
-    setLoading(true)
-    await createBidQuery[0]({ variables: { bid } })
-      .then((rs) => {
-        //console.log(rs)
-         successMsg('Successs', 'Your bid has been placed.')
-        setLoading(false)
-        refetchFunc({ query })
-        getTotalBids(query.projectID)
-        getAverageBid(query.projectID)
+  const createBid = async (bid: IBid): Promise<any> => {
+    setActionLoading(true)
+
+    return new Promise<void>((resolve, reject) => {
+      biddingQuery.createBidQ[0]({ variables: { bid } })
+      .then((res) => {
+        findProject({_id: bid.projectID}).then(() => {
+          successMsg('Success', 'Bid Placed Successfully')
+          setActionLoading(false)
+        })
+        resolve(res?.data?.createBid)
+      }).catch((err) => {
+        errorMsg('Error', err)
+        reject(err)
       })
-      .catch((err) => {
-         errorMsg('Error', err.message)
-        setLoading(false)
-      })
+    })
   }
 
   const deleteBid = async (id, refetchFunc, refetchQuery) => {
@@ -234,6 +243,7 @@ const BiddingContextProvider: React.FC<IProps> = ({ children }) => {
         unawardBid,
         awardedBids,
         unawardedBids,
+        actionLoading: actionLoading
       }}
     >
       <>

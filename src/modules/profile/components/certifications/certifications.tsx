@@ -3,7 +3,11 @@ import { ArrowRightIcon } from '@/src/components/icons'
 import Link from 'next/link'
 import React from 'react'
 
-export const Certifications = () => {
+interface IProps {
+  freelancerId?: string
+}
+
+export const Certifications: React.FC<IProps> = ({ freelancerId }) => {
   return (
     <div className="bg-skin-base col-span-1 inline-block rounded-xl w-full shadow-xl">
       <div className="border-skin-border border-b px-6 py-2 flex justify-between">
@@ -21,15 +25,17 @@ export const Certifications = () => {
           </svg>
         </div>
 
-        <Link href="/get-certified">
-          <ApButton
-            onClick={() => {}}
-            className="py-2 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2"
-          >
-            Get Certified
-            <ArrowRightIcon />
-          </ApButton>
-        </Link>
+        {!freelancerId && (
+          <Link href="/get-certified">
+            <ApButton
+              onClick={() => {}}
+              className="py-2 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2"
+            >
+              Get Certified
+              <ArrowRightIcon />
+            </ApButton>
+          </Link>
+        )}
       </div>
 
       <div className="h-64 flex items-center justify-center cs2:p-5 cs3:p-10 p-5 flex-col">

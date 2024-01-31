@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { ConfigProvider, Switch, Rate } from 'antd'
 
-export const FilterComponent = ({ browseFunc: fetchFree }) => {
+export const FreelancersFilter = () => {
   const [checked, setChecked] = useState<boolean>(false)
   const [value, setValue] = useState(3)
   const desc = ['1', '2', '3', '4', '5']
   const [filterQuery, setFilterQuery] = useState<{}>({})
 
-  useEffect(() => {
-    console.log('filterTouched')
-    fetchFree({ ...filterQuery }, false)
-  }, [])
-
   return (
     <div>
-      <h1 className="font-medium text-lg px-5 py-3 border-b">Search Filters</h1>
       <form>
         <div className="border-b px-5 py-5">
           <div className="flex items-center justify-between w-full">
@@ -26,7 +20,6 @@ export const FilterComponent = ({ browseFunc: fetchFree }) => {
             <div>
               <p className="mb-2">Min</p>
               <input
-                onChange={({ target }) => setFilterQuery({ ...filterQuery, type: target.value })}
                 className="focus:border-green-500 border-skin-border border text-black outline-none w-full text-sm bg-skin-input px-5 py-3 flex items-center rounded mb-2 disabled:cursor-not-allowed"
               />
             </div>
@@ -134,7 +127,6 @@ export const FilterComponent = ({ browseFunc: fetchFree }) => {
             <ConfigProvider theme={{ token: { colorPrimary: 'green' } }}>
               <Switch
                 className="bg-gray-500"
-                onChange={(checked: boolean) => setChecked(checked)}
               />
             </ConfigProvider>
 

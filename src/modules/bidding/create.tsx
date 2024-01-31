@@ -3,27 +3,26 @@ import React from 'react'
 import { InfoCircleFilled } from '@ant-design/icons'
 import { ApButton, ApTextInput } from '@/src/components'
 import { useBiddingContext } from './context'
+import { useProjectContext } from '../project/context'
 
-export const CreateBid = ({ projectID, query, refetch }) => {
-  const { createBid, loading } = useBiddingContext()
+interface IProps {
+  projectID: string
+}
 
-  const handleSubmit = (val) => {
-    createBid(
-      {
-        projectID,
-        ...val,
-        // proposal: val.proposal,
-        // deliveredIn: parseInt(val.deliveredIn),
-        // budget: parseInt(val.budget)
-      },
-      query,
-      refetch,
-    )
+export const CreateBid = ({ projectID }) => {
+  const { createBid, actionLoading } = useBiddingContext()
+  const { findProject } = useProjectContext()
+
+  const handleSubmit = (val) => {    
+    createBid({
+      projectID,
+      ...val
+    }, )
   }
 
   return (
-    <>
-      <div className="w-full bg-skin-base shadow-md rounded-md">
+    <div className='pr-10'>
+      <div className="bg-white shadow-lg rounded-lg w-[70%]">
         <h1 className="text-xl font-bold px-5 py-3 border-b">Place a Bid on this Project</h1>
         <div className="p-5">
           <Formik
@@ -42,7 +41,7 @@ export const CreateBid = ({ projectID, query, refetch }) => {
                 </p>
               </div>
               <div className="flex justify-between gap-8 mt-5">
-                <ApTextInput inputType="number" name="budget" label="Your Budget" />
+                <ApTextInput inputType="number" name="budget" label="Your Bid Amount" />
                 <ApTextInput
                   inputType="number"
                   name="deliveredIn"
@@ -55,12 +54,12 @@ export const CreateBid = ({ projectID, query, refetch }) => {
               </div>
 
               <div className="flex justify-end mt-5">
-                <ApButton loading={loading}>Place Your Bid</ApButton>
+                <ApButton type='submit' loading={actionLoading}>Place Your Bid</ApButton>
               </div>
             </Form>
           </Formik>
         </div>
       </div>
-    </>
+    </div>
   )
 }

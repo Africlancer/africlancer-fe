@@ -6,3 +6,10 @@ export * from './layout'
 export * from './navbar'
 export * from "./popover"
 export * from "./loader"
+export * from "./steps"
+export * from "./tag"
+export * from "./tabs"
+export * from "./table"
+export * from "./tooltip"
+export * from "./menu"
+export * from "./dropdown"

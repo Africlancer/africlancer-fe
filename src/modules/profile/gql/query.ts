@@ -1,4 +1,5 @@
 import { useMutation, gql, useLazyQuery } from '@apollo/client'
+import { ProfileFragment } from './fragment'
 
 const ADD_OR_UPDATE_PUBLICATION = gql`
   mutation AddOrUpdatePublication($publication: PublicationInput!) {
@@ -23,49 +24,10 @@ const ADD_OR_UPDATE_EXPERIENCE = gql`
 const FIND_ONE_PROFILE = gql`
   query FindOneProfile {
     findOneProfile {
-      location
-      # flagURL
-      avatar
-      skills
-      banner
-      hourlyRate
-      professionalHeadline
-      summary
-      recommendations
-      publication {
-        title
-        publisher
-        summary
-        _id
-      }
-      qualification {
-        title
-        conferringOrganization
-        summary
-        startYear
-        _id
-      }
-      education {
-        country
-        insitution
-        degree
-        startYear
-        endYear
-        _id
-      }
-      experience {
-        title
-        company
-        startMonth
-        startYear
-        endMonth
-        endYear
-        working
-        summary
-        _id
-      }
+      ...Profile
     }
   }
+  ${ProfileFragment}
 `
 const FIND_USER_AVATAR = gql`
   query FindOneProfile {
@@ -77,12 +39,10 @@ const FIND_USER_AVATAR = gql`
 const FIND_PROFILES = gql`
   query FindProfiles($query: QueryProfileInput!) {
     findProfiles(query: $query) {
-      avatar
-      hourlyRate
-      professionalHeadline
-      summary
+      ...Profile
     }
   }
+  ${ProfileFragment}
 `
 const FIND_USERS = gql`
   query FindUsers($query: QueryUserInput!) {
@@ -124,6 +84,7 @@ export default function useProfileQuery () {
   const findUserAvatarQ = useLazyQuery(FIND_USER_AVATAR, {fetchPolicy: "no-cache"});
   const findOneProfileQ = useLazyQuery(FIND_ONE_PROFILE, {fetchPolicy: "no-cache"});
   const findOneProfileQ2 = useLazyQuery(FIND_ONE_PROFILE, {fetchPolicy: "no-cache"});
+  const findProfiles = useLazyQuery(FIND_PROFILES, {fetchPolicy: "no-cache"});
   const updateProfileQ = useMutation(UPDATE_PROFILE)
   const addOrUpdateQualificationQ = useMutation(ADD_OR_UPDATE_QUALIFICATION)
   const addOrUpdatePublicationQ = useMutation(ADD_OR_UPDATE_PUBLICATION)
@@ -147,8 +108,9 @@ export default function useProfileQuery () {
     deleteExperienceQ,
     deletePublicationQ,
     deleteQualificationQ,
-
-    loading: findOneProfileQ[1].loading,
+    findProfiles,
+    
+    loading: findProfiles[1].loading || findOneProfileQ[1].loading,
     avatarLoading: findUserAvatarQ[1].loading,
     actionLoading: 
       updateProfileQ[1].loading || 

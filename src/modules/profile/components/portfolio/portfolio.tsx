@@ -3,7 +3,11 @@ import { ArrowRightIcon } from '@/src/components/icons'
 import Link from 'next/link'
 import React from 'react'
 
-export const Portfolioitems = () => {
+interface IProps {
+  freelancerId?: string
+}
+
+export const Portfolioitems: React.FC<IProps> = ({ freelancerId }) => {
   return (
     <div className="bg-skin-base shadow-xl w-full rounded-xl col-span-2">
       <div className="border-skin-border border-b px-6 py-2 flex justify-between">
@@ -24,15 +28,17 @@ export const Portfolioitems = () => {
           </svg>
         </div>
 
-        <Link href="/my-portfolio">
-          <ApButton
-            onClick={() => {}}
-            className="py-2 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2"
-          >
-            Manage
-            <ArrowRightIcon />
-          </ApButton>
-        </Link>
+        {!freelancerId && (
+          <Link href="/my-portfolio">
+            <ApButton
+              onClick={() => {}}
+              className="py-2 flex bg-skin-accent text-white rounded items-center p-3 justify-center gap-2"
+            >
+              Manage
+              <ArrowRightIcon />
+            </ApButton>
+          </Link>
+        )}
       </div>
 
       <div className="h-80 flex items-center justify-center p-16 flex-col">

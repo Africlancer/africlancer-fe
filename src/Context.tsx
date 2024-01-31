@@ -4,7 +4,7 @@ import { BiddingContextProvider } from "./modules/bidding/context";
 import { BookMarkContextProvider } from "./modules/bookmark/context";
 import { FreelancersContextProvider } from "./modules/freelancers/context";
 import { ProfileContextProvider } from "./modules/profile/context";
-import { ProjectContextProvider } from "./modules/projects/context";
+import { ProjectContextProvider } from "./modules/project/context";
 
 
 export const combineContext = (...components: FC[]): FC<any> => {
@@ -24,8 +24,8 @@ export const combineContext = (...components: FC[]): FC<any> => {
 
 const providers = [
     AuthContextProvider,
-    ProfileContextProvider,
     ProjectContextProvider,
+    ProfileContextProvider,
     BiddingContextProvider,
     FreelancersContextProvider,
     BookMarkContextProvider

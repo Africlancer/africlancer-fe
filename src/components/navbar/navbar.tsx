@@ -2,7 +2,7 @@ import Notification from '@/src/modules/notification'
 import { FIND_USER_AVATAR } from '@/src/modules/profile/gql/query'
 import { useQuery } from '@apollo/client'
 import { Dropdown, MenuProps, Image, Skeleton } from 'antd'
-import { useSession } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 import NextImage from 'next/image'
 import Link from 'next/link'
 import { ApButton } from '../button'
@@ -10,6 +10,9 @@ import { ApNotificationIcon, ArrowRightIcon } from '../icons'
 import { ApPopConfirm } from '../popconfirm'
 import { useProfileContext } from '@/src/modules/profile/context'
 import { useEffect } from 'react'
+import { ApPopover } from '../popover'
+import { ApDropdown } from '../dropdown'
+import { useRouter } from 'next/router'
 
 interface IProps {
   avatar?: any
@@ -19,6 +22,13 @@ export const Navbar: React.FC<IProps> = () => {
   const {avatar, avatarLoading, findUserAvatar} = useProfileContext()
   const sess = useSession()
   const user: any = sess.data?.user
+  const router = useRouter()
+
+  const handleSignOut = () => {
+    signOut().then(() => {
+      router.push('/signin')
+    })
+  }
 
   const items: MenuProps['items'] = [
     {
@@ -56,6 +66,10 @@ export const Navbar: React.FC<IProps> = () => {
           key: 2,
         },
       ],
+    },
+    {
+      key: '3',
+      label: <p onClick={handleSignOut} className='text-center py-1'>Sign Out</p>,
     },
   ]
 
@@ -112,14 +126,7 @@ export const Navbar: React.FC<IProps> = () => {
         <div className="hidden w-full md:flex md:items-center md:w-auto" id="menu">
           <ul className="pt-4 md:flex md:justify-between md:pt-0">
             <li>
-              <Dropdown
-                trigger={['hover']}
-                menu={{ items: browseItems }}
-                placement="bottomLeft"
-                arrow
-              >
-                <p className="md:p-4 py-2 block cursor-pointer">Browse</p>
-              </Dropdown>
+              <BrowseContent/>
             </li>
 
             <li>
@@ -186,19 +193,22 @@ export const Navbar: React.FC<IProps> = () => {
             <li className="flex items-center">
               {/* {
                 data ? ( */}
-                <div className="border-l h-10 w-2 mx-5"></div>
+                <div className="border-l h-10 w-2 ml-5"></div>
                 {!avatar ? (
                   <Skeleton.Image
                     active
                     style={{ height: '40px', width: '40px', padding: '10px' }}
                   />
                 ) : (
-                  <Dropdown className='cursor-pointer' trigger={['hover']} menu={{ items }} placement="bottomLeft" arrow>
+                  <ApDropdown overlayClassName='w-[200px]' className='py-1 px-3 rounded-md cursor-pointer hover:bg-black/5 duration-150 ease-in-out' trigger={['hover']} menu={{ items }} placement="bottomLeft" arrow>
                     <div className="flex items-center text-lg">
-                      <p className="font-semibold text-lg mr-5 cursor-pointer">{user?.username}</p>
+                      <div>
+                        <p className="font-semibold text-base mr-5 cursor-pointer">{user?.username}</p>
+                        <p className="font- text-sm mr-5 cursor-pointer">$0.00</p>
+                      </div>
                       <Image src={avatar} preview={false} alt="usrimg" className="rounded cursor-pointer" height={40} width={40}/>
                     </div>
-                  </Dropdown>
+                  </ApDropdown>
                 )}
 
               {/* ) : (
@@ -214,6 +224,52 @@ export const Navbar: React.FC<IProps> = () => {
     </header>
   )
 }
+
+
+const BrowseContent = () => {
+  return (
+    <ApPopover
+      wrapper={<p className="md:p-4 py-2 block cursor-pointer">Browse</p>}
+      placement="bottomLeft"
+    >
+      <div className="p-6">
+        <div className="flex gap-10 justify-between">
+          <div className="flex flex-col gap-2 border-r pr-10">
+            <h1 className="font-bold text-base">Search</h1>
+            <Link href="/browse/search/projects" className='hover:text-skin-accent'>
+              <p className="font-regular text-sm">Projects</p>
+            </Link>
+            <Link href="/browse/search/freelancers" className='hover:text-skin-accent'> 
+              <p className="font-regular text-sm">Freelancers</p>
+            </Link>
+            <Link href="" className='hover:text-skin-accent'>
+              <p className="font-regular text-sm">Bookmarks</p>
+            </Link>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <h1 className="font-bold text-base">Explore Africlancer</h1>
+            <Link href="" className='hover:text-skin-accent'>
+              <p className="font-regular text-sm">Showcase</p>
+            </Link>
+            <Link href="" className='hover:text-skin-accent'>
+              <p className="font-regular text-sm">Community</p>
+            </Link>
+            <Link href="" className='hover:text-skin-accent'>
+              <p className="font-regular text-sm">Customer Support</p>
+            </Link>
+          </div>
+        </div>
+
+        {/* <div className="w- flex flex-col gap-3">
+          <h1 className="font-bold text-base">Home Buying Tips</h1>
+
+        </div> */}
+      </div>
+    </ApPopover>
+  )
+}
+
 
 {
   /* <nav className="navbar bg-white fixed top-0 z-50 w-full shadow-lg">

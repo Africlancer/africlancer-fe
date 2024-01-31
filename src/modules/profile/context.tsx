@@ -16,6 +16,7 @@ interface IProfileState {
   setProfile: any
   updateProfile: (profile: IProfile) => Promise<any>
   findProfile: () => Promise<any>
+  findOneProfile: (userID: string) => Promise<any>
   findUserAvatar: () => Promise<any>
   addOrUpdatePublication: (publication: IPublication) => Promise<any>
   addOrUpdateQualification: (qualification: IQualification) => Promise<any>
@@ -48,6 +49,7 @@ const ProfileContext = createContext<IProfileState>({
   deleteEducation(educationID: string) { return null as any },
   deletePublication(publicationID: string) { return null as any },
   deleteQualification(qualificationID: string) { return null as any },
+  findOneProfile(userID: string) { return null as any },
   setProfile: null,
 } as any)
 
@@ -73,6 +75,18 @@ const ProfileContextProvider: React.FC<IProps> = ({ children }) => {
       .then((res) => {
         setProfile(res?.data?.findOneProfile)
         resolve(res?.data?.findOneProfile)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  }
+
+  const findOneProfile = async (userID: string): Promise<any> => {
+    return new Promise<void>((resolve, reject) => {
+      profileQuery.findProfiles[0]({variables: {query: {_id: userID}}})
+      .then((res) => {
+        setProfile(res?.data?.findProfiles[0])
+        resolve(res?.data?.findProfiles[0])
       }).catch((err) => {
         reject(err)
       })
@@ -264,6 +278,7 @@ const ProfileContextProvider: React.FC<IProps> = ({ children }) => {
   return (
     <ProfileContext.Provider 
       value={{
+        findOneProfile,
         avatar,
         findUserAvatar,
         deleteExperience,
